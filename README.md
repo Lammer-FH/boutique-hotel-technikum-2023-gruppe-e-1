@@ -2,6 +2,13 @@
 # Projekt: Hotel Buchungsoberfläche
 
 ---
+## Team
+
+- Gröger Mario
+- Hämmerle Clara
+- Haindl Stefanie 
+
+---
 ## Kontext und Einordnung
 
 Unser Team wurde beauftragt eine Buchungsapp zu entwickeln, die Benutzer auf dem Smartphone und dem Desktop verwenden werden.
