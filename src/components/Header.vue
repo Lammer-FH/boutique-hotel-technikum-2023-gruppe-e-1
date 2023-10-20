@@ -26,6 +26,7 @@ export default {
     </b-navbar-toggle>
 
     <b-collapse id="navbar-toggle-collapse" is-nav>
+
       <b-navbar-nav class="ml-auto">
         <b-nav-item href="#">
           <RouterLink to="/rooms">Zimmer</RouterLink>
@@ -54,6 +55,8 @@ export default {
       </b-navbar-nav>
     </b-collapse>
   </b-navbar>
+
+
 </template>
 
 <style scoped>

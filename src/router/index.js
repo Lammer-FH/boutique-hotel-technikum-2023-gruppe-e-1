@@ -73,13 +73,25 @@ const router = createRouter({
       // which is lazy-loaded when the route is visited.
       component: () => import('../views/RoomsView.vue')
     },
-    {
-      path: '/sparetime',
-      name: 'sparetime',
+{
+    path: '/sparetime',
+        name
+:
+    'sparetime',
+        // route level code-splitting
+        // this generates a separate chunk (About.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component
+:
+    () => import('../views/SparetimeView.vue')
+},
+{
+      path: '/imprint',
+      name: 'imprint',
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import('../views/SparetimeView.vue')
+      component: () => import('../views/ImprintView.vue')
     }
   ]
 })
