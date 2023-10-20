@@ -38,6 +38,9 @@ export default {
           <RouterLink to="/booking">Buchen</RouterLink>
         </b-nav-item>
         <b-nav-item href="#">
+          <RouterLink to="/about">Über Uns</RouterLink>
+        </b-nav-item>
+        <b-nav-item href="#">
           <RouterLink to="/culinary_art">Kulinarik</RouterLink>
         </b-nav-item>
         <b-nav-item href="#">
@@ -49,10 +52,10 @@ export default {
         <b-nav-item href="#">
           <RouterLink to="/login">Login</RouterLink>
         </b-nav-item>
-        <b-nav-item href="#">
+        <b-nav-item href="#" hidden="hidden">
           <RouterLink to="booking_history">Buchungshistorie</RouterLink>
         </b-nav-item>
-        <b-nav-item href="#">
+        <b-nav-item href="#" hidden="hidden">
           <RouterLink to="personal_data">Persönliche Daten</RouterLink>
         </b-nav-item>
       </b-navbar-nav>
