@@ -29,6 +29,9 @@ export default {
 
       <b-navbar-nav class="ml-auto">
         <b-nav-item href="#">
+          <RouterLink to="/">Home</RouterLink>
+        </b-nav-item>
+        <b-nav-item href="#">
           <RouterLink to="/rooms">Zimmer</RouterLink>
         </b-nav-item>
         <b-nav-item href="#">
