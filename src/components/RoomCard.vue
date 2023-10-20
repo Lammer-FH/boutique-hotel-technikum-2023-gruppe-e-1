@@ -1,16 +1,15 @@
 <script>
 export default {
   name: "RoomCard",
-  props: ["roomName", "description"],
+  props: ["roomName", "price", "imagePath"],
 }
 
 </script>
 
 <template>
-  <div>
     <b-card
-        title="{{$props.roomName}}"
-        img-src="https://picsum.photos/600/300/?image=25"
+        :title="roomName"
+        :img-src="imagePath"
         img-alt="Image"
         img-top
         tag="article"
@@ -18,12 +17,9 @@ export default {
         class="mb-2"
     >
       <b-card-text>
-        {{description}} {{$props.roomName}}
+        aktueller Preis: <b>{{price}}</b>
       </b-card-text>
-
-      <b-button href="#" variant="primary">Go somewhere</b-button>
     </b-card>
-  </div>
 </template>
 
 <style scoped>

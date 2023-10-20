@@ -58,6 +58,7 @@ export default {
       </b-navbar-nav>
     </b-collapse>
   </b-navbar>
+  <br>
 
 
 </template>
