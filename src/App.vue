@@ -22,14 +22,7 @@ import Footer from "@/components/Footer.vue";
 <style scoped>
 
 
-.footer{
-  width:100%;
-  position: fixed;
-  height: 20%;
-  bottom: 0;
-  left: 0;
-  background-color: #f2f2f2;
-}
+
 
 nav {
   width: 100%;
@@ -63,15 +56,24 @@ nav a:first-of-type {
     padding-right: calc(var(--section-gap) / 2);
   }
 
-
   nav {
     text-align: left;
     margin-left: -1rem;
     font-size: 1rem;
-
     padding: 1rem 0;
     margin-top: 1rem;
   }
+}
+
+.footer{
+  width:100%;
+  position: fixed;
+  height: fit-content;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  bottom: 0;
+  left: 0;
+  background-color: #f2f2f2;
 }
 </style>
 
