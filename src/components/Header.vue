@@ -26,8 +26,12 @@ export default {
     </b-navbar-toggle>
 
     <b-collapse id="navbar-toggle-collapse" is-nav>
+
       <b-navbar-nav class="ml-auto">
-        <b-nav-item href="#">Zimmer</b-nav-item>
+        <b-nav-item href="#">
+          <RouterLink to="/">Home</RouterLink>
+        </b-nav-item>
+
         <b-nav-item href="#">Buchen</b-nav-item>
         <b-nav-item href="#">Kulinarik</b-nav-item>
         <b-nav-item href="#">Freizeit</b-nav-item>
@@ -35,9 +39,21 @@ export default {
         <b-nav-item href="#">Login</b-nav-item>
         <b-nav-item href="#">Buchungshistorie</b-nav-item>
         <b-nav-item href="#">Persönliche Daten</b-nav-item>
+
+        <b-nav-item href="#">
+          <RouterLink to="/about">About</RouterLink>
+        </b-nav-item>
+
+
+
+
+
+
       </b-navbar-nav>
     </b-collapse>
   </b-navbar>
+
+
 </template>
 
 <style scoped>
