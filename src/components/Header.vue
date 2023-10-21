@@ -11,14 +11,16 @@ export default {
 </script>
 
 <template>
-  <b-navbar toggleable type="light" variant="light">
-    <b-navbar-brand href="#">Logo folgt</b-navbar-brand>
+  <div class="row">
 
-      <b-button variant="light">
+  <b-navbar toggleable type="light" variant="light">
+    <b-navbar-brand class="col-7" href="#">Logo folgt</b-navbar-brand>
+
+      <b-button class="col-2" variant="light">
         <BIconPersonCircle></BIconPersonCircle>
       </b-button>
 
-    <b-navbar-toggle target="navbar-toggle-collapse">
+    <b-navbar-toggle class="col-2" target="navbar-toggle-collapse">
       <template #default="{ expanded }">
         <BIconX v-if="expanded"></BIconX>
         <BIconList v-else></BIconList>
@@ -63,7 +65,7 @@ export default {
   </b-navbar>
   <br>
 
-
+  </div>
 </template>
 
 <style scoped>

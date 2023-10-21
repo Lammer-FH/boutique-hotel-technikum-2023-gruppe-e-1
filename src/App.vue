@@ -1,20 +1,22 @@
 <script setup>
 import Header from "@/components/Header.vue";
-import HomeView from "@/views/HomeView.vue";
 import Footer from "@/components/Footer.vue";
 
 </script>
 
 <template>
 
-  <div class="container">
-    <div class="header">
+  <div class="wrapper">
+
+    <div class="header-container">
       <Header/>
     </div>
 
-    <RouterView/>
+    <div class="view-container">
+      <RouterView/>
+    </div>
 
-    <div class="footer">
+    <div class="footer-container">
       <Footer/>
     </div>
   </div>
@@ -22,13 +24,22 @@ import Footer from "@/components/Footer.vue";
 </template>
 
 <style scoped>
-.header {
+
+.header-container {
   width: 100%;
-  margin: 0;
+  position: fixed;
+  height: fit-content;
+  top: 0;
+  left: 0;
+  background-color: #f2f2f2;
 }
 
-.footer{
-  width:100%;
+.view-container {
+  margin-top: 10vh
+}
+
+.footer-container {
+  width: 100%;
   position: fixed;
   height: fit-content;
   padding-top: 5px;
@@ -37,5 +48,6 @@ import Footer from "@/components/Footer.vue";
   left: 0;
   background-color: #f2f2f2;
 }
+
 </style>
 
