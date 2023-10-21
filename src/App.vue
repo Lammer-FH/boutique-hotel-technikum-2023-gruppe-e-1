@@ -28,7 +28,7 @@ import Footer from "@/components/Footer.vue";
 .header-container {
   width: 100%;
   position: fixed;
-  height: fit-content;
+
   top: 0;
   left: 0;
   background-color: #f2f2f2;
@@ -36,7 +36,8 @@ import Footer from "@/components/Footer.vue";
 }
 
 .view-container {
-  margin-top: 15vh;
+  width: 100%;
+  margin-top: 10vh;
   margin-bottom: 5vh;
   z-index: 0;
 }
