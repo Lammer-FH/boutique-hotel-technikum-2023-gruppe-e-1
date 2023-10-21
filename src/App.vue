@@ -36,7 +36,7 @@ import Footer from "@/components/Footer.vue";
 }
 
 .view-container {
-  margin-top: 5vh;
+  margin-top: 15vh;
   margin-bottom: 5vh;
   z-index: 0;
 }
