@@ -32,10 +32,13 @@ import Footer from "@/components/Footer.vue";
   top: 0;
   left: 0;
   background-color: #f2f2f2;
+  z-index: 1;
 }
 
 .view-container {
-  margin-top: 10vh
+  margin-top: 5vh;
+  margin-bottom: 5vh;
+  z-index: 0;
 }
 
 .footer-container {
@@ -47,6 +50,7 @@ import Footer from "@/components/Footer.vue";
   bottom: 0;
   left: 0;
   background-color: #f2f2f2;
+  z-index: 1;
 }
 
 </style>
