@@ -33,6 +33,9 @@ export default {
 </template>
 
 <style scoped>
-
+a {
+  color: black;
+  text-decoration: none;
+}
 
 </style>
