@@ -36,36 +36,56 @@ export default {
         <b-collapse id="navbar-toggle-collapse" is-nav >
 
           <b-navbar-nav class="ml-auto">
-            <b-nav-item class="text-end me-3" href="#">
-              <RouterLink class="link-underline link-underline-opacity-0" to="/">Home</RouterLink>
-            </b-nav-item>
-            <b-nav-item class="text-end me-3" href="#">
-              <RouterLink class="link-underline link-underline-opacity-0" to="/rooms">Zimmer</RouterLink>
-            </b-nav-item>
-            <b-nav-item class="text-end me-3" href="#">
-              <RouterLink class="link-underline link-underline-opacity-0" to="/booking">Buchen</RouterLink>
-            </b-nav-item>
-            <b-nav-item class="text-end me-3" href="#">
-              <RouterLink class="link-underline link-underline-opacity-0" to="/about">Über Uns</RouterLink>
-            </b-nav-item>
-            <b-nav-item class="text-end me-3" href="#" >
-              <RouterLink class="link-underline link-underline-opacity-0" to="/culinary_art">Kulinarik</RouterLink>
-            </b-nav-item>
-            <b-nav-item class="text-end me-3" href="#">
-              <RouterLink class="link-underline link-underline-opacity-0" to="/sparetime">Freizeit</RouterLink>
-            </b-nav-item>
-            <b-nav-item class="text-end me-3" href="#">
-              <RouterLink class="link-underline link-underline-opacity-0" to="/arrival_contact">Anreise & Kontakt</RouterLink>
-            </b-nav-item>
-            <b-nav-item class="text-end me-3" href="#">
-              <RouterLink class="link-underline link-underline-opacity-0" to="/login">Login</RouterLink>
-            </b-nav-item>
-            <b-nav-item class="text-end me-3" href="#" hidden="hidden">
-              <RouterLink class="link-underline link-underline-opacity-0" to="booking_history">Buchungshistorie</RouterLink>
-            </b-nav-item>
-            <b-nav-item class="text-end me-3" href="#" hidden="hidden">
-              <RouterLink class="link-underline link-underline-opacity-0" to="personal_data">Persönliche Daten</RouterLink>
-            </b-nav-item>
+            <RouterLink class="link-underline link-underline-opacity-0" to="/">
+              <b-nav-item class="text-end me-3" href="#">
+                Home
+              </b-nav-item>
+            </RouterLink>
+            <RouterLink class="link-underline link-underline-opacity-0" to="/rooms">
+              <b-nav-item class="text-end me-3" href="#">
+                Zimmer
+              </b-nav-item>
+            </RouterLink>
+            <RouterLink class="link-underline link-underline-opacity-0" to="/booking">
+              <b-nav-item class="text-end me-3" href="#">
+                Buchen
+              </b-nav-item>
+            </RouterLink>
+            <RouterLink class="link-underline link-underline-opacity-0" to="/about">
+              <b-nav-item class="text-end me-3" href="#">
+                Über Uns
+              </b-nav-item>
+            </RouterLink>
+            <RouterLink class="link-underline link-underline-opacity-0" to="/culinary_art">
+              <b-nav-item class="text-end me-3" href="#" >
+                Kulinarik
+              </b-nav-item>
+            </RouterLink>
+            <RouterLink class="link-underline link-underline-opacity-0" to="/sparetime">
+              <b-nav-item class="text-end me-3" href="#">
+                Freizeit
+              </b-nav-item>
+            </RouterLink>
+            <RouterLink class="link-underline link-underline-opacity-0" to="/arrival_contact">
+              <b-nav-item class="text-end me-3" href="#">
+                Anreise & Kontakt
+              </b-nav-item>
+            </RouterLink>
+            <RouterLink class="link-underline link-underline-opacity-0" to="/login">
+              <b-nav-item class="text-end me-3" href="#">
+                Login
+              </b-nav-item>
+            </RouterLink>
+            <RouterLink class="link-underline link-underline-opacity-0" to="booking_history">
+              <b-nav-item class="text-end me-3" href="#" hidden="hidden">
+                Buchungshistorie
+              </b-nav-item>
+            </RouterLink>
+            <RouterLink class="link-underline link-underline-opacity-0" to="personal_data">
+              <b-nav-item class="text-end me-3" href="#" hidden="hidden">
+                Persönliche Daten
+              </b-nav-item>
+            </RouterLink>
           </b-navbar-nav>
         </b-collapse>
       </b-navbar>
