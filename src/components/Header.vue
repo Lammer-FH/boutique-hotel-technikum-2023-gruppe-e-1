@@ -18,7 +18,7 @@ export default {
       <b-navbar toggleable type="light" variant="light">
         <b-navbar-brand class="col-7 text-center">
           <RouterLink to="/">
-            <img src="../images/logo.png" class="img-fluid">
+            <img src="../assets/images/logo.png" class="img-fluid">
           </RouterLink>
         </b-navbar-brand>
 
