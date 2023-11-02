@@ -6,20 +6,17 @@ import Footer from "@/components/Footer.vue";
 
 <template>
 
-  <div class="wrapper">
-
     <div class="header-container">
       <Header/>
     </div>
 
-    <div class="view-container">
+    <div class="container-fluid">
       <RouterView/>
     </div>
 
     <div class="footer-container">
       <Footer/>
     </div>
-  </div>
 
 </template>
 
@@ -33,13 +30,6 @@ import Footer from "@/components/Footer.vue";
   left: 0;
   background-color: #f2f2f2;
   z-index: 1;
-}
-
-.view-container {
-  width: 100%;
-  margin-top: 10vh;
-  margin-bottom: 5vh;
-  z-index: 0;
 }
 
 .footer-container {

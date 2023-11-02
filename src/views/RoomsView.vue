@@ -24,7 +24,15 @@ export default {
 
 <template>
 <h2>Unsere Zimmer</h2>
-  <RoomCard v-for="room in rooms" :roomName=room.roomName :price=room.price :imagePath=room.imagePath />
+
+<BContainer>
+  <BRow>
+    <BCol v-for="room in rooms">
+      <RoomCard :roomName=room.roomName :price=room.price :imagePath=room.imagePath />
+    </BCol>
+  </BRow>
+</BContainer>
+  
 </template>
 
 <style scoped>

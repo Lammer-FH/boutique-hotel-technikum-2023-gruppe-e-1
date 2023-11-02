@@ -6,10 +6,14 @@ export default {
 
 <template>
   <BCarousel controls indicators ride="carousel">
-    <BCarouselSlide img-src="https://picsum.photos/id/202/200/300" />
-    <BCarouselSlide img-src="https://picsum.photos/id/203/200/300" />
-    <BCarouselSlide img-src="https://picsum.photos/id/351/200/300" />
+    <BCarouselSlide img-src="https://picsum.photos/1024/680/?image=202" />
+    <BCarouselSlide img-src="https://picsum.photos/1024/680/?image=203" />
+    <BCarouselSlide img-src="https://picsum.photos/1024/680/?image=351" />
   </BCarousel>
 </template>
 
-<style scoped></style>
+<style scoped>
+ .carousel{
+  margin-bottom: 3rem;
+ }
+</style>
