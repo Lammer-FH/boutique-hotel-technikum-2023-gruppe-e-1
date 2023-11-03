@@ -3,7 +3,21 @@ import AvailabilityCheckForm from '../components/AvailabilityCheckForm.vue';
 
 export default {
     name: "BookingView",
-    components: { AvailabilityCheckForm }
+    components: { AvailabilityCheckForm, AvailabilityCheckForm },
+    props: {
+      
+    },
+    data(){
+      return {
+        availableRooms: []
+      }
+    },
+    methods: {
+      handleAvailableRoomsData(availableRooms){
+        this.availableRooms = availableRooms;
+        console.log(this.availableRooms)
+      }
+    }
 };
 </script>
 
@@ -32,7 +46,7 @@ export default {
         data-bs-parent="#booking-accordion"
       >
         <div class="accordion-body">
-          <AvailabilityCheckForm/>
+          <AvailabilityCheckForm @checked-Availability="handleAvailableRoomsData"/>
         </div>
       </div>
     </div>
