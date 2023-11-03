@@ -16,6 +16,17 @@ export default {
   beforeMount() {
     this.getRoomIds();
   },
+  watch: {
+    dateFrom(date) {
+      this.checkAvailability();
+    },
+    dateTo(date) {
+      this.checkAvailability();
+    },
+    numberOfPersons(number) {
+      this.checkAvailability();
+    },
+  },
   methods: {
     getRoomIds() {
       axios
@@ -47,17 +58,24 @@ export default {
             this.dateTo
         )
         .then((response) => {
+          console.log("check room");
           let data = response.data;
-          if(data.available == true){
-            this.availableRooms.push(room);
+          if (data.available == true) {
+            if (room.beds >= this.numberOfPersons) {
+              this.availableRooms.push(room);
+              console.log(this.availableRooms);
+            }
           }
         })
         .catch((error) => {
           console.log(error);
         })
-        .then(() => {
-          
+        .finally(() => {
+
         });
+    },
+    continueToRoomSelection() {
+      this.$emit("checked-Availability", this.availableRooms);
     },
   },
 };
@@ -84,7 +102,11 @@ export default {
     />
   </div>
   <div class="d-grid gap-2">
-    <button type="submit" class="btn btn-primary" @click="checkAvailability()">
+    <button
+      type="submit"
+      class="btn btn-primary"
+      @click="continueToRoomSelection()"
+    >
       Verfügbarkeit prüfen
     </button>
   </div>
