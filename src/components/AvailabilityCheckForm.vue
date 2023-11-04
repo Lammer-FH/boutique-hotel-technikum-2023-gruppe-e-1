@@ -14,7 +14,9 @@ export default {
     };
   },
   created() {
+    // fetch all rooms
     this.getRoomIds();
+    
     // set todays date als default for arrival date
     let today = new Date();
     let year = today.getFullYear();
@@ -29,9 +31,6 @@ export default {
     month = String(tomorrow.getMonth() + 1).padStart(2, "0"); // Adjust for zero-based months
     day = String(tomorrow.getDate()).padStart(2, "0");
     this.dateTo = `${year}-${month}-${day}`;
-
-    // fetch all rooms
-    
   },
   watch: {
     dateFrom(date) {
