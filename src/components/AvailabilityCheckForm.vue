@@ -6,15 +6,32 @@ export default {
   props: {},
   data() {
     return {
-      dateFrom: "2023-12-01",
-      dateTo: "2023-12-12",
+      dateFrom: "",
+      dateTo: "",
       numberOfPersons: 2,
       rooms: [],
       availableRooms: [],
     };
   },
-  beforeMount() {
+  created() {
     this.getRoomIds();
+    // set todays date als default for arrival date
+    let today = new Date();
+    let year = today.getFullYear();
+    let month = String(today.getMonth() + 1).padStart(2, "0"); // Adjust for zero-based months
+    let day = String(today.getDate()).padStart(2, "0");
+    this.dateFrom = `${year}-${month}-${day}`;
+
+    // set tomorrows date as default for departure date
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    year = tomorrow.getFullYear();
+    month = String(tomorrow.getMonth() + 1).padStart(2, "0"); // Adjust for zero-based months
+    day = String(tomorrow.getDate()).padStart(2, "0");
+    this.dateTo = `${year}-${month}-${day}`;
+
+    // fetch all rooms
+    
   },
   watch: {
     dateFrom(date) {
@@ -27,6 +44,25 @@ export default {
       this.checkAvailability();
     },
   },
+  computed: {
+    minDateFrom() {
+      // Calculate the minimum date, which is today's date
+      const today = new Date();
+      const year = today.getFullYear();
+      const month = String(today.getMonth() + 1).padStart(2, "0"); // Adjust for zero-based months
+      const day = String(today.getDate()).padStart(2, "0");
+      return `${year}-${month}-${day}`;
+    },
+    minDateTo() {
+      // Calculate the minimum date, which is today's date
+      const tomorrow = new Date();
+      tomorrow.setDate(tomorrow.getDate() + 1);
+      const year = tomorrow.getFullYear();
+      const month = String(tomorrow.getMonth() + 1).padStart(2, "0"); // Adjust for zero-based months
+      const day = String(tomorrow.getDate()).padStart(2, "0");
+      return `${year}-${month}-${day}`;
+    },
+  },
   methods: {
     getRoomIds() {
       axios
@@ -36,11 +72,14 @@ export default {
           data.forEach((room) => {
             this.rooms.push(room);
           });
+          console.log(this.rooms);
         })
         .catch((error) => {
           console.log(error);
         })
-        .then(() => {});
+        .then(() => {
+          this.checkAvailability();
+        });
     },
     checkAvailability() {
       this.rooms.forEach((room) => {
@@ -58,7 +97,6 @@ export default {
             this.dateTo
         )
         .then((response) => {
-          console.log("check room");
           let data = response.data;
           if (data.available == true) {
             if (room.beds >= this.numberOfPersons) {
@@ -70,9 +108,7 @@ export default {
         .catch((error) => {
           console.log(error);
         })
-        .finally(() => {
-
-        });
+        .finally(() => {});
     },
     continueToRoomSelection() {
       this.$emit("checked-Availability", this.availableRooms);
@@ -84,11 +120,23 @@ export default {
 <template>
   <div class="mb-3">
     <label for="date-from" class="form-label">Anreisedatum:</label>
-    <input type="date" class="form-control" id="date-from" v-model="dateFrom" />
+    <input
+      type="date"
+      class="form-control"
+      id="date-from"
+      v-model="dateFrom"
+      :min="minDateFrom"
+    />
   </div>
   <div class="mb-3">
     <label for="date-to" class="form-label">Abreisedatum:</label>
-    <input type="date" class="form-control" id="date-to" v-model="dateTo" />
+    <input
+      type="date"
+      class="form-control"
+      id="date-to"
+      v-model="dateTo"
+      :min="minDateTo"
+    />
   </div>
   <div class="mb-3">
     <label for="number-of-persons" class="form-label"
