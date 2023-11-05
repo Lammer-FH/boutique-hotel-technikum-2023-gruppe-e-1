@@ -109,7 +109,12 @@ export default {
         .finally(() => {});
     },
     continueToRoomSelection() {
-      this.$emit("checked-Availability", this.availableRooms);
+      const data = {
+        dateFrom: this.dateFrom,
+        dateTo: this.dateTo,
+        availableRooms: this.availableRooms,
+      };
+      this.$emit("checked-availability", data);
     },
   },
 };
