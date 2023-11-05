@@ -13,6 +13,7 @@ export default {
       availableRooms: [],
     };
   },
+
   created() {
     // fetch all rooms
     this.getRoomIds();
@@ -32,7 +33,9 @@ export default {
     day = String(tomorrow.getDate()).padStart(2, "0");
     this.dateTo = `${year}-${month}-${day}`;
   },
+
   watch: {
+    // check the Availability of the rooms, every time an input changes
     dateFrom(date) {
       this.checkAvailability();
     },
@@ -43,17 +46,19 @@ export default {
       this.checkAvailability();
     },
   },
+
   computed: {
+    // get todays date
     minDateFrom() {
-      // Calculate the minimum date, which is today's date
       const today = new Date();
       const year = today.getFullYear();
       const month = String(today.getMonth() + 1).padStart(2, "0"); // Adjust for zero-based months
       const day = String(today.getDate()).padStart(2, "0");
       return `${year}-${month}-${day}`;
     },
+
+    // get tomorrows date
     minDateTo() {
-      // Calculate the minimum date, which is today's date
       const tomorrow = new Date();
       tomorrow.setDate(tomorrow.getDate() + 1);
       const year = tomorrow.getFullYear();
@@ -62,7 +67,12 @@ export default {
       return `${year}-${month}-${day}`;
     },
   },
+
   methods: {
+    /*
+    fetch all rooms and store them in the rooms array
+    after fetching call the checkAvailability method
+    */
     getRoomIds() {
       axios
         .get("https://boutique-hotel.helmuth-lammer.at/api/v1/rooms")
@@ -79,12 +89,24 @@ export default {
           this.checkAvailability();
         });
     },
+
+    /*
+      reset the availableRooms array to empty,
+      iterate through the rooms array
+      for every room check its availability
+    */
     checkAvailability() {
       this.availableRooms = [];
       this.rooms.forEach((room) => {
         this.checkAvailabilityForRoom(room);
       });
     },
+
+    /*
+      make request to with a rooms id, the arrival date and the departure date.
+      if the room is available and the number of beds is greater than the number of persons,
+      push the room to the availableRooms array
+    */
     checkAvailabilityForRoom(room) {
       axios
         .get(
@@ -108,6 +130,11 @@ export default {
         })
         .finally(() => {});
     },
+
+    /*
+      create a data object which will be passed to the parent component 
+      with the checked-availability emitter
+    */
     continueToRoomSelection() {
       const data = {
         dateFrom: this.dateFrom,

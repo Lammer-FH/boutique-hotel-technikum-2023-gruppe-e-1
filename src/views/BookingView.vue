@@ -13,14 +13,18 @@ export default {
       availableRooms: [],
     };
   },
+
   methods: {
+    /*
+      set the data received from AvailableCheckForm 
+      and open the accordions RoomSelection item
+    */
     handleAvailabilityData(data) {
-      console.log(data);
       this.selectedDateFrom = data.dateFrom;
       this.selectedDateTo = data.dateTo;
       this.availableRooms = data.availableRooms;
       this.$nextTick(() => {
-        this.$refs.secondAccordionButton.click();
+        this.$refs.RoomSelectionButton.click();
       });
     },
   },
@@ -60,7 +64,7 @@ export default {
     <div class="accordion-item">
       <h2 class="accordion-header">
         <button
-          ref="secondAccordionButton"
+          ref="RoomSelectionButton"
           class="accordion-button collapsed"
           type="button"
           data-bs-toggle="collapse"
