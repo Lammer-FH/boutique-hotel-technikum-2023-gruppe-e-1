@@ -16,7 +16,7 @@ export default {
   created() {
     // fetch all rooms
     this.getRoomIds();
-    
+
     // set todays date als default for arrival date
     let today = new Date();
     let year = today.getFullYear();
@@ -71,7 +71,6 @@ export default {
           data.forEach((room) => {
             this.rooms.push(room);
           });
-          console.log(this.rooms);
         })
         .catch((error) => {
           console.log(error);
@@ -81,6 +80,7 @@ export default {
         });
     },
     checkAvailability() {
+      this.availableRooms = [];
       this.rooms.forEach((room) => {
         this.checkAvailabilityForRoom(room);
       });
@@ -100,7 +100,6 @@ export default {
           if (data.available == true) {
             if (room.beds >= this.numberOfPersons) {
               this.availableRooms.push(room);
-              console.log(this.availableRooms);
             }
           }
         })
@@ -146,6 +145,7 @@ export default {
       class="form-control"
       id="number-of-persons"
       v-model="numberOfPersons"
+      min="1"
     />
   </div>
   <div class="d-grid gap-2">
