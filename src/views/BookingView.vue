@@ -1,23 +1,23 @@
 <script>
-import AvailabilityCheckForm from '../components/AvailabilityCheckForm.vue';
+import AvailabilityCheckForm from "../components/AvailabilityCheckForm.vue";
 
 export default {
-    name: "BookingView",
-    components: { AvailabilityCheckForm, AvailabilityCheckForm },
-    props: {
-      
+  name: "BookingView",
+  components: { AvailabilityCheckForm, AvailabilityCheckForm },
+  props: {},
+  data() {
+    return {
+      availableRooms: [],
+    };
+  },
+  methods: {
+    handleAvailableRoomsData(availableRooms) {
+      this.availableRooms = availableRooms;
+      this.$nextTick(() => {
+        this.$refs.secondAccordionButton.click();
+      });
     },
-    data(){
-      return {
-        availableRooms: []
-      }
-    },
-    methods: {
-      handleAvailableRoomsData(availableRooms){
-        this.availableRooms = availableRooms;
-        console.log(this.availableRooms)
-      }
-    }
+  },
 };
 </script>
 
@@ -46,13 +46,16 @@ export default {
         data-bs-parent="#booking-accordion"
       >
         <div class="accordion-body">
-          <AvailabilityCheckForm @checked-Availability="handleAvailableRoomsData"/>
+          <AvailabilityCheckForm
+            @checked-Availability="handleAvailableRoomsData"
+          />
         </div>
       </div>
     </div>
     <div class="accordion-item">
       <h2 class="accordion-header">
         <button
+          ref="secondAccordionButton"
           class="accordion-button collapsed"
           type="button"
           data-bs-toggle="collapse"
@@ -60,7 +63,7 @@ export default {
           aria-expanded="false"
           aria-controls="collapseTwo"
         >
-        2. Zimmer auswählen
+          2. Zimmer auswählen
         </button>
       </h2>
       <div
