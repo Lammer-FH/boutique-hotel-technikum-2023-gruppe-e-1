@@ -43,15 +43,15 @@ export default {
           class="accordion-button collapsed"
           type="button"
           data-bs-toggle="collapse"
-          data-bs-target="#collapseOne"
+          data-bs-target="#collapseAvailabilityCheck"
           aria-expanded="false"
-          aria-controls="collapseOne"
+          aria-controls="collapseAvailabilityCheck"
         >
           1. Verfügbarkeit prüfen
         </button>
       </h2>
       <div
-        id="collapseOne"
+        id="collapseAvailabilityCheck"
         class="accordion-collapse collapse show"
         data-bs-parent="#booking-accordion"
       >
@@ -68,15 +68,15 @@ export default {
           class="accordion-button collapsed"
           type="button"
           data-bs-toggle="collapse"
-          data-bs-target="#collapseTwo"
+          data-bs-target="#collapseRoomSelection"
           aria-expanded="false"
-          aria-controls="collapseTwo"
+          aria-controls="collapseRoomSelection"
         >
           2. Zimmer auswählen
         </button>
       </h2>
       <div
-        id="collapseTwo"
+        id="collapseRoomSelection"
         class="accordion-collapse collapse"
         data-bs-parent="#booking-accordion"
       >
@@ -91,15 +91,15 @@ export default {
           class="accordion-button collapsed"
           type="button"
           data-bs-toggle="collapse"
-          data-bs-target="#collapseThree"
+          data-bs-target="#collapseContactData"
           aria-expanded="false"
-          aria-controls="collapseThree"
+          aria-controls="collapseContactData"
         >
           3. Kontaktdaten eingeben
         </button>
       </h2>
       <div
-        id="collapseThree"
+        id="collapseContactData"
         class="accordion-collapse collapse"
         data-bs-parent="#booking-accordion"
       >
@@ -121,15 +121,15 @@ export default {
           class="accordion-button collapsed"
           type="button"
           data-bs-toggle="collapse"
-          data-bs-target="#collapseFour"
+          data-bs-target="#collapseFinishBooking"
           aria-expanded="false"
-          aria-controls="collapseFour"
+          aria-controls="collapseFinishBooking"
         >
           4. Buchung abschließen
         </button>
       </h2>
       <div
-        id="collapseFour"
+        id="collapseFinishBooking"
         class="accordion-collapse collapse"
         data-bs-parent="#booking-accordion"
       >
