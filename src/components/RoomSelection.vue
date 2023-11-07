@@ -2,9 +2,6 @@
 export default {
   name: "RoomSelection",
   props: ["data"],
-  created() {
-    console.log(this.data);
-  },
 };
 </script>
 
