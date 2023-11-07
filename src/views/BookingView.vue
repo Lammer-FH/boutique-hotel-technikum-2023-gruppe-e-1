@@ -28,6 +28,9 @@ export default {
         this.$refs.RoomSelectionButton.click();
       });
     },
+    /*
+      create a data object which will be passed to the RoomSelection component 
+    */
     sendDataToRoomSelection(){
       let data = {
         dateFrom: this.dateFrom,
@@ -35,7 +38,6 @@ export default {
         numberOfPersons: this.numberOfPersons,
         availableRooms: this.availableRooms,
       }
-      console.log("BookingView:" + this.dateFrom)
       return data;
     }
   },
