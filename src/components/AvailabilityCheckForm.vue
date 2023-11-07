@@ -139,6 +139,7 @@ export default {
       const data = {
         dateFrom: this.dateFrom,
         dateTo: this.dateTo,
+        numberOfPersons: this.numberOfPersons,
         availableRooms: this.availableRooms,
       };
       this.$emit("checked-availability", data);
