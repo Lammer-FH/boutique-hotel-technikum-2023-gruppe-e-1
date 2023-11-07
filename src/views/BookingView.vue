@@ -8,8 +8,9 @@ export default {
   props: {},
   data() {
     return {
-      selectedDateFrom: '',
-      selectedDateTo: '',
+      dateFrom: '',
+      dateTo: '',
+      numberOfPersons: 2,
       availableRooms: [],
     };
   },
@@ -20,13 +21,23 @@ export default {
       and open the accordions RoomSelection item
     */
     handleAvailabilityData(data) {
-      this.selectedDateFrom = data.dateFrom;
-      this.selectedDateTo = data.dateTo;
+      this.dateFrom = data.dateFrom;
+      this.dateTo = data.dateTo;
       this.availableRooms = data.availableRooms;
       this.$nextTick(() => {
         this.$refs.RoomSelectionButton.click();
       });
     },
+    sendDataToRoomSelection(){
+      let data = {
+        dateFrom: this.dateFrom,
+        dateTo: this.dateTo,
+        numberOfPersons: this.numberOfPersons,
+        availableRooms: this.availableRooms,
+      }
+      console.log("BookingView:" + this.dateFrom)
+      return data;
+    }
   },
 };
 </script>
@@ -81,7 +92,7 @@ export default {
         data-bs-parent="#booking-accordion"
       >
         <div class="accordion-body">
-          <RoomSelection :dateFrom=selectedDateFrom :dateTo=selectedDateTo :availableRooms=availableRooms />
+          <RoomSelection :data=sendDataToRoomSelection() />
         </div>
       </div>
     </div>
