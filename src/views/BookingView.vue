@@ -1,6 +1,6 @@
 <script>
-import AvailabilityCheckForm from "../components/AvailabilityCheckForm.vue";
-import RoomSelection from "../components/RoomSelection.vue";
+import AvailabilityCheckForm from "../components/booking/AvailabilityCheckForm.vue";
+import RoomSelection from "../components/booking/RoomSelection.vue";
 
 export default {
   name: "BookingView",
