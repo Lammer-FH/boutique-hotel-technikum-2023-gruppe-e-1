@@ -23,6 +23,7 @@ export default {
     handleAvailabilityData(data) {
       this.dateFrom = data.dateFrom;
       this.dateTo = data.dateTo;
+      this.numberOfPersons = data.numberOfPersons;
       this.availableRooms = data.availableRooms;
       this.$nextTick(() => {
         this.$refs.RoomSelectionButton.click();
