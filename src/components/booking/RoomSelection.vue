@@ -18,7 +18,7 @@ export default {
       </BRow>
     </BContainer>
 
-    <div class="form-check pt-3" v-for="room in this.data.availableRooms">
+    <div class="form-check pt-3" v-for="room in this.data.availableRooms" v-if="this.data.availableRooms.length > 0">
       <input
         class="form-check-input"
         type="radio"
@@ -28,6 +28,9 @@ export default {
       <label class="form-check-label" :for="'room' + room.id">
         {{ room.roomsName }}, {{ room.pricePerNight }} €
       </label>
+    </div>
+    <div v-else class="mt-3 ms-3 text-danger">
+      Keine Zimmer im angegebenen Zeitraum verfügbar
     </div>
   </BContainer>
 </template>
