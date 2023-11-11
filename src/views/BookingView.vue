@@ -8,10 +8,12 @@ export default {
   props: {},
   data() {
     return {
-      dateFrom: '',
-      dateTo: '',
+      dateFrom: "",
+      dateTo: "",
       numberOfPersons: 2,
       availableRooms: [],
+      selectedRoomId: null,
+      isValidRoomSelection: false,
     };
   },
 
@@ -30,17 +32,38 @@ export default {
       });
     },
     /*
+      set the data received from RoomSelection 
+      and open the accordions next item
+    */
+    handleRoomSelectionData(data) {
+      this.selectedRoomId = data.selectedRoomId;
+      this.isValidRoomSelection = data.isValidRoomSelection;
+      console.log(this.isValidRoomSelection);
+      this.$nextTick(() => {
+        this.$refs.contactDataFormButton.click();
+      });
+    },
+    /*
       create a data object which will be passed to the RoomSelection component 
     */
-    sendDataToRoomSelection(){
+    sendDataToRoomSelection() {
       let data = {
         dateFrom: this.dateFrom,
         dateTo: this.dateTo,
         numberOfPersons: this.numberOfPersons,
         availableRooms: this.availableRooms,
-      }
+      };
       return data;
-    }
+    },
+  },
+
+  computed: {
+    /*
+      check if there is a room selected
+    */
+    isValidRoomSelectionForm() {
+      return this.isValidRoomSelection;
+    },
   },
 };
 </script>
@@ -70,8 +93,9 @@ export default {
         data-bs-parent="#booking-accordion"
       >
         <div class="accordion-body">
-          <AvailabilityCheckForm @checked-availability="handleAvailabilityData" />
-
+          <AvailabilityCheckForm
+            @checked-availability="handleAvailabilityData"
+          />
         </div>
       </div>
     </div>
@@ -95,19 +119,24 @@ export default {
         data-bs-parent="#booking-accordion"
       >
         <div class="accordion-body">
-          <RoomSelection :data=sendDataToRoomSelection() />
+          <RoomSelection
+            :data="sendDataToRoomSelection()"
+            @selected-room="handleRoomSelectionData"
+          />
         </div>
       </div>
     </div>
     <div class="accordion-item">
       <h2 class="accordion-header">
         <button
+          ref="contactDataFormButton"
           class="accordion-button collapsed"
           type="button"
           data-bs-toggle="collapse"
           data-bs-target="#collapseContactData"
           aria-expanded="false"
           aria-controls="collapseContactData"
+          :disabled="!isValidRoomSelectionForm"
         >
           3. Kontaktdaten eingeben
         </button>
