@@ -1,6 +1,70 @@
 <script>
+import AvailabilityCheckForm from "../components/booking/AvailabilityCheckForm.vue";
+import RoomSelection from "../components/booking/RoomSelection.vue";
+
 export default {
   name: "BookingView",
+  components: { AvailabilityCheckForm, RoomSelection },
+  props: {},
+  data() {
+    return {
+      dateFrom: "",
+      dateTo: "",
+      numberOfPersons: 2,
+      availableRooms: [],
+      selectedRoomId: null,
+      isValidRoomSelection: false,
+    };
+  },
+
+  methods: {
+    /*
+      set the data received from AvailableCheckForm 
+      and open the accordions RoomSelection item
+    */
+    handleAvailabilityData(data) {
+      this.dateFrom = data.dateFrom;
+      this.dateTo = data.dateTo;
+      this.numberOfPersons = data.numberOfPersons;
+      this.availableRooms = data.availableRooms;
+      this.$nextTick(() => {
+        this.$refs.RoomSelectionButton.click();
+      });
+    },
+    /*
+      set the data received from RoomSelection 
+      and open the accordions next item
+    */
+    handleRoomSelectionData(data) {
+      this.selectedRoomId = data.selectedRoomId;
+      this.isValidRoomSelection = data.isValidRoomSelection;
+      console.log(this.isValidRoomSelection);
+      this.$nextTick(() => {
+        this.$refs.contactDataFormButton.click();
+      });
+    },
+    /*
+      create a data object which will be passed to the RoomSelection component 
+    */
+    sendDataToRoomSelection() {
+      let data = {
+        dateFrom: this.dateFrom,
+        dateTo: this.dateTo,
+        numberOfPersons: this.numberOfPersons,
+        availableRooms: this.availableRooms,
+      };
+      return data;
+    },
+  },
+
+  computed: {
+    /*
+      check if there is a room selected
+    */
+    isValidRoomSelectionForm() {
+      return this.isValidRoomSelection;
+    },
+  },
 };
 </script>
 
@@ -16,75 +80,69 @@ export default {
           class="accordion-button collapsed"
           type="button"
           data-bs-toggle="collapse"
-          data-bs-target="#collapseOne"
+          data-bs-target="#collapseAvailabilityCheck"
           aria-expanded="false"
-          aria-controls="collapseOne"
+          aria-controls="collapseAvailabilityCheck"
         >
           1. Verfügbarkeit prüfen
         </button>
       </h2>
       <div
-        id="collapseOne"
-        class="accordion-collapse collapse"
+        id="collapseAvailabilityCheck"
+        class="accordion-collapse collapse show"
         data-bs-parent="#booking-accordion"
       >
         <div class="accordion-body">
-          <strong>This is the first item's accordion body.</strong> It is shown
-          by default, until the collapse plugin adds the appropriate classes
-          that we use to style each element. These classes control the overall
-          appearance, as well as the showing and hiding via CSS transitions. You
-          can modify any of this with custom CSS or overriding our default
-          variables. It's also worth noting that just about any HTML can go
-          within the <code>.accordion-body</code>, though the transition does
-          limit overflow.
+          <AvailabilityCheckForm
+            @checked-availability="handleAvailabilityData"
+          />
         </div>
       </div>
     </div>
     <div class="accordion-item">
       <h2 class="accordion-header">
         <button
+          ref="RoomSelectionButton"
           class="accordion-button collapsed"
           type="button"
           data-bs-toggle="collapse"
-          data-bs-target="#collapseTwo"
+          data-bs-target="#collapseRoomSelection"
           aria-expanded="false"
-          aria-controls="collapseTwo"
+          aria-controls="collapseRoomSelection"
         >
-        2. Zimmer auswählen
+          2. Zimmer auswählen
         </button>
       </h2>
       <div
-        id="collapseTwo"
+        id="collapseRoomSelection"
         class="accordion-collapse collapse"
         data-bs-parent="#booking-accordion"
       >
         <div class="accordion-body">
-          <strong>This is the second item's accordion body.</strong> It is
-          hidden by default, until the collapse plugin adds the appropriate
-          classes that we use to style each element. These classes control the
-          overall appearance, as well as the showing and hiding via CSS
-          transitions. You can modify any of this with custom CSS or overriding
-          our default variables. It's also worth noting that just about any HTML
-          can go within the <code>.accordion-body</code>, though the transition
-          does limit overflow.
+          <RoomSelection
+            :data="sendDataToRoomSelection()"
+            @selected-room="handleRoomSelectionData"
+          />
         </div>
       </div>
     </div>
     <div class="accordion-item">
       <h2 class="accordion-header">
         <button
+          ref="contactDataFormButton"
           class="accordion-button collapsed"
           type="button"
           data-bs-toggle="collapse"
-          data-bs-target="#collapseThree"
+          data-bs-target="#collapseContactData"
           aria-expanded="false"
-          aria-controls="collapseThree"
+          aria-controls="collapseContactData"
+          :disabled="!isValidRoomSelectionForm"
         >
           3. Kontaktdaten eingeben
         </button>
       </h2>
       <div
-        id="collapseThree"
+        id="collapseContactData"
         class="accordion-collapse collapse"
         data-bs-parent="#booking-accordion"
       >
@@ -106,15 +164,15 @@ export default {
           class="accordion-button collapsed"
           type="button"
           data-bs-toggle="collapse"
-          data-bs-target="#collapseFour"
+          data-bs-target="#collapseFinishBooking"
           aria-expanded="false"
-          aria-controls="collapseFour"
+          aria-controls="collapseFinishBooking"
         >
           4. Buchung abschließen
         </button>
       </h2>
       <div
-        id="collapseFour"
+        id="collapseFinishBooking"
         class="accordion-collapse collapse"
         data-bs-parent="#booking-accordion"
       >
