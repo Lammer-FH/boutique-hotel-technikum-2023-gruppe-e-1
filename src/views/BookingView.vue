@@ -57,7 +57,6 @@ export default {
       this.emailAdress = personalData.emailAdress;
       this.emailAdressConfirm = personalData.emailAdressConfirm;
       this.breakfast = personalData.breakfast;
-      console.log("handlePersonalData done");
       this.$nextTick(() => {
         this.$refs.confirmBookingButton.click();
       });
@@ -78,7 +77,7 @@ export default {
 
     // comments
     sendDataToConfirmBooking() {
-      let personalData = {
+      let bookingData = {
         firstName: this.firstName,
         lastName: this.lastName,
         emailAdress: this.emailAdress,
@@ -88,7 +87,7 @@ export default {
         dateTo: this.dateTo,
         numberOfPersons: this.numberOfPersons,
       };
-      return personalData;
+      return bookingData;
     },
   },
 
@@ -206,7 +205,10 @@ export default {
           data-bs-parent="#booking-accordion"
       >
         <div class="accordion-body">
-          <ConfirmBooking :personalData="sendDataToConfirmBooking()"/>
+          <ConfirmBooking
+              :booking-data="sendDataToConfirmBooking()"
+
+          />
         </div>
       </div>
     </div>

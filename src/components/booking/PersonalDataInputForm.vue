@@ -17,33 +17,7 @@ export default {
 
   computed: {},
 
-  watch: {
-    // debuging
-    breakfast() {
-      console.log(this.breakfast);
-    },
-  },
-
   methods: {
-    // debuging
-    /*  clickTest() {
-      let personalData = {
-        firstName: this.firstName,
-        lastName: this.lastName,
-        emailAdress: this.emailAdress,
-        emailAdressConfirm: this.emailAdressConfirm,
-        breakfast: this.breakfast,
-      };
-      console.log(
-        this.firstName,
-        this.lastName,
-        this.emailAdress,
-        this.emailAdressConfirm,
-        this.breakfast
-      );
-      console.log(personalData);
-    },
-    */
 
     continueToConfirmBooking() {
       let personalData = {
@@ -57,6 +31,12 @@ export default {
     },
   },
 };
+//ToDo
+// inputs checken
+// email checken
+// email confirmation checken
+// alle felder erforderlich
+
 </script>
 
 <template>
@@ -71,7 +51,10 @@ export default {
   </div>
   <div class="mb-3">
     <label for="lastName" class="form-label">Nachname:</label>
-    <input type="text" class="form-control" id="lastName" v-model="lastName" />
+    <input type="text"
+           class="form-control"
+           id="lastName"
+           v-model="lastName"/>
   </div>
 
   <div class="mb-3">
@@ -101,11 +84,11 @@ export default {
     <div>
       <b-form-group>
         <b-form-radio v-model="breakfast" name="breakfast" value="true"
-        >Ja</b-form-radio
-        >
+        >Ja
+        </b-form-radio>
         <b-form-radio v-model="breakfast" name="breakfast" value="false"
-        >Nein</b-form-radio
-        >
+        >Nein
+        </b-form-radio>
       </b-form-group>
     </div>
   </div>
