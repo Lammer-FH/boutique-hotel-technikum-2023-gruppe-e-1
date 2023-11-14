@@ -65,7 +65,7 @@ export default {
           .post("https://boutique-hotel.helmuth-lammer.at/api/v1/room/"
               + this.bookingData.selectedRoomId +"/from/"
               + this.bookingData.dateFrom + "/to/"
-              + this.bookingData.dateTo , testdata)
+              + this.bookingData.dateTo , data)
           .then((response) => { console.log(response) })
           .catch((error) => { console.error("There was an error", error) })
 
