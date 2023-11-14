@@ -72,10 +72,8 @@ export default {
   },
 };
 //ToDo
-// inputs checken
-// email checken
-// email confirmation checken
-// alle felder erforderlich
+// frühstück pre ausgewählt
+// warnings besser machen
 
 </script>
 

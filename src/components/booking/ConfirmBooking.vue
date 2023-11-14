@@ -12,12 +12,13 @@ export default {
       dateTo: "",
       numberOfPersons: 2,
       availableRooms: [],
+      selectedRoomId: null,
+      isValidRoomSelection: false,
       firstName: "",
       lastName: "",
       emailAdress: "",
       emailAdressConfirm: "",
       breakfast: true,
-      testDaten: []
     };
   },
 
@@ -25,15 +26,49 @@ export default {
     book() {
       //ToDo
       // buchungsid übernehmen
+      /*
+      firstName: this.firstName,
+          lastName: this.lastName,
+          emailAdress: this.emailAdress,
+          emailAdressConfirm: this.emailAdressConfirm,
+          breakfast: this.breakfast,
+          dateFrom: this.dateFrom,
+          dateTo: this.dateTo,
+          numberOfPersons: this.numberOfPersons,
+*/
+      /*
+      this.firstName: this.bookingData.firstName,
+          this.lastName: this.bookingData.lastName,
+          this.emailAdress: this.bookingData.emailAdress,
+*/
 
-/*
+      let data = {
+        "firstname": this.bookingData.firstName,
+        "lastname": this.bookingData.lastName,
+        "email": this.bookingData.emailAdress,
+        "birthdate": "2000-10-10"
+      }
+
+      let testdata = {
+        "firstname": "Franz",
+        "lastname": "Xaver",
+        "email": "franz@example.com",
+        "birthdate": "2000-10-10"
+      }
+
+
+      console.log("Booking Button gedrückt")
+      console.log(data)
+      console.log(testdata)
+
       axios
-          .post("https://boutique-hotel.helmuth-lammer.at/api/v1/room/2/from/2026-11-10/to/2026-11-11", )
+          .post("https://boutique-hotel.helmuth-lammer.at/api/v1/room/"
+              + this.bookingData.selectedRoomId +"/from/"
+              + this.bookingData.dateFrom + "/to/"
+              + this.bookingData.dateTo , testdata)
           .then((response) => { console.log(response) })
           .catch((error) => { console.error("There was an error", error) })
 
- */
-      console.log("Booking Button gedrückt")
     },
 
   },

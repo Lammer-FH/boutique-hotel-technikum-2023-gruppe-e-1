@@ -85,6 +85,7 @@ export default {
         breakfast: this.breakfast,
         dateFrom: this.dateFrom,
         dateTo: this.dateTo,
+        selectedRoomId: this.selectedRoomId,
         numberOfPersons: this.numberOfPersons,
       };
       return bookingData;
