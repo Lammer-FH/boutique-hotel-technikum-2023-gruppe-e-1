@@ -24,6 +24,8 @@ export default {
     };
   },
 
+
+
   methods: {
     /*
       set the data received from AvailableCheckForm 

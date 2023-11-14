@@ -48,7 +48,7 @@ export default {
         "email": this.bookingData.emailAdress,
         "birthdate": "2000-10-10"
       }
-
+/*
       let testdata = {
         "firstname": "Franz",
         "lastname": "Xaver",
@@ -60,7 +60,7 @@ export default {
       console.log("Booking Button gedrückt")
       console.log(data)
       console.log(testdata)
-
+*/
       axios
           .post("https://boutique-hotel.helmuth-lammer.at/api/v1/room/"
               + this.bookingData.selectedRoomId +"/from/"
