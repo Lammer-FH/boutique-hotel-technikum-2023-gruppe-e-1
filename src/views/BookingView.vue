@@ -1,10 +1,12 @@
 <script>
 import AvailabilityCheckForm from "../components/booking/AvailabilityCheckForm.vue";
 import RoomSelection from "../components/booking/RoomSelection.vue";
+import PersonalDataInputForm from "@/components/booking/PersonalDataInputForm.vue";
+import ConfirmBooking from "@/components/booking/ConfirmBooking.vue";
 
 export default {
   name: "BookingView",
-  components: { AvailabilityCheckForm, RoomSelection },
+  components: {AvailabilityCheckForm, RoomSelection, PersonalDataInputForm, ConfirmBooking},
   props: {},
   data() {
     return {
@@ -14,6 +16,11 @@ export default {
       availableRooms: [],
       selectedRoomId: null,
       isValidRoomSelection: false,
+      firstName: "",
+      lastName: "",
+      emailAdress: "",
+      emailAdressConfirm: "",
+      breakfast: true,
     };
   },
 
@@ -43,6 +50,19 @@ export default {
         this.$refs.contactDataFormButton.click();
       });
     },
+    // Comments
+    handlePersonalData(personalData) {
+      this.firstName = personalData.firstName;
+      this.lastName = personalData.lastName;
+      this.emailAdress = personalData.emailAdress;
+      this.emailAdressConfirm = personalData.emailAdressConfirm;
+      this.breakfast = personalData.breakfast;
+      console.log("handlePersonalData done");
+      this.$nextTick(() => {
+        this.$refs.confirmBookingButton.click();
+      });
+
+    },
     /*
       create a data object which will be passed to the RoomSelection component 
     */
@@ -54,6 +74,21 @@ export default {
         availableRooms: this.availableRooms,
       };
       return data;
+    },
+
+    // comments
+    sendDataToConfirmBooking() {
+      let personalData = {
+        firstName: this.firstName,
+        lastName: this.lastName,
+        emailAdress: this.emailAdress,
+        emailAdressConfirm: this.emailAdressConfirm,
+        breakfast: this.breakfast,
+        dateFrom: this.dateFrom,
+        dateTo: this.dateTo,
+        numberOfPersons: this.numberOfPersons,
+      };
+      return personalData;
     },
   },
 
@@ -77,24 +112,24 @@ export default {
     <div class="accordion-item">
       <h2 class="accordion-header">
         <button
-          class="accordion-button collapsed"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#collapseAvailabilityCheck"
-          aria-expanded="false"
-          aria-controls="collapseAvailabilityCheck"
+            class="accordion-button collapsed"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#collapseAvailabilityCheck"
+            aria-expanded="false"
+            aria-controls="collapseAvailabilityCheck"
         >
           1. Verfügbarkeit prüfen
         </button>
       </h2>
       <div
-        id="collapseAvailabilityCheck"
-        class="accordion-collapse collapse show"
-        data-bs-parent="#booking-accordion"
+          id="collapseAvailabilityCheck"
+          class="accordion-collapse collapse show"
+          data-bs-parent="#booking-accordion"
       >
         <div class="accordion-body">
           <AvailabilityCheckForm
-            @checked-availability="handleAvailabilityData"
+              @checked-availability="handleAvailabilityData"
           />
         </div>
       </div>
@@ -102,26 +137,26 @@ export default {
     <div class="accordion-item">
       <h2 class="accordion-header">
         <button
-          ref="RoomSelectionButton"
-          class="accordion-button collapsed"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#collapseRoomSelection"
-          aria-expanded="false"
-          aria-controls="collapseRoomSelection"
+            ref="RoomSelectionButton"
+            class="accordion-button collapsed"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#collapseRoomSelection"
+            aria-expanded="false"
+            aria-controls="collapseRoomSelection"
         >
           2. Zimmer auswählen
         </button>
       </h2>
       <div
-        id="collapseRoomSelection"
-        class="accordion-collapse collapse"
-        data-bs-parent="#booking-accordion"
+          id="collapseRoomSelection"
+          class="accordion-collapse collapse"
+          data-bs-parent="#booking-accordion"
       >
         <div class="accordion-body">
           <RoomSelection
-            :data="sendDataToRoomSelection()"
-            @selected-room="handleRoomSelectionData"
+              :data="sendDataToRoomSelection()"
+              @selected-room="handleRoomSelectionData"
           />
         </div>
       </div>
@@ -129,62 +164,49 @@ export default {
     <div class="accordion-item">
       <h2 class="accordion-header">
         <button
-          ref="contactDataFormButton"
-          class="accordion-button collapsed"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#collapseContactData"
-          aria-expanded="false"
-          aria-controls="collapseContactData"
-          :disabled="!isValidRoomSelectionForm"
+            ref="contactDataFormButton"
+            class="accordion-button collapsed"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#collapseContactData"
+            aria-expanded="false"
+            aria-controls="collapseContactData"
+            :disabled="!isValidRoomSelectionForm"
         >
           3. Kontaktdaten eingeben
         </button>
       </h2>
       <div
-        id="collapseContactData"
-        class="accordion-collapse collapse"
-        data-bs-parent="#booking-accordion"
+          id="collapseContactData"
+          class="accordion-collapse collapse"
+          data-bs-parent="#booking-accordion"
       >
         <div class="accordion-body">
-          <strong>This is the third item's accordion body.</strong> It is hidden
-          by default, until the collapse plugin adds the appropriate classes
-          that we use to style each element. These classes control the overall
-          appearance, as well as the showing and hiding via CSS transitions. You
-          can modify any of this with custom CSS or overriding our default
-          variables. It's also worth noting that just about any HTML can go
-          within the <code>.accordion-body</code>, though the transition does
-          limit overflow.
+          <PersonalDataInputForm @personalData="handlePersonalData"/>
         </div>
       </div>
     </div>
     <div class="accordion-item">
       <h2 class="accordion-header">
         <button
-          class="accordion-button collapsed"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#collapseFinishBooking"
-          aria-expanded="false"
-          aria-controls="collapseFinishBooking"
+            ref="confirmBookingButton"
+            class="accordion-button collapsed"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#collapseFinishBooking"
+            aria-expanded="false"
+            aria-controls="collapseFinishBooking"
         >
           4. Buchung abschließen
         </button>
       </h2>
       <div
-        id="collapseFinishBooking"
-        class="accordion-collapse collapse"
-        data-bs-parent="#booking-accordion"
+          id="collapseFinishBooking"
+          class="accordion-collapse collapse"
+          data-bs-parent="#booking-accordion"
       >
         <div class="accordion-body">
-          <strong>This is the third item's accordion body.</strong> It is hidden
-          by default, until the collapse plugin adds the appropriate classes
-          that we use to style each element. These classes control the overall
-          appearance, as well as the showing and hiding via CSS transitions. You
-          can modify any of this with custom CSS or overriding our default
-          variables. It's also worth noting that just about any HTML can go
-          within the <code>.accordion-body</code>, though the transition does
-          limit overflow.
+          <ConfirmBooking :personalData="sendDataToConfirmBooking()"/>
         </div>
       </div>
     </div>
