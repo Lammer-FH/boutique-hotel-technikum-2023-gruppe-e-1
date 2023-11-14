@@ -1,34 +1,74 @@
 <script>
-import axios from "axios";
+import {useVuelidate} from '@vuelidate/core'
+import {required, email, sameAs} from '@vuelidate/validators'
+import {reactive, computed} from "vue";
+
 
 export default {
   name: "PersonalDataInputForm",
   props: {},
-  data() {
-    return {
+
+  // initiate Vuelidate
+  setup() {
+    const state = reactive({
       firstName: "",
       lastName: "",
       emailAdress: "",
       emailAdressConfirm: "",
       breakfast: true,
+    })
+
+    const rules = computed(() => {
+      return {
+        firstName: {required},
+        lastName: {required},
+        emailAdress: {required, email},
+        emailAdressConfirm: {required, email, sameAs: sameAs(state.emailAdress)},
+        breakfast: {required},
+      }
+    })
+
+    const v$ = useVuelidate(rules, state)
+
+    return {
+      state,
+      v$
+    }
+  },
+
+
+  data() {
+    return {
       personalData: [],
     };
   },
 
-  computed: {},
-
   methods: {
 
     continueToConfirmBooking() {
-      let personalData = {
-        firstName: this.firstName,
-        lastName: this.lastName,
-        emailAdress: this.emailAdress,
-        emailAdressConfirm: this.emailAdressConfirm,
-        breakfast: this.breakfast,
-      };
-      this.$emit("personalData", personalData);
-    },
+      this.v$.$validate()
+      if (!this.v$.$error) {
+        let personalData = {
+          firstName: this.state.firstName,
+          lastName: this.state.lastName,
+          emailAdress: this.state.emailAdress,
+          emailAdressConfirm: this.state.emailAdressConfirm,
+          breakfast: this.state.breakfast,
+        };
+        this.$emit("personalData", personalData);
+        /*
+       let personalData = {
+         firstName: this.firstName,
+         lastName: this.lastName,
+         emailAdress: this.emailAdress,
+         emailAdressConfirm: this.emailAdressConfirm,
+         breakfast: this.breakfast,
+       };
+       this.$emit("personalData", personalData);
+     */
+
+      }
+      },
   },
 };
 //ToDo
@@ -40,21 +80,28 @@ export default {
 </script>
 
 <template>
+
   <div class="mb-3">
     <label for="firstName" class="form-label">Vorname:</label>
     <input
         type="text"
         class="form-control"
         id="firstName"
-        v-model="firstName"
+        v-model="state.firstName"
     />
+    <span v-if="v$.firstName.$error">
+      {{ v$.firstName.$errors[0].$message }}
+    </span>
   </div>
   <div class="mb-3">
     <label for="lastName" class="form-label">Nachname:</label>
     <input type="text"
            class="form-control"
            id="lastName"
-           v-model="lastName"/>
+           v-model="state.lastName"/>
+    <span v-if="v$.lastName.$error">
+      {{ v$.lastName.$errors[0].$message }}
+    </span>
   </div>
 
   <div class="mb-3">
@@ -63,8 +110,11 @@ export default {
         type="text"
         class="form-control"
         id="emailAdress"
-        v-model="emailAdress"
+        v-model="state.emailAdress"
     />
+    <span v-if="v$.emailAdress.$error">
+      {{ v$.emailAdress.$errors[0].$message }}
+    </span>
   </div>
 
   <div class="mb-3">
@@ -75,18 +125,21 @@ export default {
         type="text"
         class="form-control"
         id="emailAdressConfirm"
-        v-model="emailAdressConfirm"
+        v-model="state.emailAdressConfirm"
     />
+    <span v-if="v$.emailAdressConfirm.$error">
+      {{ v$.emailAdressConfirm.$errors[0].$message }}
+    </span>
   </div>
 
   <div class="mb-3">
     <label for="breakfast" class="form-label">Frühstück:</label>
     <div>
       <b-form-group>
-        <b-form-radio v-model="breakfast" name="breakfast" value="true"
+        <b-form-radio v-model="state.breakfast" name="breakfast" value="true"
         >Ja
         </b-form-radio>
-        <b-form-radio v-model="breakfast" name="breakfast" value="false"
+        <b-form-radio v-model="state.breakfast" name="breakfast" value="false"
         >Nein
         </b-form-radio>
       </b-form-group>
@@ -102,6 +155,7 @@ export default {
       Buchen
     </button>
   </div>
+
 </template>
 
 <style scoped></style>
