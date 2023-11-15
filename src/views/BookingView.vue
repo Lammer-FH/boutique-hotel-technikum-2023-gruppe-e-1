@@ -21,6 +21,7 @@ export default {
       emailAdress: "",
       emailAdressConfirm: "",
       breakfast: "",
+      birthday: ""
     };
   },
 
@@ -73,6 +74,7 @@ export default {
       this.emailAdress = personalData.emailAdress;
       this.emailAdressConfirm = personalData.emailAdressConfirm;
       this.breakfast = personalData.breakfast;
+      this.birthday = personalData.birthday;
       this.$nextTick(() => {
         this.$refs.confirmBookingButton.click();
       });
@@ -98,6 +100,7 @@ export default {
         emailAdress: this.emailAdress,
         emailAdressConfirm: this.emailAdressConfirm,
         breakfast: this.breakfast,
+        birthday: this.birthday,
         dateFrom: this.dateFrom,
         dateTo: this.dateTo,
         selectedRoomId: this.selectedRoomId,

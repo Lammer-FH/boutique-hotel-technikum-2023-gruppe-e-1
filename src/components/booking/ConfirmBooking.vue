@@ -19,6 +19,7 @@ export default {
       emailAdress: "",
       emailAdressConfirm: "",
       breakfast: "",
+      birthday: ""
     };
   },
 
@@ -26,7 +27,6 @@ export default {
     book() {
       //ToDo
       // buchungsid übernehmen
-      // birthdate
       // confirmation modal
       // stores axios
 
@@ -35,8 +35,10 @@ export default {
         "firstname": this.bookingData.firstName,
         "lastname": this.bookingData.lastName,
         "email": this.bookingData.emailAdress,
-        "birthdate": "2000-10-10"
+        "birthdate": this.bookingData.birthday,
       }
+
+      console.log(data)
 
       axios
           .post("https://boutique-hotel.helmuth-lammer.at/api/v1/room/"
@@ -71,6 +73,10 @@ export default {
       <BRow>
         <BCol> Name:</BCol>
         <BCol> {{ bookingData.firstName }} {{ bookingData.lastName }} </BCol>
+      </BRow>
+      <BRow>
+        <BCol> Geburtsdatum:</BCol>
+        <BCol> {{ bookingData.birthday }} </BCol>
       </BRow>
       <BRow>
         <BCol> eMail Adresse:</BCol>

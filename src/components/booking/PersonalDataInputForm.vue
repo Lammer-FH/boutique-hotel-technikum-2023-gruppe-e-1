@@ -18,6 +18,7 @@ export default {
       emailAdress: "",
       emailAdressConfirm: "",
       breakfast: "Ja",
+      birthday: "",
     })
 
     const rules = computed(() => {
@@ -27,6 +28,7 @@ export default {
         emailAdress: {required, email},
         emailAdressConfirm: {required, email, sameAs: sameAs(state.emailAdress)},
         breakfast: {required},
+        birthday: {required},
       }
     })
 
@@ -41,6 +43,7 @@ export default {
   methods: {
 
     continueToConfirmBooking() {
+      console.log(this.state.birthday)
       this.v$.$validate()
       if (!this.v$.$error) {
         let personalData = {
@@ -49,6 +52,7 @@ export default {
           emailAdress: this.state.emailAdress,
           emailAdressConfirm: this.state.emailAdressConfirm,
           breakfast: this.state.breakfast,
+          birthday: this.state.birthday,
         };
         this.$emit("personalData", personalData);
       }
@@ -82,6 +86,19 @@ export default {
            v-model="state.lastName"/>
     <span class="text-danger" v-if="v$.lastName.$error">
       Feld darf nicht leer sein!
+    </span>
+  </div>
+
+  <div class="mb-3">
+    <label for="birthday" class="form-label">Geburtstag:</label>
+    <input
+        type="date"
+        class="form-control"
+        id="birthday"
+        v-model="state.birthday"
+    />
+    <span class="text-danger" v-if="v$.birthday.$error">
+      Bitte Datum auswählen!
     </span>
   </div>
 
