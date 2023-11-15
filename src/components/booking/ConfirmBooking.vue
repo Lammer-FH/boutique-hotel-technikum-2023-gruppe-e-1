@@ -1,5 +1,6 @@
 <script>
-import axios from "axios";
+
+import {useBookingApiStore} from "@/stores/bookingApiStore";
 
 export default {
   name: "ConfirmBooking",
@@ -21,32 +22,23 @@ export default {
       breakfast: "",
       birthday: "",
       bookingID: "",
+      bookingApi: useBookingApiStore(),
     };
   },
 
+
   methods: {
-    book() {
+     book() {
+       this.bookingApi.postApi(this.bookingData)
 
-      let data = {
-        "firstname": this.bookingData.firstName,
-        "lastname": this.bookingData.lastName,
-        "email": this.bookingData.emailAdress,
-        "birthdate": this.bookingData.birthday,
-      }
-
-      axios
-          .post("https://boutique-hotel.helmuth-lammer.at/api/v1/room/"
-              + this.bookingData.selectedRoomId + "/from/"
-              + this.bookingData.dateFrom + "/to/"
-              + this.bookingData.dateTo, data)
-          .then((response) => {
-            this.bookingID = response.data.id
-            this.$refs['confirm-booking'].show()
-          })
-          .catch((error) => {
-            console.error("There was an error", error)
-            this.$refs['failed-booking'].show()
-          })
+       // Timeout to garuantee the data from the are ready
+       setTimeout(() => {
+         if (this.bookingApi.confirmBooking) {
+           this.$refs['confirm-booking'].show();
+         } else {
+           this.$refs['failed-booking'].show();
+         }
+       }, 500);
     },
 
   },
@@ -92,7 +84,7 @@ export default {
   <div>
     <b-modal ref="confirm-booking" id="modal-1" title="Buchungsbestätigung">
       <p class="my-4">Buchung erfolgreich durchgeführt.</p>
-      <p class="my-4">Ihre Buchungs ID: {{ this.bookingID }}</p>
+      <p class="my-4">Ihre Buchungs ID: {{ this.bookingApi.bookingID }}</p>
     </b-modal>
   </div>
 

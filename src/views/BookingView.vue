@@ -48,7 +48,6 @@ export default {
     handleRoomSelectionData(data) {
       this.selectedRoomId = data.selectedRoomId;
       this.isValidRoomSelection = data.isValidRoomSelection;
-      console.log(this.isValidRoomSelection);
       this.$nextTick(() => {
         this.$refs.contactDataFormButton.click();
       });
