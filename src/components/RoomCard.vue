@@ -1,8 +1,25 @@
 <script>
+import {ref} from "vue";
+
 export default {
   name: "RoomCard",
   props: ["room"],
 
+  data() {
+    return {
+      imageSources: [
+        `src/assets/images/rooms/${this.room.id}.jpg`,
+
+      ],
+      currentImageIndex: ref(0)
+    }
+  },
+
+  computed  : {
+    imagePath() {
+      return this.imageSources[this.currentImageIndex];
+    }
+  }
 }
 </script>
 
@@ -12,7 +29,7 @@ export default {
 
   <RouterLink :to="'/roomDetails/' + this.room.id">
     <div class="card" style="width: 18rem;">
-      <img src="../assets/images/rooms/1.jpg" class="card-img-top" alt="...">
+      <img :src=imagePath class="card-img-top" alt="...">
       <div class="card-body">
         <h5 class="card-title">{{ this.room.roomsName }}</h5>
         <p class="card-text"> aktueller Preis: <b>{{ this.room.pricePerNight }}</b></p>
