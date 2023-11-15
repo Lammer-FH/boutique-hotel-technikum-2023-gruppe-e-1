@@ -8,6 +8,8 @@ export default {
   name: "PersonalDataInputForm",
   props: {},
 
+  emits: ["personalData"],
+
   // initiate Vuelidate
   setup() {
     const state = reactive({
@@ -34,13 +36,6 @@ export default {
       state,
       v$
     }
-  },
-
-
-  data() {
-    return {
-      personalData: [],
-    };
   },
 
   methods: {

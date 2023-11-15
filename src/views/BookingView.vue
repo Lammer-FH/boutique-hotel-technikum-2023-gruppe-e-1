@@ -52,6 +52,20 @@ export default {
         this.$refs.contactDataFormButton.click();
       });
     },
+
+    /*
+      create a data object which will be passed to the RoomSelection component 
+    */
+    sendDataToRoomSelection() {
+      let data = {
+        dateFrom: this.dateFrom,
+        dateTo: this.dateTo,
+        numberOfPersons: this.numberOfPersons,
+        availableRooms: this.availableRooms,
+      };
+      return data;
+    },
+
     // Comments
     handlePersonalData(personalData) {
       this.firstName = personalData.firstName;
@@ -64,17 +78,16 @@ export default {
       });
 
     },
+
+  },
+
+
+  computed: {
     /*
-      create a data object which will be passed to the RoomSelection component 
+      check if there is a room selected
     */
-    sendDataToRoomSelection() {
-      let data = {
-        dateFrom: this.dateFrom,
-        dateTo: this.dateTo,
-        numberOfPersons: this.numberOfPersons,
-        availableRooms: this.availableRooms,
-      };
-      return data;
+    isValidRoomSelectionForm() {
+      return this.isValidRoomSelection;
     },
 
     // comments
@@ -92,16 +105,8 @@ export default {
       };
       return bookingData;
     },
-  },
-// ToDo
-  // methoden in computed wechseln
-  computed: {
-    /*
-      check if there is a room selected
-    */
-    isValidRoomSelectionForm() {
-      return this.isValidRoomSelection;
-    },
+
+
   },
 };
 </script>
@@ -210,7 +215,7 @@ export default {
       >
         <div class="accordion-body">
           <ConfirmBooking
-              :booking-data="sendDataToConfirmBooking()"
+              :booking-data="sendDataToConfirmBooking"
 
           />
         </div>
