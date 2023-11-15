@@ -17,7 +17,7 @@ export default {
       lastName: "",
       emailAdress: "",
       emailAdressConfirm: "",
-      breakfast: true,
+      breakfast: "Ja",
     })
 
     const rules = computed(() => {
@@ -51,24 +51,11 @@ export default {
           breakfast: this.state.breakfast,
         };
         this.$emit("personalData", personalData);
-        /*
-       let personalData = {
-         firstName: this.firstName,
-         lastName: this.lastName,
-         emailAdress: this.emailAdress,
-         emailAdressConfirm: this.emailAdressConfirm,
-         breakfast: this.breakfast,
-       };
-       this.$emit("personalData", personalData);
-     */
-
       }
-      },
+    },
   },
 };
 //ToDo
-// frühstück pre ausgewählt
-// warnings besser machen
 // birthdate
 
 </script>
@@ -83,8 +70,8 @@ export default {
         id="firstName"
         v-model="state.firstName"
     />
-    <span v-if="v$.firstName.$error">
-      {{ v$.firstName.$errors[0].$message }}
+    <span class="text-danger" v-if="v$.firstName.$error">
+      Feld darf nicht leer sein!
     </span>
   </div>
   <div class="mb-3">
@@ -93,8 +80,8 @@ export default {
            class="form-control"
            id="lastName"
            v-model="state.lastName"/>
-    <span v-if="v$.lastName.$error">
-      {{ v$.lastName.$errors[0].$message }}
+    <span class="text-danger" v-if="v$.lastName.$error">
+      Feld darf nicht leer sein!
     </span>
   </div>
 
@@ -106,8 +93,8 @@ export default {
         id="emailAdress"
         v-model="state.emailAdress"
     />
-    <span v-if="v$.emailAdress.$error">
-      {{ v$.emailAdress.$errors[0].$message }}
+    <span class="text-danger" v-if="v$.emailAdress.$error">
+      Feld darf nicht leer sein! / Ungültige eMail Adresse!
     </span>
   </div>
 
@@ -121,8 +108,8 @@ export default {
         id="emailAdressConfirm"
         v-model="state.emailAdressConfirm"
     />
-    <span v-if="v$.emailAdressConfirm.$error">
-      {{ v$.emailAdressConfirm.$errors[0].$message }}
+    <span class="text-danger" v-if="v$.emailAdressConfirm.$error">
+      Ungültige eMail Adresse! / eMail Adressen stimmen nicht überein!
     </span>
   </div>
 
@@ -130,10 +117,10 @@ export default {
     <label for="breakfast" class="form-label">Frühstück:</label>
     <div>
       <b-form-group>
-        <b-form-radio v-model="state.breakfast" name="breakfast" value="true"
+        <b-form-radio v-model="state.breakfast" name="breakfast" value="Ja"
         >Ja
         </b-form-radio>
-        <b-form-radio v-model="state.breakfast" name="breakfast" value="false"
+        <b-form-radio v-model="state.breakfast" name="breakfast" value="Nein"
         >Nein
         </b-form-radio>
       </b-form-group>

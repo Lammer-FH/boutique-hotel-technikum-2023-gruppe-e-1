@@ -20,7 +20,7 @@ export default {
       lastName: "",
       emailAdress: "",
       emailAdressConfirm: "",
-      breakfast: true,
+      breakfast: "",
     };
   },
 
