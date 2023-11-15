@@ -66,7 +66,10 @@ export default {
       return data;
     },
 
-    // Comments
+    /*
+      set the data received from PersonalDataInputForm
+      and open the accordions next item
+    */
     handlePersonalData(personalData) {
       this.firstName = personalData.firstName;
       this.lastName = personalData.lastName;
@@ -91,7 +94,9 @@ export default {
       return this.isValidRoomSelection;
     },
 
-    // comments
+    /*
+     create a data object which will be passed to the ConfirmBooking component
+   */
     sendDataToConfirmBooking() {
       let bookingData = {
         firstName: this.firstName,

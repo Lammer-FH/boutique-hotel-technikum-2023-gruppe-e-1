@@ -10,14 +10,13 @@ export const useBookingApiStore = defineStore('bookingApi', {
     }),
 
     actions: {
-        async postApi(bookingData) {
+        postApi(bookingData) {
             let data = {
                 "firstname": bookingData.firstName,
                 "lastname": bookingData.lastName,
                 "email": bookingData.emailAdress,
                 "birthdate": bookingData.birthday,
             }
-
             axios
                 .post(apiUrl + "room/"
                     + bookingData.selectedRoomId + "/from/"
@@ -26,27 +25,11 @@ export const useBookingApiStore = defineStore('bookingApi', {
                 .then((response) => {
                     this.$state.confirmBooking = true
                     this.$state.bookingID = response.data.id
-                    console.log("Success Post Booking")
-/*
-                    this.$state.confirmBooking = true
-                    this.$state.bookingID = response.data.id;
-                    console.log("Success Post Booking");
-                    console.log("Booking:" + this.$state.confirmBooking)
-                    console.log("Booking ID:" + this.$state.bookingID)
-
- */
                 })
                 .catch((error) => {
                     console.error("Error Post Booking")
                     this.$state.confirmBooking = false
                     this.$state.bookingID = 0;
-/*
-                    this.$state.confirmBooking = false
-                    this.$state.bookingID = 0;
-                    console.error("Error Post Booking", error);
-                    console.log("Booking:" + this.$state.confirmBooking)
-                    console.log("Booking ID:" + this.$state.bookingID)
-*/
                 });
         }
     }

@@ -5,42 +5,30 @@ import {useBookingApiStore} from "@/stores/bookingApiStore";
 export default {
   name: "ConfirmBooking",
 
+  // Data from the Parent
   props: ["bookingData"],
 
   data() {
     return {
-      dateFrom: "",
-      dateTo: "",
-      numberOfPersons: 2,
-      availableRooms: [],
-      selectedRoomId: null,
-      isValidRoomSelection: false,
-      firstName: "",
-      lastName: "",
-      emailAdress: "",
-      emailAdressConfirm: "",
-      breakfast: "",
-      birthday: "",
-      bookingID: "",
+      // access bookingApiStore
       bookingApi: useBookingApiStore(),
     };
   },
 
-
   methods: {
-     book() {
-       this.bookingApi.postApi(this.bookingData)
+    // call the Api in the store with the booking Data
+    book() {
+      this.bookingApi.postApi(this.bookingData)
 
-       // Timeout to garuantee the data from the are ready
-       setTimeout(() => {
-         if (this.bookingApi.confirmBooking) {
-           this.$refs['confirm-booking'].show();
-         } else {
-           this.$refs['failed-booking'].show();
-         }
-       }, 500);
+      // Timeout to garuantee the data from the post request are ready
+      setTimeout(() => {
+        if (this.bookingApi.confirmBooking) {
+          this.$refs['confirm-booking'].show();
+        } else {
+          this.$refs['failed-booking'].show();
+        }
+      }, 500);
     },
-
   },
 };
 

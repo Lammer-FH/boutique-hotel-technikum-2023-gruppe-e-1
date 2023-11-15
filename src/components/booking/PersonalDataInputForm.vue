@@ -8,7 +8,7 @@ export default {
   name: "PersonalDataInputForm",
   props: {},
 
-
+// Data for the parent
   emits: ["personalData"],
 
   // initiate Vuelidate
@@ -32,7 +32,6 @@ export default {
         birthday: {required},
       }
     })
-
     const v$ = useVuelidate(rules, state)
 
     return {
@@ -43,8 +42,8 @@ export default {
 
   methods: {
 
+    // on Button click: checks if all required Fields are filled, stores all values int the personalData Object and continues to next Tab
     continueToConfirmBooking() {
-
       this.v$.$validate()
       if (!this.v$.$error) {
         let personalData = {
