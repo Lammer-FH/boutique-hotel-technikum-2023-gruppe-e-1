@@ -15,7 +15,7 @@ export default {
     }
   },
 
-  computed  : {
+  computed: {
     imagePath() {
       return this.imageSources[this.currentImageIndex];
     }
@@ -27,7 +27,7 @@ export default {
 
   <!-- klassisches Bootstrap verwendet, weil mit der Bootstrap-Vue Card das Bild nicht angezeigt wurde -->
 
-  <RouterLink :to="'/roomDetails/' + this.room.id">
+  <RouterLink :to="'/roomDetails/' + room.id">
     <div class="card" style="width: 18rem;">
       <img :src=imagePath class="card-img-top" alt="...">
       <div class="card-body">
