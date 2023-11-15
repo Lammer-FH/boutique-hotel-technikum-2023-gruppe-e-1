@@ -8,6 +8,7 @@ export default {
   name: "PersonalDataInputForm",
   props: {},
 
+
   emits: ["personalData"],
 
   // initiate Vuelidate
@@ -43,7 +44,7 @@ export default {
   methods: {
 
     continueToConfirmBooking() {
-      console.log(this.state.birthday)
+
       this.v$.$validate()
       if (!this.v$.$error) {
         let personalData = {
@@ -59,8 +60,6 @@ export default {
     },
   },
 };
-//ToDo
-// birthdate
 
 </script>
 
@@ -153,6 +152,7 @@ export default {
       Buchen
     </button>
   </div>
+
 
 </template>
 
