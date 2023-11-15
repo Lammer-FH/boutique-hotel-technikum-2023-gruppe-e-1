@@ -26,21 +26,10 @@ export default {
     book() {
       //ToDo
       // buchungsid übernehmen
-      /*
-      firstName: this.firstName,
-          lastName: this.lastName,
-          emailAdress: this.emailAdress,
-          emailAdressConfirm: this.emailAdressConfirm,
-          breakfast: this.breakfast,
-          dateFrom: this.dateFrom,
-          dateTo: this.dateTo,
-          numberOfPersons: this.numberOfPersons,
-*/
-      /*
-      this.firstName: this.bookingData.firstName,
-          this.lastName: this.bookingData.lastName,
-          this.emailAdress: this.bookingData.emailAdress,
-*/
+      // birthdate
+      // confirmation modal
+      // stores axios
+
 
       let data = {
         "firstname": this.bookingData.firstName,
@@ -48,25 +37,13 @@ export default {
         "email": this.bookingData.emailAdress,
         "birthdate": "2000-10-10"
       }
-/*
-      let testdata = {
-        "firstname": "Franz",
-        "lastname": "Xaver",
-        "email": "franz@example.com",
-        "birthdate": "2000-10-10"
-      }
 
-
-      console.log("Booking Button gedrückt")
-      console.log(data)
-      console.log(testdata)
-*/
       axios
           .post("https://boutique-hotel.helmuth-lammer.at/api/v1/room/"
               + this.bookingData.selectedRoomId +"/from/"
               + this.bookingData.dateFrom + "/to/"
               + this.bookingData.dateTo , data)
-          .then((response) => { console.log(response) })
+          .then((response) => { console.log(response.data.id) })
           .catch((error) => { console.error("There was an error", error) })
 
     },

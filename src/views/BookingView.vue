@@ -93,7 +93,8 @@ export default {
       return bookingData;
     },
   },
-
+// ToDo
+  // methoden in computed wechseln
   computed: {
     /*
       check if there is a room selected

@@ -74,6 +74,7 @@ export default {
 //ToDo
 // frühstück pre ausgewählt
 // warnings besser machen
+// birthdate
 
 </script>
 
