@@ -60,24 +60,19 @@ export default {
     // get todays date
     minDateFrom() {
       const today = new Date();
-      const year = today.getFullYear();
-      const month = String(today.getMonth() + 1).padStart(2, "0"); // Adjust for zero-based months
-      const day = String(today.getDate()).padStart(2, "0");
-      return `${year}-${month}-${day}`;
+      return this.dateToString(today);
     },
 
     // get tomorrows date
     minDateTo() {
       const tomorrow = new Date();
       tomorrow.setDate(tomorrow.getDate() + 1);
-      const year = tomorrow.getFullYear();
-      const month = String(tomorrow.getMonth() + 1).padStart(2, "0"); // Adjust for zero-based months
-      const day = String(tomorrow.getDate()).padStart(2, "0");
-      return `${year}-${month}-${day}`;
+      return this.dateToString(tomorrow);
     },
   },
 
   methods: {
+    // convert date to string
     dateToString(date){
       const year = date.getFullYear();
       const month = String(date.getMonth() + 1).padStart(2, "0"); // Adjust for zero-based months
