@@ -35,19 +35,6 @@ export default {
     this.dateTo = `${year}-${month}-${day}`;
   },
 
-  watch: {
-    // check the Availability of the rooms, every time an input changes
-    dateFrom(date) {
-      this.checkAvailability();
-    },
-    dateTo(date) {
-      this.checkAvailability();
-    },
-    numberOfPersons(number) {
-      this.checkAvailability();
-    },
-  },
-
   computed: {
     // get todays date
     minDateFrom() {
@@ -137,6 +124,7 @@ export default {
       with the checked-availability emitter
     */
     continueToRoomSelection() {
+      this.checkAvailability();
       const data = {
         dateFrom: this.dateFrom,
         dateTo: this.dateTo,
