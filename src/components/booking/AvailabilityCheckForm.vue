@@ -4,6 +4,7 @@ import axios from "axios";
 export default {
   name: "AvailabilityCheckForm",
   props: {},
+  emits: ["data"],
   data() {
     return {
       dateFrom: "",

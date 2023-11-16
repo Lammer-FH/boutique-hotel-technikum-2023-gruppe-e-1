@@ -1,6 +1,6 @@
 <script>
 import {useVuelidate} from '@vuelidate/core'
-import {required, email, sameAs} from '@vuelidate/validators'
+import {required, email, sameAs, minValue} from '@vuelidate/validators'
 import {reactive, computed} from "vue";
 
 
@@ -32,20 +32,21 @@ export default {
         emailAdress: {required, email},
         emailAdressConfirm: {required, email, sameAs: sameAs(state.emailAdress)},
         breakfast: {required},
-        birthday: {required},
+        birthday: {required,
+          minValue: value => value <= getMaxDate()},
       }
     })
     const v$ = useVuelidate(rules, state)
 
     /*
-    set current data and max data for the Birthday Data Picker to be at least 18 years in the past.
+    set current data and max data for the Birthday to be at least 18 years in the past.
      */
     function getMaxDate() {
       const currentDate = new Date();
       const minDate = new Date(
           currentDate.getFullYear() - 18,
           currentDate.getMonth(),
-          currentDate.getDate()
+          currentDate.getDate() +1
       );
       return minDate.toISOString().split('T')[0];
     }
@@ -61,6 +62,7 @@ export default {
 
     // on Button click: checks if all required Fields are filled, stores all values int the personalData Object and continues to next Tab
     continueToConfirmBooking() {
+
       this.v$.$validate()
       if (!this.v$.$error) {
         let personalData = {
@@ -75,6 +77,7 @@ export default {
       }
     },
   },
+
 };
 
 </script>
@@ -111,9 +114,10 @@ export default {
         class="form-control"
         id="birthday"
         v-model="state.birthday"
+        :max="getMaxDate()"
     />
     <span class="text-danger" v-if="v$.birthday.$error">
-      Bitte Datum auswählen!
+      Datum muss mindestens 18 Jahre in der Vergangenheit liegen!
     </span>
   </div>
 
