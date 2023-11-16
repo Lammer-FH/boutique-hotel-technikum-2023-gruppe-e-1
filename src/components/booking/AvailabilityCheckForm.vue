@@ -21,18 +21,12 @@ export default {
 
     // set todays date als default for arrival date
     let today = new Date();
-    let year = today.getFullYear();
-    let month = String(today.getMonth() + 1).padStart(2, "0"); // Adjust for zero-based months
-    let day = String(today.getDate()).padStart(2, "0");
-    this.dateFrom = `${year}-${month}-${day}`;
+    this.dateFrom = this.dateToString(today);
 
     // set tomorrows date as default for departure date
     const tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
-    year = tomorrow.getFullYear();
-    month = String(tomorrow.getMonth() + 1).padStart(2, "0"); // Adjust for zero-based months
-    day = String(tomorrow.getDate()).padStart(2, "0");
-    this.dateTo = `${year}-${month}-${day}`;
+    this.dateTo = this.dateToString(tomorrow);
   },
 
   watch: {
