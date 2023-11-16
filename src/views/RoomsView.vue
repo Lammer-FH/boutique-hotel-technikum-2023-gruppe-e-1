@@ -55,7 +55,7 @@ export default {
        :current-page="currentPage"
        small
   >
-  <RoomCard v-for="room in rooms"  :room=room />
+  <RoomCard v-for="room in rooms" :key="room.id" :room=room />
   </div>
   <div class="overflow-auto">
     <b-pagination
