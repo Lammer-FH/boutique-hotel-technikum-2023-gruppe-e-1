@@ -17,8 +17,8 @@ export default {
 
   methods: {
     // call the Api in the store with the booking Data
-    book() {
-      this.bookingApi.postApi(this.bookingData)
+     book() {
+        this.bookingApi.postApi(this.bookingData)
 
       // Timeout to garuantee the data from the post request are ready
       setTimeout(() => {
@@ -70,14 +70,14 @@ export default {
   </div>
 
   <div>
-    <b-modal ref="confirm-booking" id="modal-1" title="Buchungsbestätigung">
+    <b-modal ref="confirm-booking" id="confirm-booking" title="Buchungsbestätigung" ok-only>
       <p class="my-4">Buchung erfolgreich durchgeführt.</p>
       <p class="my-4">Ihre Buchungs ID: {{ this.bookingApi.bookingID }}</p>
     </b-modal>
   </div>
 
   <div>
-    <b-modal ref="failed-booking" id="modal-1" title="Buchung fehlgeschlagen">
+    <b-modal ref="failed-booking" id="failed-booking" title="Buchung fehlgeschlagen" ok-only>
       <p class="my-4">Bitte Buchung erneut durchführen.</p>
     </b-modal>
   </div>

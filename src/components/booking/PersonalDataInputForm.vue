@@ -11,7 +11,7 @@ export default {
 // Data for the parent
   emits: ["personalData"],
 
-  // initiate Vuelidate
+
   setup() {
     const state = reactive({
       firstName: "",
@@ -22,6 +22,9 @@ export default {
       birthday: "",
     })
 
+    /*
+    initialize Vuelidate
+     */
     const rules = computed(() => {
       return {
         firstName: {required},
@@ -34,9 +37,23 @@ export default {
     })
     const v$ = useVuelidate(rules, state)
 
+    /*
+    set current data and max data for the Birthday Data Picker to be at least 18 years in the past.
+     */
+    function getMaxDate() {
+      const currentDate = new Date();
+      const minDate = new Date(
+          currentDate.getFullYear() - 18,
+          currentDate.getMonth(),
+          currentDate.getDate()
+      );
+      return minDate.toISOString().split('T')[0];
+    }
+
     return {
       state,
-      v$
+      v$,
+      getMaxDate,
     }
   },
 
