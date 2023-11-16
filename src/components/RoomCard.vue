@@ -19,7 +19,7 @@ export default {
     imagePath() {
       return this.imageSources[this.currentImageIndex];
     }
-  }
+  },
 }
 </script>
 
@@ -32,9 +32,10 @@ export default {
       <img :src=imagePath class="card-img-top" alt="...">
       <div class="card-body">
         <h5 class="card-title">{{ this.room.roomsName }}</h5>
-        <p class="card-text"> aktueller Preis: <b>{{ this.room.pricePerNight }}</b></p>
+        <p class="card-text"> aktueller Preis pro Nacht in Euro: <b>{{ this.room.pricePerNight }} </b></p>
       </div>
     </div>
+
   </RouterLink>
 
 </template>

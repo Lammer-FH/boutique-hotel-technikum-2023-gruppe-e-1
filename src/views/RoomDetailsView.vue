@@ -1,25 +1,43 @@
 <script>
 
+import axios from "axios";
+
 export default {
   name: "RoomDetailsView",
 
   data() {
     return {
-      roomId: 1
+      room: null
     }
   },
 
   created() {
-    this.roomId = this.$route.params.roomId
-    console.log(this.roomId)
-  }
+    this.fetchRoomDetails();
+  },
 
+  methods: {
+    fetchRoomDetails() {
+      this.roomId = this.$route.params.roomId
+      console.log(this.roomId)
+
+      axios.get(`https://boutique-hotel.helmuth-lammer.at/api/v1/rooms/${this.roomId}`)
+          .then(response => {
+            this.room = response.data;
+          })
+          .catch(error => {
+            console.error(error);
+          });
+    }
+  }
 }
 
 </script>
 
 <template>
-  <h2>Unsere Zimmer mit Details</h2>
+  <div v-if="room">
+  <h2>{{ room.roomName }}</h2>
+
+  </div>
 
 </template>
 
