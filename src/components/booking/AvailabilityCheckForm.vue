@@ -35,6 +35,27 @@ export default {
     this.dateTo = `${year}-${month}-${day}`;
   },
 
+  watch: {
+    // set dateTo to one day after dateFrom if dateFrom is later than dateTo
+    dateFrom(newDateFromAsString) {
+      if(Date.parse(newDateFromAsString) > Date.parse(this.dateTo)){ 
+        const newDateFrom = new Date(this.dateFrom);
+        const newDateTo = new Date();
+        newDateTo.setDate(newDateFrom.getDate() + 1);
+        this.dateTo = this.dateToString(newDateTo);
+      }
+    },
+    // set dateFrom to one day before dateTo if dateTo is earlier than dateForm
+    dateTo(newDateToAsString) {
+      if(Date.parse(newDateToAsString) < Date.parse(this.dateFrom)){ 
+        const newDateTo = new Date(this.dateTo);
+        const newDateFrom = new Date();
+        newDateFrom.setDate(newDateTo.getDate() + 1);
+        this.dateFrom = this.dateToString(newDateFrom);
+      }
+    },
+  },
+
   computed: {
     // get todays date
     minDateFrom() {
@@ -57,6 +78,12 @@ export default {
   },
 
   methods: {
+    dateToString(date){
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, "0"); // Adjust for zero-based months
+      const day = String(date.getDate()).padStart(2, "0");
+      return `${year}-${month}-${day}`;
+    },
     /*
     fetch all rooms and store them in the rooms array
     after fetching call the checkAvailability method
