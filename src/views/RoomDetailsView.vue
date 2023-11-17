@@ -96,27 +96,33 @@ export default {
 </script>
 
 <template>
-  <div v-if="room">
-    <h3>{{ room.roomName }}</h3>
+  <div v-if="room" class="container my-4">
+    <b-row>
+      <!-- Image Column -->
+      <b-col md="6" class="mb-3">
+        <b-img :src="imagePath" class="img-fluid w-100" alt="Hotelzimmer"></b-img>
+      </b-col>
 
-    <img :src="imagePath" class="room-image" alt="Hotelzimmer">
-<br>
-    <p>Das Zimmer ist mit folgenden Extras ausgestattet:</p>
-    <ul class="list-unstyled">
-
-      <li>  <font-awesome-icon :icon="['fas', 'bed']" /> Betten: {{ room.beds }}</li>
-      <li v-for="extra in room.extras" :key="extra.id">
-
-        <font-awesome-icon :icon="getIconName(extra.name)" />
-
-        {{ getNameToDisplay(extra.name) }}: {{ extra.available === 1 ? 'ja' : 'nein' }}
-
-      </li>
-    </ul>
-
-
+      <!-- Room Details Column -->
+      <b-col md="6">
+        <h3>{{ room.roomName }}</h3>
+        <p>Das Zimmer ist mit folgenden Extras ausgestattet:</p>
+        <b-list-group>
+          <b-list-group-item>
+            <font-awesome-icon :icon="['fas', 'bed']"/>
+            Betten: {{ room.beds }}
+          </b-list-group-item>
+          <b-list-group-item v-for="extra in room.extras" :key="extra.id">
+            <font-awesome-icon :icon="getIconName(extra.name)"/>
+            {{ getNameToDisplay(extra.name) }}: {{ extra.available === 1 ? 'ja' : 'nein' }}
+          </b-list-group-item>
+        </b-list-group>
+      </b-col>
+    </b-row>
   </div>
-
+  <div v-else class="text-center">
+    Die Zimmerdetails werden gerade geladen.
+  </div>
 </template>
 
 <style scoped>
