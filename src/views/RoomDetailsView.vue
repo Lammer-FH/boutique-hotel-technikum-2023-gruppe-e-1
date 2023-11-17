@@ -31,14 +31,20 @@ export default {
           });
     },
 
-    getIconClass(extraName) {
+    getIconName(extraName) {
       const iconMap = {
-        'minibar': 'fa fa-glass-martini',
-        'bathroom': 'fa fa-bath',
+        'minibar': 'wine-bottle',
+        'bathroom': 'fa-bath',
+        'television': 'fa-tv',
+        'livingroom': 'fa-couch',
+        'aircondition': 'fa-snowflake',
+        'wifi': 'fa-wifi',
+        'breakfast': 'fa-mug-saucer',
+        'handicapped accessible': 'fa-wheelchair-move'
 
         // Add other mappings as needed
       };
-      return iconMap[extraName] || 'fa fa-question-circle'; // default icon
+      return ['fas', iconMap[extraName] || 'question-circle']; // default icon
     },
 
     getNameToDisplay(nameFromDatabase) {
@@ -62,16 +68,18 @@ export default {
 
 <template>
   <div v-if="room">
-    <h2>{{ room.roomName }}</h2>
-    <font-awesome-icon icon="fa-solid fa-user-secret"/>
+    <h3>{{ room.roomName }}</h3>
+<br>
+    <p>Das Zimmer ist mit folgenden Extras ausgestattet:</p>
+    <ul class="list-unstyled">
 
-    <ul>
-      <li>Anzahl Betten: {{ room.beds }}</li>
+      <li>  <font-awesome-icon :icon="['fas', 'bed']" /> Betten: {{ room.beds }}</li>
       <li v-for="extra in room.extras" :key="extra.id">
 
-        <i :class="getIconClass(extra.name)"></i>
+        <font-awesome-icon :icon="getIconName(extra.name)" />
 
         {{ getNameToDisplay(extra.name) }}: {{ extra.available === 1 ? 'ja' : 'nein' }}
+
       </li>
     </ul>
 
