@@ -13,6 +13,8 @@ export default {
       rooms: [],
       availableRooms: [],
       isValidNumberOfPersons: true,
+      isValidDateInput: true,
+      isValidForm: true,
     };
   },
 
@@ -34,24 +36,25 @@ export default {
     // set dateTo to one day after dateFrom if dateFrom is later than dateTo
     dateFrom(newDateFromAsString) {
       if(Date.parse(newDateFromAsString) > Date.parse(this.dateTo)){ 
-        const newDateFrom = new Date(this.dateFrom);
-        const newDateTo = new Date();
-        newDateTo.setDate(newDateFrom.getDate() + 1);
-        this.dateTo = this.dateToString(newDateTo);
+        this.isValidDateInput = false
+      } else {
+        this.isValidDateInput = true
       }
+      this.validateForm();
     },
     // set dateFrom to one day before dateTo if dateTo is earlier than dateForm
     dateTo(newDateToAsString) {
       if(Date.parse(newDateToAsString) < Date.parse(this.dateFrom)){ 
-        const newDateTo = new Date(this.dateTo);
-        const newDateFrom = new Date();
-        newDateFrom.setDate(newDateTo.getDate() + 1);
-        this.dateFrom = this.dateToString(newDateFrom);
+        this.isValidDateInput = false
+      } else {
+        this.isValidDateInput = true
       }
+      this.validateForm();
     },
     numberOfPersons(newNumberOfPersons){
       this.isValidNumberOfPersons = newNumberOfPersons > 1;
-    }
+      this.validateForm();
+    },
   },
 
   computed: {
@@ -70,6 +73,15 @@ export default {
   },
 
   methods: {
+    validateForm(){
+      this.isValidForm = true;
+      if(!this.isValidDateInput){
+        this.isValidForm = false
+      }
+      if(!this.isValidNumberOfPersons){
+        this.isValidForm = false
+      }
+    },
     // convert date to string
     dateToString(date){
       const year = date.getFullYear();
@@ -150,7 +162,7 @@ export default {
         dateTo: this.dateTo,
         numberOfPersons: this.numberOfPersons,
         availableRooms: this.availableRooms,
-        isValidAvailabilityCheck: this.isValidNumberOfPersons
+        isValidAvailabilityForm: this.isValidForm
       };
       this.$emit("checked-availability", data);
     },
@@ -168,6 +180,9 @@ export default {
       v-model="dateFrom"
       :min="minDateFrom"
     />
+    <span class="text-danger" v-if=!isValidDateInput>
+      Das Anreisedatum darf nicht nach dem Abreisedatum liegen
+    </span>
   </div>
   <div class="mb-3">
     <label for="date-to" class="form-label">Abreisedatum:</label>
@@ -178,6 +193,9 @@ export default {
       v-model="dateTo"
       :min="minDateTo"
     />
+    <span class="text-danger" v-if=!isValidDateInput>
+      Das Abreisedatum darf nicht vor dem Anreisedatum liegen
+    </span>
   </div>
   <div class="mb-3">
     <label for="number-of-persons" class="form-label"
@@ -199,7 +217,7 @@ export default {
       type="submit"
       class="btn btn-primary"
       @click="continueToRoomSelection()"
-      :disabled="!isValidNumberOfPersons"
+      :disabled="!isValidForm"
     >
       Verfügbarkeit prüfen
     </button>
