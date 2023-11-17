@@ -89,7 +89,17 @@ export default {
         // Add other mappings as needed
       };
       return nameMap[nameFromDatabase] || nameFromDatabase; // return the internal name if no mapping is found
+    },
+
+    goBack() {
+
+      this.$router.push('/rooms');
+    },
+    goToBooking() {
+      this.$router.push('/booking');
     }
+
+
   }
 }
 
@@ -117,6 +127,20 @@ export default {
             {{ getNameToDisplay(extra.name) }}: {{ extra.available === 1 ? 'ja' : 'nein' }}
           </b-list-group-item>
         </b-list-group>
+      </b-col>
+    </b-row>
+
+    <!-- buttons -->
+
+    <b-row class="my-3">
+      <b-col d="6" sm="12">
+        <b-button variant="primary" @click="goBack" class="w-100">Zurück zur Zimmerübersicht</b-button>
+      </b-col>
+
+      <br>
+
+      <b-col d="6" sm="12">
+        <b-button variant="success" @click="goToBooking" class="w-100">Verfügbarkeit prüfen</b-button>
       </b-col>
     </b-row>
   </div>
