@@ -12,6 +12,7 @@ export default {
       numberOfPersons: 2,
       rooms: [],
       availableRooms: [],
+      isValidNumberOfPersons: true,
     };
   },
 
@@ -48,6 +49,9 @@ export default {
         this.dateFrom = this.dateToString(newDateFrom);
       }
     },
+    numberOfPersons(newNumberOfPersons){
+      this.isValidNumberOfPersons = newNumberOfPersons > 1;
+    }
   },
 
   computed: {
@@ -146,6 +150,7 @@ export default {
         dateTo: this.dateTo,
         numberOfPersons: this.numberOfPersons,
         availableRooms: this.availableRooms,
+        isValidAvailabilityCheck: this.isValidNumberOfPersons
       };
       this.$emit("checked-availability", data);
     },
@@ -185,12 +190,16 @@ export default {
       v-model="numberOfPersons"
       min="1"
     />
+    <span class="text-danger" v-if=!isValidNumberOfPersons>
+      Die Anzahl der Personen darf nicht kleiner as 1 sein.
+    </span>
   </div>
   <div class="d-grid gap-2">
     <button
       type="submit"
       class="btn btn-primary"
       @click="continueToRoomSelection()"
+      :disabled="!isValidNumberOfPersons"
     >
       Verfügbarkeit prüfen
     </button>
