@@ -1,5 +1,6 @@
 <script>
 import axios from "axios";
+import { useBookingApiStore } from "../../stores/bookingApiStore";
 
 export default {
   name: "AvailabilityCheckForm",
@@ -15,12 +16,16 @@ export default {
       isValidNumberOfPersons: true,
       isValidDateInput: true,
       isValidForm: true,
+      bookingApi: useBookingApiStore(),
+      hasErrorGettingRooms: false,
+      gettingRoomsError: "",
+      modalFailedGettingRooms: null,
     };
   },
 
   created() {
     // fetch all rooms
-    this.getRoomIds();
+    //this.getRoomIds();
 
     // set todays date als default for arrival date
     let today = new Date();
@@ -33,25 +38,26 @@ export default {
   },
 
   watch: {
-    // set dateTo to one day after dateFrom if dateFrom is later than dateTo
+    // validate arrival date
     dateFrom(newDateFromAsString) {
-      if(Date.parse(newDateFromAsString) > Date.parse(this.dateTo)){ 
-        this.isValidDateInput = false
+      if (Date.parse(newDateFromAsString) > Date.parse(this.dateTo)) {
+        this.isValidDateInput = false;
       } else {
-        this.isValidDateInput = true
+        this.isValidDateInput = true;
       }
       this.validateForm();
     },
-    // set dateFrom to one day before dateTo if dateTo is earlier than dateForm
+    // validate departure date
     dateTo(newDateToAsString) {
-      if(Date.parse(newDateToAsString) < Date.parse(this.dateFrom)){ 
-        this.isValidDateInput = false
+      if (Date.parse(newDateToAsString) < Date.parse(this.dateFrom)) {
+        this.isValidDateInput = false;
       } else {
-        this.isValidDateInput = true
+        this.isValidDateInput = true;
       }
       this.validateForm();
     },
-    numberOfPersons(newNumberOfPersons){
+    // numberOfPersons is infalid if user input < 1 
+    numberOfPersons(newNumberOfPersons) {
       this.isValidNumberOfPersons = newNumberOfPersons > 1;
       this.validateForm();
     },
@@ -73,41 +79,24 @@ export default {
   },
 
   methods: {
-    validateForm(){
+    /*
+      check if all user inputs are valid
+    */
+    validateForm() {
       this.isValidForm = true;
-      if(!this.isValidDateInput){
-        this.isValidForm = false
+      if (!this.isValidDateInput) {
+        this.isValidForm = false;
       }
-      if(!this.isValidNumberOfPersons){
-        this.isValidForm = false
+      if (!this.isValidNumberOfPersons) {
+        this.isValidForm = false;
       }
     },
     // convert date to string
-    dateToString(date){
+    dateToString(date) {
       const year = date.getFullYear();
       const month = String(date.getMonth() + 1).padStart(2, "0"); // Adjust for zero-based months
       const day = String(date.getDate()).padStart(2, "0");
       return `${year}-${month}-${day}`;
-    },
-    /*
-    fetch all rooms and store them in the rooms array
-    after fetching call the checkAvailability method
-    */
-    getRoomIds() {
-      axios
-        .get("https://boutique-hotel.helmuth-lammer.at/api/v1/rooms")
-        .then((response) => {
-          let data = response.data;
-          data.forEach((room) => {
-            this.rooms.push(room);
-          });
-        })
-        .catch((error) => {
-          console.log(error);
-        })
-        .then(() => {
-          this.checkAvailability();
-        });
     },
 
     /*
@@ -152,19 +141,33 @@ export default {
     },
 
     /*
-      create a data object which will be passed to the parent component 
-      with the checked-availability emitter
+      get all Rooms from api and check for error
+      if there is a error show a Message
+      if not check the availability for each room
+      prepare data and send it to the BookingView
     */
-    continueToRoomSelection() {
-      this.checkAvailability();
-      const data = {
-        dateFrom: this.dateFrom,
-        dateTo: this.dateTo,
-        numberOfPersons: this.numberOfPersons,
-        availableRooms: this.availableRooms,
-        isValidAvailabilityForm: this.isValidForm
-      };
-      this.$emit("checked-availability", data);
+    async continueToRoomSelection() {
+      this.bookingApi.getRooms();
+      setTimeout(() => {
+        if (this.bookingApi.hasRoomsError) {
+          this.$refs.modalFailedGettingRooms.show();
+        } else {
+          const rooms = this.bookingApi.rooms;
+          this.availableRooms = [];
+          rooms.forEach((room) => {
+            this.checkAvailabilityForRoom(room);
+          });
+
+          const data = {
+            dateFrom: this.dateFrom,
+            dateTo: this.dateTo,
+            numberOfPersons: this.numberOfPersons,
+            availableRooms: this.availableRooms,
+            isValidAvailabilityCheck: this.isValidNumberOfPersons,
+          };
+          this.$emit("checked-availability", data);
+        }
+      }, 500);
     },
   },
 };
@@ -180,7 +183,7 @@ export default {
       v-model="dateFrom"
       :min="minDateFrom"
     />
-    <span class="text-danger" v-if=!isValidDateInput>
+    <span class="text-danger" v-if="!isValidDateInput">
       Das Anreisedatum darf nicht nach dem Abreisedatum liegen
     </span>
   </div>
@@ -193,7 +196,7 @@ export default {
       v-model="dateTo"
       :min="minDateTo"
     />
-    <span class="text-danger" v-if=!isValidDateInput>
+    <span class="text-danger" v-if="!isValidDateInput">
       Das Abreisedatum darf nicht vor dem Anreisedatum liegen
     </span>
   </div>
@@ -208,7 +211,7 @@ export default {
       v-model="numberOfPersons"
       min="1"
     />
-    <span class="text-danger" v-if=!isValidNumberOfPersons>
+    <span class="text-danger" v-if="!isValidNumberOfPersons">
       Die Anzahl der Personen darf nicht kleiner as 1 sein.
     </span>
   </div>
@@ -221,6 +224,23 @@ export default {
     >
       Verfügbarkeit prüfen
     </button>
+  </div>
+
+  <div>
+    <b-modal
+      ref="modalFailedGettingRooms"
+      id="failed-getting-rooms"
+      title="Es ist ein Fehler aufgetreten"
+      ok-only
+    >
+      <p class="my-4">
+        Bei der Abfrage der Daten ist ein Fehler aufgetreten. Bitte versuchen
+        Sie es zu einem späteren Zeitpunkt erneut.
+      </p>
+      <p class="my-4">
+        {{ this.gettingRoomsError }}
+      </p>
+    </b-modal>
   </div>
 </template>
 
