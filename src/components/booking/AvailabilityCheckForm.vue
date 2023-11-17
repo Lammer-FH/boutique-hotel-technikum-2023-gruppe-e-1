@@ -1,6 +1,6 @@
 <script>
 import axios from "axios";
-import { useBookingApiStore } from "../../stores/bookingApiStore";
+import { useRoomApiStore } from "../../stores/roomApiStore";
 
 export default {
   name: "AvailabilityCheckForm",
@@ -16,7 +16,7 @@ export default {
       isValidNumberOfPersons: true,
       isValidDateInput: true,
       isValidForm: true,
-      bookingApi: useBookingApiStore(),
+      roomApi: useRoomApiStore(),
       hasErrorGettingRooms: false,
       gettingRoomsError: "",
       modalFailedGettingRooms: null,
@@ -147,12 +147,12 @@ export default {
       prepare data and send it to the BookingView
     */
     async continueToRoomSelection() {
-      this.bookingApi.getRooms();
+      this.roomApi.getRooms();
       setTimeout(() => {
-        if (this.bookingApi.hasRoomsError) {
+        if (this.roomApi.hasRoomsError) {
           this.$refs.modalFailedGettingRooms.show();
         } else {
-          const rooms = this.bookingApi.rooms;
+          const rooms = this.roomApi.rooms;
           this.availableRooms = [];
           rooms.forEach((room) => {
             this.checkAvailabilityForRoom(room);
