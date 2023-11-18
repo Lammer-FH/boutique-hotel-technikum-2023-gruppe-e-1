@@ -1,7 +1,6 @@
 <script>
 import RoomCard from "@/components/RoomCard.vue";
-
-import axios from 'axios'
+import { useRoomApiStore } from "../stores/roomApiStore";
 
 export default {
   name: "RoomsView",
@@ -11,7 +10,8 @@ export default {
     return {
       perPage: 5,
       currentPage: 1,
-      rooms: []
+      rooms: [],
+      roomApi: useRoomApiStore(),
     }
   },
 
@@ -28,20 +28,10 @@ export default {
 
   methods: {
     getRooms() {
-      axios.get("https://boutique-hotel.helmuth-lammer.at/api/v1/rooms")
-          .then(response => {
-            let data = response.data
-            data.forEach((room) => {
-              this.rooms.push(room);
-            })
-          })
-          .catch(error => {
-            // handle error
-            console.log(error)
-          })
-          .then(() => {
-            // always executed
-          });
+      this.roomApi.getRooms();
+      setTimeout(() => {
+        this.rooms = this.roomApi.rooms;
+      }, 500);
     }
   }
 }
