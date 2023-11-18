@@ -12,6 +12,15 @@ export const useRoomApiStore = defineStore("roomApi", {
   }),
 
   actions: {
+    fetchRoomDetails(roomId){
+      axios.get(apiUrl + "rooms/" + roomId)
+            .then(response => {
+              this.$state.room = response.data;
+            })
+            .catch(error => {
+              console.error(error);
+            });
+    },
     getRooms() {
       axios
         .get(apiUrl + "rooms")
@@ -24,14 +33,4 @@ export const useRoomApiStore = defineStore("roomApi", {
         });
     },
   },
-  fetchRoomDetails(roomId){
-    console.log("try get room Details")
-    axios.get(apiUrl + "rooms/" + roomId)
-          .then(response => {
-            this.$state.room = response.data;
-          })
-          .catch(error => {
-            console.error(error);
-          });
-  }
 });

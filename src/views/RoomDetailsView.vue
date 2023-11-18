@@ -50,19 +50,10 @@ export default {
   methods: {
     getRoomDetails() {
       this.roomId = this.$route.params.roomId
-      console.log(this.roomId)
       this.roomApi.fetchRoomDetails(this.roomId);
       setTimeout(() => {
         this.room = this.roomApi.room;
       }, 500);
-
-      /*axios.get(`https://boutique-hotel.helmuth-lammer.at/api/v1/rooms/${this.roomId}`)
-          .then(response => {
-            this.room = response.data;
-          })
-          .catch(error => {
-            console.error(error);
-          });*/
     },
 
     getIconName(extraName) {
