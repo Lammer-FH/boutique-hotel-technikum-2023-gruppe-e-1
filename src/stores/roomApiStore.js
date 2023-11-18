@@ -9,6 +9,7 @@ export const useRoomApiStore = defineStore("roomApi", {
     room: null,
     hasRoomsError: false,
     roomsError: "",
+    isRoomAvailable: false,
   }),
 
   actions: {
@@ -31,6 +32,24 @@ export const useRoomApiStore = defineStore("roomApi", {
           console.log(error);
           this.$state.hasRoomsError = true;
         });
+    },
+    checkAvailability(roomId, dateFrom, dateTo){
+      axios
+        .get(
+          "https://boutique-hotel.helmuth-lammer.at/api/v1/room/" +
+            roomId +
+            "/from/" +
+            dateFrom +
+            "/to/" +
+            dateTo
+        )
+        .then((response) => {
+          this.$state.isRoomAvailable = response.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+        .finally(() => {});
     },
   },
 });

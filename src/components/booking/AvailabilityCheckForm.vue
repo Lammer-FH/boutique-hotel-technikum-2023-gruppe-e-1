@@ -56,7 +56,7 @@ export default {
       }
       this.validateForm();
     },
-    // numberOfPersons is infalid if user input < 1 
+    // numberOfPersons is infalid if user input < 1
     numberOfPersons(newNumberOfPersons) {
       this.isValidNumberOfPersons = newNumberOfPersons > 1;
       this.validateForm();
@@ -117,27 +117,15 @@ export default {
       push the room to the availableRooms array
     */
     checkAvailabilityForRoom(room) {
-      axios
-        .get(
-          "https://boutique-hotel.helmuth-lammer.at/api/v1/room/" +
-            room.id +
-            "/from/" +
-            this.dateFrom +
-            "/to/" +
-            this.dateTo
-        )
-        .then((response) => {
-          let data = response.data;
-          if (data.available == true) {
-            if (room.beds >= this.numberOfPersons) {
-              this.availableRooms.push(room);
-            }
+      this.roomApi.checkAvailability(room.id, this.dateFrom, this.dateTo);
+      setTimeout(() => {
+        if (this.roomApi.isRoomAvailable) {
+          if (room.beds >= this.numberOfPersons) {
+            this.availableRooms.push(room);
           }
-        })
-        .catch((error) => {
-          console.log(error);
-        })
-        .finally(() => {});
+        }
+        console.log(this.availableRooms);
+      }, 500);
     },
 
     /*
