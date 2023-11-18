@@ -6,6 +6,7 @@ const apiUrl = "https://boutique-hotel.helmuth-lammer.at/api/v1/";
 export const useRoomApiStore = defineStore("roomApi", {
   state: () => ({
     rooms: [],
+    room: null,
     hasRoomsError: false,
     roomsError: "",
   }),
@@ -23,4 +24,14 @@ export const useRoomApiStore = defineStore("roomApi", {
         });
     },
   },
+  fetchRoomDetails(roomId){
+    console.log("try get room Details")
+    axios.get(apiUrl + "rooms/" + roomId)
+          .then(response => {
+            this.$state.room = response.data;
+          })
+          .catch(error => {
+            console.error(error);
+          });
+  }
 });

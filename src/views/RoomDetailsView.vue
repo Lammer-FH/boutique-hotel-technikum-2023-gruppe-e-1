@@ -3,6 +3,7 @@
 import axios from "axios";
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 import {ref} from "vue";
+import { useRoomApiStore } from "../stores/roomApiStore";
 
 export default {
   name: "RoomDetailsView",
@@ -15,7 +16,7 @@ export default {
       currentImageIndex: ref(0),
       // Assuming room details are fetched and stored in `room`
       imageSources: [],
-
+      roomApi: useRoomApiStore(),
     }
   },
 
@@ -43,21 +44,25 @@ export default {
 
   created() {
     this.roomId = this.$route.params.roomId;
-    this.fetchRoomDetails();
+    this.getRoomDetails();
   },
 
   methods: {
-    fetchRoomDetails() {
+    getRoomDetails() {
       this.roomId = this.$route.params.roomId
       console.log(this.roomId)
+      this.roomApi.fetchRoomDetails(this.roomId);
+      setTimeout(() => {
+        this.room = this.roomApi.room;
+      }, 500);
 
-      axios.get(`https://boutique-hotel.helmuth-lammer.at/api/v1/rooms/${this.roomId}`)
+      /*axios.get(`https://boutique-hotel.helmuth-lammer.at/api/v1/rooms/${this.roomId}`)
           .then(response => {
             this.room = response.data;
           })
           .catch(error => {
             console.error(error);
-          });
+          });*/
     },
 
     getIconName(extraName) {
