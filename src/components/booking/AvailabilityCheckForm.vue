@@ -18,7 +18,10 @@ export default {
       isValidForm: true,
       roomApi: useRoomApiStore(),
       hasErrorGettingRooms: false,
-      gettingRoomsError: "",
+      apiError: {
+        title: "",
+        message: "",
+      },
       modalFailedGettingRooms: null,
     };
   },
@@ -119,13 +122,28 @@ export default {
     checkAvailabilityForRoom(room) {
       this.roomApi.checkAvailability(room.id, this.dateFrom, this.dateTo);
       setTimeout(() => {
-        if (this.roomApi.isRoomAvailable) {
-          if (room.beds >= this.numberOfPersons) {
-            this.availableRooms.push(room);
+        if (this.roomApi.checkAvailabilityErrorCode != 200) {
+          this.apiError.title = "Fehler bei der Abftrage: Verfügbarkeit";
+          this.apiError.message =
+            "Bei der Abfrage der Verfügbarkeit ist ein Fehler aufgetreten. Bitte versuchen Sie es zu einem späteren Zeitpunkt erneut. (Error " +
+            this.roomApi.checkAvailabilityErrorCode +
+            ")";
+          this.$refs.modalFailedGettingRooms.show();
+        } else {
+          if (this.roomApi.isRoomAvailable) {
+            this.checkRoomAvailabilityDependingOnNumberOfPersons(room);
           }
         }
-        console.log(this.availableRooms);
       }, 500);
+    },
+
+    /*
+      check if a room has enough beds for all the selected number of persons
+    */
+    checkRoomAvailabilityDependingOnNumberOfPersons(room) {
+      if (room.beds >= this.numberOfPersons) {
+        this.availableRooms.push(room);
+      }
     },
 
     /*
@@ -137,7 +155,12 @@ export default {
     async continueToRoomSelection() {
       this.roomApi.getRooms();
       setTimeout(() => {
-        if (this.roomApi.hasRoomsError) {
+        if (this.roomApi.getRoomsErrorCode != 200) {
+          this.apiError.title = "Fehler bei der Abftrage: Zimmer";
+          this.apiError.message =
+            "Bei der Abfrage der Zimmer ist ein Fehler aufgetreten. Bitte versuchen Sie es zu einem späteren Zeitpunkt erneut. (Error " +
+            this.roomApi.getRoomsErrorCode +
+            ")";
           this.$refs.modalFailedGettingRooms.show();
         } else {
           const rooms = this.roomApi.rooms;
@@ -146,16 +169,20 @@ export default {
             this.checkAvailabilityForRoom(room);
           });
 
-          const data = {
-            dateFrom: this.dateFrom,
-            dateTo: this.dateTo,
-            numberOfPersons: this.numberOfPersons,
-            availableRooms: this.availableRooms,
-            isValidAvailabilityCheck: this.isValidNumberOfPersons,
-          };
-          this.$emit("checked-availability", data);
+          this.sendDataToBookingView();
         }
       }, 500);
+    },
+
+    sendDataToBookingView() {
+      const data = {
+        dateFrom: this.dateFrom,
+        dateTo: this.dateTo,
+        numberOfPersons: this.numberOfPersons,
+        availableRooms: this.availableRooms,
+        isValidAvailabilityCheck: this.isValidNumberOfPersons,
+      };
+      this.$emit("checked-availability", data);
     },
   },
 };
@@ -218,15 +245,11 @@ export default {
     <b-modal
       ref="modalFailedGettingRooms"
       id="failed-getting-rooms"
-      title="Es ist ein Fehler aufgetreten"
+      :title="this.apiError.title"
       ok-only
     >
       <p class="my-4">
-        Bei der Abfrage der Daten ist ein Fehler aufgetreten. Bitte versuchen
-        Sie es zu einem späteren Zeitpunkt erneut.
-      </p>
-      <p class="my-4">
-        {{ this.gettingRoomsError }}
+        {{ this.apiError.message }}
       </p>
     </b-modal>
   </div>

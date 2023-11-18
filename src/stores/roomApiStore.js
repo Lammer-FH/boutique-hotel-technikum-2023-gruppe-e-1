@@ -7,49 +7,45 @@ export const useRoomApiStore = defineStore("roomApi", {
   state: () => ({
     rooms: [],
     room: null,
-    hasRoomsError: false,
-    roomsError: "",
+    getRoomsErrorCode: 200,
     isRoomAvailable: false,
+    checkAvailabilityErrorCode: 200,
   }),
 
   actions: {
-    fetchRoomDetails(roomId){
-      axios.get(apiUrl + "rooms/" + roomId)
-            .then(response => {
-              this.$state.room = response.data;
-            })
-            .catch(error => {
-              console.error(error);
-            });
+    fetchRoomDetails(roomId) {
+      axios
+        .get(apiUrl + "rooms/" + roomId)
+        .then((response) => {
+          this.$state.room = response.data;
+        })
+        .catch((error) => {
+          console.error(error);
+        });
     },
     getRooms() {
       axios
         .get(apiUrl + "rooms")
         .then((response) => {
           this.$state.rooms = response.data;
+          this.$state.getRoomsErrorCode = response.status;
         })
         .catch((error) => {
           console.log(error);
-          this.$state.hasRoomsError = true;
+          this.$state.getRoomsErrorCode = error.request.status;
         });
     },
-    checkAvailability(roomId, dateFrom, dateTo){
+    checkAvailability(roomId, dateFrom, dateTo) {
       axios
-        .get(
-          "https://boutique-hotel.helmuth-lammer.at/api/v1/room/" +
-            roomId +
-            "/from/" +
-            dateFrom +
-            "/to/" +
-            dateTo
-        )
+        .get(apiUrl + "room/" + roomId + "/from/" + dateFrom + "/to/" + dateTo)
         .then((response) => {
           this.$state.isRoomAvailable = response.data;
+          this.$state.checkAvailabilityErrorCode = response.status;
         })
         .catch((error) => {
           console.log(error);
-        })
-        .finally(() => {});
+          this.$state.checkAvailabilityErrorCode = error.request.status;
+        });
     },
   },
 });
