@@ -22,3 +22,4 @@ app.use(router)
 app.use(BootstrapVueNext)
 app.component('font-awesome-icon', FontAwesomeIcon)
 app.mount('#app')
+

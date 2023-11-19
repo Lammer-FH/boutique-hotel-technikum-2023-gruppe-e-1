@@ -2,6 +2,8 @@
 import RoomCard from "@/components/RoomCard.vue";
 import { useRoomApiStore } from "../stores/roomApiStore";
 
+import axios from 'axios'
+
 export default {
   name: "RoomsView",
   components: { RoomCard },
