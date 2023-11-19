@@ -41,17 +41,5 @@ export const useBookingApiStore = defineStore("bookingApi", {
           this.$state.bookingID = 0;
         });
     },
-    getRooms() {
-      axios
-        .get(apiUrl + "rooms")
-        .then((response) => {
-          this.$state.rooms = response.data;
-        })
-        .catch((error) => {
-          console.log(error);
-          this.$state.hasRoomsError = true;
-          this.$state.roomsError = error;
-        });
-    },
   },
 });

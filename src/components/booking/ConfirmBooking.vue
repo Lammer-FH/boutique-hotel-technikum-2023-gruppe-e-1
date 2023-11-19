@@ -1,41 +1,45 @@
 <script>
-
-import {useBookingApiStore} from "@/stores/bookingApiStore";
+import { useBookingApiStore } from "@/stores/bookingApiStore";
+import ConfirmationModal from "../ConfirmationModal.vue";
 
 export default {
   name: "ConfirmBooking",
-
   // Data from the Parent
   props: ["bookingData"],
-
   data() {
     return {
       // access bookingApiStore
       bookingApi: useBookingApiStore(),
+      modalData: {
+        title: "",
+        message: "",
+      },
+      isModalHidden: true,
     };
   },
-
   methods: {
     // call the Api in the store with the booking Data
-     book() {
-        this.bookingApi.postApi(this.bookingData)
-
+    book() {
+      this.bookingApi.postApi(this.bookingData);
       // Timeout to garuantee the data from the post request are ready
       setTimeout(() => {
         if (this.bookingApi.confirmBooking) {
-          this.$refs['confirm-booking'].show();
+          this.modalData.title = "Buchungsbestätigung";
+          this.modalData.message = "Buchung erfolgreich durchgeführt. Ihre Buchungs ID: " + this.bookingApi.bookingID;
+          this.isModalHidden = false;
         } else {
-          this.$refs['failed-booking'].show();
+          this.modalData.title = "Buchung fehlgeschlagen";
+          this.modalData.message = "Bitte Buchung erneut durchführen.";
+          this.isModalHidden = false;
         }
       }, 500);
     },
   },
+  components: { ConfirmationModal },
 };
-
 </script>
 
 <template>
-
   <BContainer fluid class="pb-3 border-bottom">
     <BRow>
       <BCol> gewählter Zeitraum:</BCol>
@@ -70,18 +74,8 @@ export default {
   </div>
 
   <div>
-    <b-modal ref="confirm-booking" id="confirm-booking" title="Buchungsbestätigung" ok-only>
-      <p class="my-4">Buchung erfolgreich durchgeführt.</p>
-      <p class="my-4">Ihre Buchungs ID: {{ this.bookingApi.bookingID }}</p>
-    </b-modal>
-  </div>
-
-  <div>
-    <b-modal ref="failed-booking" id="failed-booking" title="Buchung fehlgeschlagen" ok-only>
-      <p class="my-4">Bitte Buchung erneut durchführen.</p>
-    </b-modal>
+    <ConfirmationModal :modalData="this.modalData" :isHidden="isModalHidden" />
   </div>
 </template>
 
 <style scoped></style>
-

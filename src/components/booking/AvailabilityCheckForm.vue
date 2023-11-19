@@ -1,10 +1,12 @@
 <script>
 import axios from "axios";
 import { useRoomApiStore } from "../../stores/roomApiStore";
+import ConfirmationModal from "../ConfirmationModal.vue";
 
 export default {
   name: "AvailabilityCheckForm",
   props: {},
+  components: { ConfirmationModal },
   emits: ["data"],
   data() {
     return {
@@ -22,24 +24,20 @@ export default {
         title: "",
         message: "",
       },
-      modalFailedGettingRooms: null,
+      isModalHidden: true,
     };
   },
-
   created() {
     // fetch all rooms
     //this.getRoomIds();
-
     // set todays date als default for arrival date
     let today = new Date();
     this.dateFrom = this.dateToString(today);
-
     // set tomorrows date as default for departure date
     const tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
     this.dateTo = this.dateToString(tomorrow);
   },
-
   watch: {
     // validate arrival date
     dateFrom(newDateFromAsString) {
@@ -65,14 +63,12 @@ export default {
       this.validateForm();
     },
   },
-
   computed: {
     // get todays date
     minDateFrom() {
       const today = new Date();
       return this.dateToString(today);
     },
-
     // get tomorrows date
     minDateTo() {
       const tomorrow = new Date();
@@ -80,11 +76,10 @@ export default {
       return this.dateToString(tomorrow);
     },
   },
-
   methods: {
     /*
-      check if all user inputs are valid
-    */
+          check if all user inputs are valid
+        */
     validateForm() {
       this.isValidForm = true;
       if (!this.isValidDateInput) {
@@ -101,24 +96,22 @@ export default {
       const day = String(date.getDate()).padStart(2, "0");
       return `${year}-${month}-${day}`;
     },
-
     /*
-      reset the availableRooms array to empty,
-      iterate through the rooms array
-      for every room check its availability
-    */
+          reset the availableRooms array to empty,
+          iterate through the rooms array
+          for every room check its availability
+        */
     checkAvailability() {
       this.availableRooms = [];
       this.rooms.forEach((room) => {
         this.checkAvailabilityForRoom(room);
       });
     },
-
     /*
-      make request to with a rooms id, the arrival date and the departure date.
-      if the room is available and the number of beds is greater than the number of persons,
-      push the room to the availableRooms array
-    */
+          make request to with a rooms id, the arrival date and the departure date.
+          if the room is available and the number of beds is greater than the number of persons,
+          push the room to the availableRooms array
+        */
     checkAvailabilityForRoom(room) {
       this.roomApi.checkAvailability(room.id, this.dateFrom, this.dateTo);
       setTimeout(() => {
@@ -128,7 +121,7 @@ export default {
             "Bei der Abfrage der Verfügbarkeit ist ein Fehler aufgetreten. Bitte versuchen Sie es zu einem späteren Zeitpunkt erneut. (Error " +
             this.roomApi.checkAvailabilityErrorCode +
             ")";
-          this.$refs.modalFailedGettingRooms.show();
+            this.isModalHidden = false;
         } else {
           if (this.roomApi.isRoomAvailable) {
             this.checkRoomAvailabilityDependingOnNumberOfPersons(room);
@@ -136,22 +129,20 @@ export default {
         }
       }, 500);
     },
-
     /*
-      check if a room has enough beds for all the selected number of persons
-    */
+          check if a room has enough beds for all the selected number of persons
+        */
     checkRoomAvailabilityDependingOnNumberOfPersons(room) {
       if (room.beds >= this.numberOfPersons) {
         this.availableRooms.push(room);
       }
     },
-
     /*
-      get all Rooms from api and check for error
-      if there is a error show a Message
-      if not check the availability for each room
-      prepare data and send it to the BookingView
-    */
+          get all Rooms from api and check for error
+          if there is a error show a Message
+          if not check the availability for each room
+          prepare data and send it to the BookingView
+        */
     async continueToRoomSelection() {
       this.roomApi.getRooms();
       setTimeout(() => {
@@ -161,19 +152,17 @@ export default {
             "Bei der Abfrage der Zimmer ist ein Fehler aufgetreten. Bitte versuchen Sie es zu einem späteren Zeitpunkt erneut. (Error " +
             this.roomApi.getRoomsErrorCode +
             ")";
-          this.$refs.modalFailedGettingRooms.show();
+          this.isModalHidden = false;
         } else {
           const rooms = this.roomApi.rooms;
           this.availableRooms = [];
           rooms.forEach((room) => {
             this.checkAvailabilityForRoom(room);
           });
-
           this.sendDataToBookingView();
         }
       }, 500);
     },
-
     sendDataToBookingView() {
       const data = {
         dateFrom: this.dateFrom,
@@ -185,6 +174,7 @@ export default {
       this.$emit("checked-availability", data);
     },
   },
+  components: { ConfirmationModal },
 };
 </script>
 
@@ -242,16 +232,10 @@ export default {
   </div>
 
   <div>
-    <b-modal
-      ref="modalFailedGettingRooms"
-      id="failed-getting-rooms"
-      :title="this.apiError.title"
-      ok-only
-    >
-      <p class="my-4">
-        {{ this.apiError.message }}
-      </p>
-    </b-modal>
+    <ConfirmationModal
+      :modalData="this.apiError"
+      :isHidden="isModalHidden"
+    />
   </div>
 </template>
 
