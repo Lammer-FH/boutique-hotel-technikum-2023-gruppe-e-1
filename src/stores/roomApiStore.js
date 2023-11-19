@@ -31,7 +31,6 @@ export const useRoomApiStore = defineStore("roomApi", {
           this.$state.getRoomsErrorCode = response.status;
         })
         .catch((error) => {
-          console.log(error);
           this.$state.getRoomsErrorCode = error.request.status;
         });
     },
@@ -43,7 +42,6 @@ export const useRoomApiStore = defineStore("roomApi", {
           this.$state.checkAvailabilityErrorCode = response.status;
         })
         .catch((error) => {
-          console.log(error);
           this.$state.checkAvailabilityErrorCode = error.request.status;
         });
     },

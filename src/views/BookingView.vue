@@ -38,9 +38,8 @@ export default {
       this.dateTo = data.dateTo;
       this.numberOfPersons = data.numberOfPersons;
       this.availableRooms = data.availableRooms;
-      console.log(this.isValidAvailabilityCheck)
       this.isValidAvailabilityCheck = data.isValidAvailabilityCheck;
-      console.log(this.isValidAvailabilityCheck)
+
       this.$nextTick(() => {
         this.$refs.RoomSelectionButton.click();
       });
