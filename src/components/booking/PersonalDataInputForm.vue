@@ -1,6 +1,6 @@
 <script>
 import {useVuelidate} from '@vuelidate/core'
-import {required, email, sameAs, minValue} from '@vuelidate/validators'
+import {required, email, sameAs, minValue} from '@vuelidate/validators';
 import {reactive, computed} from "vue";
 
 
