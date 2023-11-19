@@ -15,6 +15,7 @@ export default {
       numberOfPersons: 2,
       availableRooms: [],
       selectedRoomId: null,
+      isValidAvailabilityCheck: false,
       isValidRoomSelection: false,
       firstName: "",
       lastName: "",
@@ -37,6 +38,8 @@ export default {
       this.dateTo = data.dateTo;
       this.numberOfPersons = data.numberOfPersons;
       this.availableRooms = data.availableRooms;
+      this.isValidAvailabilityCheck = data.isValidAvailabilityCheck;
+
       this.$nextTick(() => {
         this.$refs.RoomSelectionButton.click();
       });
@@ -87,6 +90,9 @@ export default {
 
 
   computed: {
+    isValidAvailabilityForm(){
+      return this.isValidAvailabilityCheck;
+    },
     /*
       check if there is a room selected
     */
@@ -159,6 +165,7 @@ export default {
             data-bs-target="#collapseRoomSelection"
             aria-expanded="false"
             aria-controls="collapseRoomSelection"
+            :disabled="!isValidAvailabilityForm"
         >
           2. Zimmer auswählen
         </button>

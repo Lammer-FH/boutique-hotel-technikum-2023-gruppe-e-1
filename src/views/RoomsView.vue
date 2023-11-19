@@ -1,72 +1,67 @@
 <script>
 import RoomCard from "@/components/RoomCard.vue";
+import { useRoomApiStore } from "../stores/roomApiStore";
 
 import axios from 'axios'
 
 export default {
   name: "RoomsView",
-  components: {RoomCard},
+  components: { RoomCard },
 
   data() {
     return {
       perPage: 5,
       currentPage: 1,
-      rooms: []
-    }
+      rooms: [],
+      roomApi: useRoomApiStore(),
+    };
   },
 
   created() {
     this.getRooms();
-
   },
 
   computed: {
     rows() {
-      return this.rooms.length
-    }
-   },
+      return this.rooms.length;
+    },
+  },
 
   methods: {
     getRooms() {
-      axios.get("https://boutique-hotel.helmuth-lammer.at/api/v1/rooms")
-          .then(response => {
-            let data = response.data
-            data.forEach((room) => {
-              this.rooms.push(room);
-            })
-          })
-          .catch(error => {
-            // handle error
-            console.log(error)
-          })
-          .then(() => {
-            // always executed
-          });
-    }
-  }
-}
+      this.roomApi.getRooms();
+      setTimeout(() => {
+        this.rooms = this.roomApi.rooms;
+      }, 500);
+    },
+  },
+};
 </script>
 
 <template>
   <h2>Unsere Zimmer</h2>
-  <div class="rows" id="roomCards"
-       :items="rooms.id"
-       :per-page="perPage"
-       :current-page="currentPage"
-       small
-  >
-  <RoomCard v-for="room in rooms" :key="room.id" :room=room />
-  </div>
-  <div class="overflow-auto">
+
+  <div>
+    <BRow >
+      <BCol
+          v-for="room in rooms.slice(
+          (currentPage - 1) * perPage,
+          (currentPage - 1) * perPage + perPage
+        )"
+          :key="room.id"
+          class="d-flex justify-content-center"
+      >
+        <RoomCard :room="room" />
+      </BCol>
+    </BRow>
+
     <b-pagination
+        class="mt-3"
         v-model="currentPage"
-        :total-rows="rows"
+        :total-rows="this.rooms.length"
         :per-page="perPage"
-        aria-controls="roomCards"
     ></b-pagination>
   </div>
- </template>
+</template>
 
-<style scoped>
-
-</style>
+<style scoped></style>
