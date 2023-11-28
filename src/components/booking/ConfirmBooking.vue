@@ -19,20 +19,20 @@ export default {
   },
   methods: {
     // call the Api in the store with the booking Data
-    book() {
-      this.bookingApi.postApi(this.bookingData);
-      // Timeout to garuantee the data from the post request are ready
-      setTimeout(() => {
-        if (this.bookingApi.confirmBooking) {
-          this.modalData.title = "Buchungsbestätigung";
-          this.modalData.message = "Buchung erfolgreich durchgeführt. Ihre Buchungs ID: " + this.bookingApi.bookingID;
-          this.isModalHidden = false;
-        } else {
-          this.modalData.title = "Buchung fehlgeschlagen";
-          this.modalData.message = "Bitte Buchung erneut durchführen.";
-          this.isModalHidden = false;
-        }
-      }, 500);
+     book() {
+       this.bookingApi.postApi(this.bookingData)
+           .then( () => {
+             if (this.bookingApi.confirmBooking) {
+               this.modalData.title = "Buchungsbestätigung";
+               this.modalData.message = "Buchung erfolgreich durchgeführt. Ihre Buchungs ID: " + this.bookingApi.bookingID;
+               this.isModalHidden = false;
+             } else {
+               this.modalData.title = "Buchung fehlgeschlagen";
+               this.modalData.message = "Bitte Buchung erneut durchführen.";
+               this.isModalHidden = false;
+             }
+           });
+
     },
   },
   components: { ConfirmationModal },
