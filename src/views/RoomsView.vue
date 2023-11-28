@@ -29,10 +29,9 @@ export default {
 
   methods: {
     getRooms() {
-      this.roomApi.getRooms();
-      setTimeout(() => {
+      this.roomApi.getRooms().then(() => {
         this.rooms = this.roomApi.rooms;
-      }, 500);
+      });
     },
   },
 };
