@@ -14,17 +14,17 @@ export const useAuthenticationApiStore = defineStore("authenticationApi", {
         clientId: loginData.email,
         secret: loginData.password,
       }
-      console.log(data)
       return axios
         .post(
           apiUrl + "login",
           data
         )
         .then((response) => {
-          console.log(response);
+          localStorage.token = response.data
         })
         .catch((error) => {
           console.error("Error Post Login");
+          this.hasLoginError = true;
         });
     },
   },

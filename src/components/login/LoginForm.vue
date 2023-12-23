@@ -1,20 +1,26 @@
 <script>
-import { useAuthenticationApiStore } from '../../stores/authenticationApiStore';
+import { useAuthenticationApiStore } from "../../stores/authenticationApiStore";
 
 export default {
   name: "LoginForm",
-  data(){
+  data() {
     return {
       authenticationApi: useAuthenticationApiStore(),
-      loginData: {email: "", password: ""}
-    }
+      loginData: { email: "", password: "" },
+    };
   },
   methods: {
-    login(){
+    login() {
       console.log(this.loginData);
-      this.authenticationApi.postLogin(this.loginData);
+      this.authenticationApi.postLogin(this.loginData).then(() => {
+        this.sendDataToLoginView();
+      });
+    },
+    sendDataToLoginView(){
+      const data = this.authenticationApi.hasLoginError;
+      this.$emit("handle-login", data);
     }
-  }
+  },
 };
 </script>
 
@@ -23,7 +29,13 @@ export default {
     <div class="row mr-3">
       <div class="col-sm">
         <label for="email" class="form-label">E-Mailadresse</label>
-        <input id="email" name="email" type="email" class="form-control mb-3" v-model="this.loginData.email"/>
+        <input
+          id="email"
+          name="email"
+          type="email"
+          class="form-control mb-3"
+          v-model="this.loginData.email"
+        />
         <div class="form-text" id="email-message"></div>
       </div>
     </div>
@@ -42,7 +54,12 @@ export default {
     </div>
     <div class="row mr-3">
       <div class="col-sm d-grid">
-        <button id="login-button" type="button" class="btn btn-primary" @click="login">
+        <button
+          id="login-button"
+          type="button"
+          class="btn btn-primary"
+          @click="login"
+        >
           Anmelden
         </button>
       </div>
