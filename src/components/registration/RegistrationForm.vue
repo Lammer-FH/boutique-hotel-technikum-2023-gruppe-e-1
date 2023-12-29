@@ -6,6 +6,7 @@ export default {
   name: "RegistrationForm",
   // Data from the Parent
   props: ["registrationData"],
+
   data() {
     return {
       // access registerUserApiStore
@@ -15,13 +16,15 @@ export default {
         message: "",
       },
       isModalHidden: true,
+      inputFromUser: {...this.registrationData}
     };
   },
+
   methods: {
     // call the Api in the store with the registrationData
     registerUser() {
-      this.registrationApi.postRegisterUser(this.registrationData)
-          .then( () => {
+      this.registrationApi.postRegisterUser(this.inputFromUser)
+          .then(() => {
             if (this.registrationApi.confirmRegistration) {
               this.modalData.title = "Registrierungsbestätigung";
               this.modalData.message = "Registrierung erfolgreich durchgeführt. Sie können sich nun mit ihrer Emailadresse und Passwort einloggen.";
@@ -32,56 +35,139 @@ export default {
               this.isModalHidden = false;
             }
           });
-
+//TODO: noch v$ und error handling usw einfügen!
     },
   },
-  components: { ConfirmationModal },
+  components: {ConfirmationModal},
 };
 </script>
 
 <template>
-  <BContainer fluid class="pb-3 border-bottom">
-      <BRow>
-      <BCol> Name:</BCol>
-      <BCol> {{ registrationData.firstName }} {{ registrationData.lastName }}</BCol>
-    </BRow>
-    <BRow>
-      <BCol> Anschrift:</BCol>
-      <BCol> {{ registrationData.adress }}</BCol>
-    </BRow>
-    <BRow>
-      <BCol> Postleitzahl:</BCol>
-      <BCol> {{ registrationData.postcode }}</BCol>
-    </BRow>
-    <BRow>
-      <BCol> Ort:</BCol>
-      <BCol> {{ registrationData.city }}</BCol>
-    </BRow>
-    <BRow>
-      <BCol> eMail Adresse:</BCol>
-      <BCol> {{ registrationData.emailAdress }}</BCol>
-    </BRow>
-    <BRow>
-    <BCol> Passwort:</BCol>
-    <BCol> {{ registrationData.password }}</BCol>
-  </BRow>
-    <BRow>
-      <BCol> Passwort wiederholen:</BCol>
-      <BCol> {{ registrationData.passwordConfirm }}</BCol>
-    </BRow>
+
+  <div class="mb-3">
+    <label for="firstName" class="form-label">Vorname:</label>
+    <input
+        type="text"
+        class="form-control"
+        id="firstName"
+        v-model="inputFromUser.firstName"
+    />
+    <!--
+  <span class="text-danger" v-if="v$.firstName.$error">
+    Feld darf nicht leer sein!
+  </span>
+  -->
+</div>
+
+<div class="mb-3">
+  <label for="lastName" class="form-label">Nachname:</label>
+  <input type="text"
+         class="form-control"
+         id="lastName"
+         v-model="inputFromUser.lastName"/>
+
+  <!-- <span class="text-danger" v-if="v$.lastName.$error">
+     Feld darf nicht leer sein!
+   </span>
+   -->
+
+   </div>
+
+   <div class="mb-3">
+     <label for="street" class="form-label">Strasse:</label>
+     <input
+         type="text"
+         class="form-control"
+         id="street"
+         v-model="inputFromUser.adress"
+     />
+     <!--  <span class="text-danger" v-if="v$.adress.$error">
+           Feld darf nicht leer sein!
+     </span>
+
+     -->
+   </div>
+
+   <div class="mb-3">
+     <label for="emailAdress" class="form-label">eMail Adresse:</label>
+     <input
+         type="text"
+         class="form-control"
+         id="emailAdress"
+         v-model="inputFromUser.email"
+     />
+     <!-- <span class="text-danger" v-if="v$.emailAdress.$error">
+     Feld darf nicht leer sein! / Ungültige eMail Adresse!
+   </span> -->
+ </div>
+
+ <div class="mb-3">
+   <label for="emailAdressConfirm" class="form-label"
+   >eMail Adresse bestätigen:</label>
+   <input
+       type="text"
+       class="form-control"
+       id="emailAdressConfirm"
+       v-model="inputFromUser.emailAdressConfirm"
+   />
+   <!-- <span class="text-danger" v-if="v$.emailAdressConfirm.$error">
+   Ungültige eMail Adresse! / eMail Adressen stimmen nicht überein!
+ </span>
+ -->
+</div>
+
+<div class="d-grid gap-2">
+ <div class="mb-3">
+   <label for="username" class="form-label"
+   >Username:</label
+   >
+   <input
+       type="text"
+       class="form-control"
+       id="emailAdressConfirm"
+       v-model="inputFromUser.username"
+   />
+
+   <!--
+ <span class="text-danger" v-if="v$.username.$error">
+Das Feld darf nicht leer sein.
+    </span>
+    -->
+</div>
+</div>
+
+ <div class="d-grid gap-2">
+   <div class="mb-3">
+     <label for="password" class="form-label">Passwort:</label>
+     <input
+         type="text"
+         class="form-control"
+         id="emailAdressConfirm"
+         v-model="inputFromUser.password"
+     />
+     <!--
+   <span class="text-danger" v-if="v$.password.$error">
+Das Feld darf nicht leer sein.
+  </span>
+  -->
+ </div>
 
 
-  </BContainer>
+ <div class="d-grid gap-2">
+   <button
+       type="submit"
+       class="btn btn-primary"
+       @click="registerUser">
+     Registrieren
+   </button>
+ </div>
 
-  <div class="d-grid gap-2">
-    <button type="submit" class="btn btn-primary" @click="registerUser()">
-      Registrieren
-    </button>
-  </div>
+ <div>
+   <ConfirmationModal :modalData="this.modalData" :isHidden="isModalHidden"/>
+ </div>
 
-  <div>
-    <ConfirmationModal :modalData="this.modalData" :isHidden="isModalHidden" />
-  </div>
+ </div>
 </template>
+ <style scoped>
 
-<style scoped></style>
+ </style>
