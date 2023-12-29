@@ -5,15 +5,15 @@ const apiUrl = "https://boutique-hotel.helmuth-lammer.at/api/v1/";
 
 export const useRegisterUserApiStore = defineStore("registrationApi", {
     state: () => ({
-        hasRegistrationError: false
-
+        hasRegistrationError: false,
+        confirmRegistration: false
     }),
 
     actions: {
         postRegisterUser(registrationData) {
             const data = {
-                firstname: registrationData.firstname,
-                lastname: registrationData.password,
+                firstname: registrationData.firstName,
+                lastname: registrationData.lastName,
                 email: registrationData.email,
                 username: registrationData.username,
                 password: registrationData.password
@@ -25,6 +25,7 @@ export const useRegisterUserApiStore = defineStore("registrationApi", {
                     data
                 )
                 .then((response) => {
+                    this.$state.confirmRegistration = true,
                     localStorage.token = response.data
                 })
                 .catch((error) => {

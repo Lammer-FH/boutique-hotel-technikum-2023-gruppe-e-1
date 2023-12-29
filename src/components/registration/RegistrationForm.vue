@@ -1,15 +1,15 @@
 <script>
-import { registerUserApiStore } from "@/stores/registerUserApiStore";
+import {useRegisterUserApiStore} from "@/stores/registerUserApiStore";
 import ConfirmationModal from "../ConfirmationModal.vue";
 
 export default {
   name: "RegistrationForm",
   // Data from the Parent
-  props: [],
+  props: ["registrationData"],
   data() {
     return {
-      // access bookingApiStore
-      bookingApi: useRegistrationApiStore(),
+      // access registerUserApiStore
+      registrationApi: useRegisterUserApiStore(),
       modalData: {
         title: "",
         message: "",
@@ -18,17 +18,17 @@ export default {
     };
   },
   methods: {
-    // call the Api in the store with the booking Data
-    book() {
-      this.bookingApi.postApi(this.bookingData)
+    // call the Api in the store with the registrationData
+    registerUser() {
+      this.registrationApi.postRegisterUser(this.registrationData)
           .then( () => {
-            if (this.bookingApi.confirmBooking) {
-              this.modalData.title = "Buchungsbestätigung";
-              this.modalData.message = "Buchung erfolgreich durchgeführt. Ihre Buchungs ID: " + this.bookingApi.bookingID;
+            if (this.registrationApi.confirmRegistration) {
+              this.modalData.title = "Registrierungsbestätigung";
+              this.modalData.message = "Registrierung erfolgreich durchgeführt. Sie können sich nun mit ihrer Emailadresse und Passwort einloggen.";
               this.isModalHidden = false;
             } else {
-              this.modalData.title = "Buchung fehlgeschlagen";
-              this.modalData.message = "Bitte Buchung erneut durchführen.";
+              this.modalData.title = "Registrierung fehlgeschlagen";
+              this.modalData.message = "Bitte registrieren Sie sich erneut.";
               this.isModalHidden = false;
             }
           });
@@ -41,35 +41,41 @@ export default {
 
 <template>
   <BContainer fluid class="pb-3 border-bottom">
-    <BRow>
-      <BCol> gewählter Zeitraum:</BCol>
-      <BCol> {{ bookingData.dateFrom }} - {{ bookingData.dateTo }}</BCol>
-    </BRow>
-    <BRow>
-      <BCol> Anzahl der Personen:</BCol>
-      <BCol> {{ bookingData.numberOfPersons }}</BCol>
-    </BRow>
-    <BRow>
+      <BRow>
       <BCol> Name:</BCol>
-      <BCol> {{ bookingData.firstName }} {{ bookingData.lastName }}</BCol>
+      <BCol> {{ registrationData.firstName }} {{ registrationData.lastName }}</BCol>
     </BRow>
     <BRow>
-      <BCol> Geburtsdatum:</BCol>
-      <BCol> {{ bookingData.birthday }}</BCol>
+      <BCol> Anschrift:</BCol>
+      <BCol> {{ registrationData.adress }}</BCol>
+    </BRow>
+    <BRow>
+      <BCol> Postleitzahl:</BCol>
+      <BCol> {{ registrationData.postcode }}</BCol>
+    </BRow>
+    <BRow>
+      <BCol> Ort:</BCol>
+      <BCol> {{ registrationData.city }}</BCol>
     </BRow>
     <BRow>
       <BCol> eMail Adresse:</BCol>
-      <BCol> {{ bookingData.emailAdress }}</BCol>
+      <BCol> {{ registrationData.emailAdress }}</BCol>
     </BRow>
     <BRow>
-      <BCol> Frühstück:</BCol>
-      <BCol> {{ bookingData.breakfast }}</BCol>
+    <BCol> Passwort:</BCol>
+    <BCol> {{ registrationData.password }}</BCol>
+  </BRow>
+    <BRow>
+      <BCol> Passwort wiederholen:</BCol>
+      <BCol> {{ registrationData.passwordConfirm }}</BCol>
     </BRow>
+
+
   </BContainer>
 
   <div class="d-grid gap-2">
-    <button type="submit" class="btn btn-primary" @click="book()">
-      Zahlungspflichtig bestellen
+    <button type="submit" class="btn btn-primary" @click="registerUser()">
+      Registrieren
     </button>
   </div>
 

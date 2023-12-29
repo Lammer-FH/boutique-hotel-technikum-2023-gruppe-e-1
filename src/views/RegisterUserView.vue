@@ -1,29 +1,33 @@
+
 <script>
+import RegistrationForm from "@/components/registration/RegistrationForm.vue";
+
 export default {
   name: "RegisterUserView",
-  props: {},
+  components: { RegistrationForm },
   data() {
     return {
-      firstName: "",
-      lastName: "",
-      adress: "",
-      postcode: "",
-      city: "",
-      emailAdress: "",
-      emailAdressConfirm: "",
-      userName: "",
-      password: "",
-      passwordConfirm: ""
+      registrationData: {
+        firstName: "",
+        lastName: "",
+        adress: "",
+        postcode: "",
+        city: "",
+        emailAdress: "",
+        password: "",
+        passwordConfirm: ""
+      }
     };
   }
 }
 </script>
 
-
 <template>
-
+  <div>
+    Registrierung
+    <RegistrationForm :registrationData="registrationData" />
+  </div>
 </template>
 
 <style scoped>
-
 </style>
