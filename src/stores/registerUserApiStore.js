@@ -8,7 +8,7 @@ export const useRegisterUserApiStore = defineStore("registrationApi", {
         hasRegistrationError: false,
         confirmRegistration: false
     }),
-
+//TODO: was hat es mit dem String auf sich im PDF von lammer bei der PostRegistrationUserApi?
     actions: {
         postRegisterUser(registrationData) {
             const data = {
