@@ -8,7 +8,7 @@ export const useRegisterUserApiStore = defineStore("registrationApi", {
         hasRegistrationError: false,
         confirmRegistration: false
     }),
-//TODO: was hat es mit dem String auf sich im PDF von lammer bei der PostRegistrationUserApi?
+
     actions: {
         postRegisterUser(registrationData) {
             const data = {
@@ -27,6 +27,7 @@ export const useRegisterUserApiStore = defineStore("registrationApi", {
                 .then((response) => {
                     this.$state.confirmRegistration = true,
                     localStorage.token = response.data
+            //TODO: muss man hier den token überhaupt speichern?
                 })
                 .catch((error) => {
                     console.error("Error Post Registration");
