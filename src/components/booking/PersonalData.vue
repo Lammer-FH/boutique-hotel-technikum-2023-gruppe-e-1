@@ -31,6 +31,10 @@ export default {
       <BCol> Frühstück:</BCol>
       <BCol> {{ personalData.breakfast }}</BCol>
     </BRow>
+
+
+
+
   </BContainer>
 </template>
 

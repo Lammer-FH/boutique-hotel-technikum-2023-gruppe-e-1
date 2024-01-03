@@ -1,5 +1,5 @@
 <script>
-import axios from "axios";
+
 import { useRoomApiStore } from "../../stores/roomApiStore";
 import ConfirmationModal from "../bookingConfirmation/ConfirmationModal.vue";
 
@@ -174,7 +174,6 @@ export default {
       this.$emit("checked-availability", data);
     },
   },
-  components: { ConfirmationModal },
 };
 </script>
 
