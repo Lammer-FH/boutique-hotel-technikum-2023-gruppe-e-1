@@ -7,7 +7,6 @@ import HotelContactInformation from "@/components/HotelContactInformation.vue";
 
 export default {
   name: "ConfirmBooking",
-
   // Data from the Parent
   props: ["modalData", "isHidden"],
   watch: {
@@ -18,13 +17,21 @@ export default {
             }
         }
     },
-  components: {PersonalData, HotelContactInformation }
+  components: {PersonalData, HotelContactInformation },
+  methods: {
+    printModalContent() {
+      // Open print dialog for the modal content
+      window.print();
+    },
+  },ç
+
 };
 </script>
 
 <template>
+
   <div>
-    <b-modal ref="confirmationModal" id="confirmationModel" :title="this.modalData.title" ok-only>
+    <b-modal ref="confirmationModal" id="confirmationModal" :title="this.modalData.title" ok-only>
 
       <b-list-group>
         <b-list-group-item>
@@ -37,6 +44,12 @@ export default {
           <HotelContactInformation />
         </b-list-group-item>
       </b-list-group>
+
+      <b-button @click="printModalContent" variant="primary">Print</b-button>
+
+
+
+
 
     </b-modal>
   </div>
