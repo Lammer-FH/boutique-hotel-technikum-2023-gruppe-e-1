@@ -3,6 +3,7 @@
 <script>
 
 import PersonalData from "@/components/booking/PersonalData.vue";
+import HotelContactInformation from "@/components/HotelContactInformation.vue";
 
 export default {
   name: "ConfirmBooking",
@@ -17,16 +18,13 @@ export default {
             }
         }
     },
-  components: {PersonalData }
+  components: {PersonalData, HotelContactInformation }
 };
 </script>
 
 <template>
   <div>
     <b-modal ref="confirmationModal" id="confirmationModel" :title="this.modalData.title" ok-only>
-
-
-
 
       <b-list-group>
         <b-list-group-item>
@@ -35,9 +33,9 @@ export default {
         <b-list-group-item>
           <PersonalData v-if="this.modalData.bookingOk" :personalData="this.modalData.details" />
         </b-list-group-item>
-        <b-list-group-item>Morbi leo risus</b-list-group-item>
-        <b-list-group-item>Porta ac consectetur ac</b-list-group-item>
-        <b-list-group-item>Vestibulum at eros</b-list-group-item>
+        <b-list-group-item>
+          <HotelContactInformation />
+        </b-list-group-item>
       </b-list-group>
 
     </b-modal>
