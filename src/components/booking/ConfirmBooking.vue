@@ -1,6 +1,6 @@
 <script>
 import { useBookingApiStore } from "@/stores/bookingApiStore";
-import ConfirmationModal from "../ConfirmationModal.vue";
+import ConfirmationModal from "../bookinConfirmation/ConfirmationModal.vue";
 
 export default {
   name: "ConfirmBooking",
@@ -13,6 +13,7 @@ export default {
       modalData: {
         title: "",
         message: "",
+        details: "",
       },
       isModalHidden: true,
     };
@@ -25,14 +26,15 @@ export default {
              if (this.bookingApi.confirmBooking) {
                this.modalData.title = "Buchungsbestätigung";
                this.modalData.message = "Buchung erfolgreich durchgeführt. Ihre Buchungs ID: " + this.bookingApi.bookingID;
+               this.modalData.details = this.bookingData;
                this.isModalHidden = false;
              } else {
                this.modalData.title = "Buchung fehlgeschlagen";
                this.modalData.message = "Bitte Buchung erneut durchführen.";
+               this.modalData.details = " ";
                this.isModalHidden = false;
              }
            });
-
     },
   },
   components: { ConfirmationModal },
