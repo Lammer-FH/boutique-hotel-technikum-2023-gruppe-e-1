@@ -1,7 +1,7 @@
 <script>
 import axios from "axios";
 import { useRoomApiStore } from "../../stores/roomApiStore";
-import ConfirmationModal from "../bookinConfirmation/ConfirmationModal.vue";
+import ConfirmationModal from "../bookingConfirmation/ConfirmationModal.vue";
 
 export default {
   name: "AvailabilityCheckForm",

@@ -1,6 +1,7 @@
 <script>
 import { useBookingApiStore } from "@/stores/bookingApiStore";
-import ConfirmationModal from "../bookinConfirmation/ConfirmationModal.vue";
+import ConfirmationModal from "../bookingConfirmation/ConfirmationModal.vue";
+import PersonalData from "@/components/booking/PersonalData.vue";
 
 export default {
   name: "ConfirmBooking",
@@ -14,6 +15,7 @@ export default {
         title: "",
         message: "",
         details: "",
+        bookingOk: true
       },
       isModalHidden: true,
     };
@@ -32,42 +34,19 @@ export default {
                this.modalData.title = "Buchung fehlgeschlagen";
                this.modalData.message = "Bitte Buchung erneut durchführen.";
                this.modalData.details = " ";
+               this.modalData.bookingOk = false;
                this.isModalHidden = false;
              }
            });
     },
   },
-  components: { ConfirmationModal },
+  components: { ConfirmationModal, PersonalData },
 };
 </script>
 
 <template>
-  <BContainer fluid class="pb-3 border-bottom">
-    <BRow>
-      <BCol> gewählter Zeitraum:</BCol>
-      <BCol> {{ bookingData.dateFrom }} - {{ bookingData.dateTo }}</BCol>
-    </BRow>
-    <BRow>
-      <BCol> Anzahl der Personen:</BCol>
-      <BCol> {{ bookingData.numberOfPersons }}</BCol>
-    </BRow>
-    <BRow>
-      <BCol> Name:</BCol>
-      <BCol> {{ bookingData.firstName }} {{ bookingData.lastName }}</BCol>
-    </BRow>
-    <BRow>
-      <BCol> Geburtsdatum:</BCol>
-      <BCol> {{ bookingData.birthday }}</BCol>
-    </BRow>
-    <BRow>
-      <BCol> eMail Adresse:</BCol>
-      <BCol> {{ bookingData.emailAdress }}</BCol>
-    </BRow>
-    <BRow>
-      <BCol> Frühstück:</BCol>
-      <BCol> {{ bookingData.breakfast }}</BCol>
-    </BRow>
-  </BContainer>
+
+  <PersonalData :personalData="this.bookingData" />
 
   <div class="d-grid gap-2">
     <button type="submit" class="btn btn-primary" @click="book()">
