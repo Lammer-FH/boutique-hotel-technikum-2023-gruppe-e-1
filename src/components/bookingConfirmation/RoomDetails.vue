@@ -22,6 +22,12 @@ export default {
 
   },
 
+  computed: {
+    imagePath() {
+      return `/src/assets/images/rooms/${this.room.id}.jpg`;
+    }
+  },
+
   methods: {
     getRoomDetails() {
       this.roomApi.fetchRoomDetails(this.roomId);

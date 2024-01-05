@@ -3,6 +3,7 @@
 import PersonalData from "@/components/booking/PersonalData.vue";
 import HotelContactInformation from "@/components/HotelContactInformation.vue";
 import RoomDetails from "@/components/bookingConfirmation/RoomDetails.vue";
+import HotelLocation from "@/components/bookingConfirmation/HotelLocation.vue";
 
 export default {
   name: "BookingConfirmation",
@@ -33,7 +34,7 @@ data() {
     }
   },
 
-  components: { PersonalData, HotelContactInformation, RoomDetails }
+  components: { PersonalData, HotelContactInformation, RoomDetails, HotelLocation }
 
 
 }
@@ -54,7 +55,7 @@ data() {
       <RoomDetails :roomId="this.roomId"/>
     </b-list-group-item>
     <b-list-group-item>
-      <h1>Buchungsbestätigung</h1>
+      <HotelLocation />
     </b-list-group-item>
     <b-list-group-item>
       <HotelContactInformation />
