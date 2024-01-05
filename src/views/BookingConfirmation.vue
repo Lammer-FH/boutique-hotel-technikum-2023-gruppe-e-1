@@ -1,13 +1,16 @@
 <script>
-import {computed} from "vue";
+
 import PersonalData from "@/components/booking/PersonalData.vue";
+import HotelContactInformation from "@/components/HotelContactInformation.vue";
+import RoomDetails from "@/components/bookingConfirmation/RoomDetails.vue";
 
 export default {
   name: "BookingConfirmation",
 
 data() {
     return {
-      bookingData: null
+      bookingData: null,
+      roomId: null,
     }
 },
 
@@ -15,13 +18,22 @@ data() {
     // change string back to json object
     try {
       this.bookingData = JSON.parse(this.$route.params.bookingData);
-      console.log("Parsed bookingData:", this.bookingData);
-    } catch (error) {
+      } catch (error) {
       console.error("Error parsing bookingData:", error);
+    }
+
+    this.roomId = this.bookingData.selectedRoomId;
+
+
+  },
+
+  methods: {
+    printContent() {
+      window.print();
     }
   },
 
-  components: { PersonalData }
+  components: { PersonalData, HotelContactInformation, RoomDetails }
 
 
 }
@@ -31,10 +43,27 @@ data() {
 
 <template>
 
-  <p>läuft</p>
-  <p>{{this.bookingData.firstName}}</p>
+  <b-list-group>
+    <b-list-group-item>
+      <h1>Buchungsbestätigung</h1>
+    </b-list-group-item>
+    <b-list-group-item>
+      <PersonalData :personalData="this.bookingData" />
+    </b-list-group-item>
+    <b-list-group-item>
+      <RoomDetails :roomId="this.roomId"/>
+    </b-list-group-item>
+    <b-list-group-item>
+      <h1>Buchungsbestätigung</h1>
+    </b-list-group-item>
+    <b-list-group-item>
+      <HotelContactInformation />
+    </b-list-group-item>
 
-  <PersonalData :personalData="this.bookingData" />
+  </b-list-group>
+
+  <b-button @click="printContent" variant="primary">Print</b-button>
+
 
 </template>
 
