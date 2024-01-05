@@ -4,7 +4,7 @@
 
 import PersonalData from "@/components/booking/PersonalData.vue";
 import HotelContactInformation from "@/components/HotelContactInformation.vue";
-import RoomDetailsView from "@/views/RoomDetailsView.vue";
+import RoomDetails from "@/components/bookingConfirmation/RoomDetails.vue";
 
 export default {
   name: "ConfirmBooking",
@@ -18,7 +18,7 @@ export default {
             }
         }
     },
-  components: {PersonalData, HotelContactInformation,RoomDetailsView },
+  components: {PersonalData, HotelContactInformation,RoomDetails },
   methods: {
     printModalContent() {
       // Open print dialog for the modal content
@@ -42,7 +42,7 @@ export default {
           <PersonalData v-if="this.modalData.bookingOk" :personalData="this.modalData.details" />
         </b-list-group-item>
         <b-list-group-item>
-          <RoomDetailsView />
+
         </b-list-group-item>
         <b-list-group-item>
           <HotelContactInformation />

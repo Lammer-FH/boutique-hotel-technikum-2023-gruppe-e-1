@@ -1,7 +1,7 @@
 <script>
 
 import { useRoomApiStore } from "../../stores/roomApiStore";
-import ConfirmationModal from "../bookingConfirmation/ConfirmationModal.vue";
+import ConfirmationModal from "../bookingConfirmation/BookingFailModal.vue";
 
 export default {
   name: "AvailabilityCheckForm",

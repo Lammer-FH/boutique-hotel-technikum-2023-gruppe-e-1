@@ -1,6 +1,6 @@
 <script>
 import { useBookingApiStore } from "@/stores/bookingApiStore";
-import ConfirmationModal from "../bookingConfirmation/ConfirmationModal.vue";
+import ConfirmationModal from "../bookingConfirmation/BookingFailModal.vue";
 import PersonalData from "@/components/booking/PersonalData.vue";
 
 export default {
@@ -26,10 +26,14 @@ export default {
        this.bookingApi.postApi(this.bookingData)
            .then( () => {
              if (this.bookingApi.confirmBooking) {
+               // neue seite als buchungsbestätigung mit druckoption
+
+               /*
                this.modalData.title = "Buchungsbestätigung";
                this.modalData.message = "Buchung erfolgreich durchgeführt. Ihre Buchungs ID: " + this.bookingApi.bookingID;
                this.modalData.details = this.bookingData;
                this.isModalHidden = false;
+                */
              } else {
                this.modalData.title = "Buchung fehlgeschlagen";
                this.modalData.message = "Bitte Buchung erneut durchführen.";
