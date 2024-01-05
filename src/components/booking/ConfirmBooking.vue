@@ -35,11 +35,14 @@ export default {
                this.isModalHidden = false;
                 */
              } else {
+               /*
                this.modalData.title = "Buchung fehlgeschlagen";
                this.modalData.message = "Bitte Buchung erneut durchführen.";
                this.modalData.details = " ";
                this.modalData.bookingOk = false;
                this.isModalHidden = false;
+
+                */
              }
            });
     },
@@ -52,10 +55,14 @@ export default {
 
   <PersonalData :personalData="this.bookingData" />
 
+
   <div class="d-grid gap-2">
+    <!-- convert json object to string, otherwise the hand over of the bookingData to BookingConfirmation.vue did not work -->
+    <RouterLink  :to="'/booking_confirmation/' + JSON.stringify(this.bookingData)">
     <button type="submit" class="btn btn-primary" @click="book()">
       Zahlungspflichtig bestellen
     </button>
+      </RouterLink>
   </div>
 
   <div>
