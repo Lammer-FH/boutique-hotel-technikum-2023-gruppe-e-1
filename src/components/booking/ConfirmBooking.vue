@@ -24,7 +24,6 @@ export default {
        this.bookingApi.postApi(this.bookingData)
            .then( () => {
              if (this.bookingApi.confirmBooking) {
-               // neue seite als buchungsbestätigung mit druckoption
                this.$router.push({path: "/booking_confirmation/" + JSON.stringify(this.bookingData) });
              } else {
                this.modalData.title = "Buchung fehlgeschlagen";

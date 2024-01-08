@@ -5,8 +5,6 @@ export default {
   data() {
     return {
       map: null,
-      markerA: null,
-      markerB: null,
       directionsService: null,
       directionsRenderer: null,
       mapCenter: {lat: 48.208492, lng: 16.373127},
@@ -29,7 +27,7 @@ export default {
     initializeMap() {
       this.map = new google.maps.Map(this.$refs.mapRef, {
         center: this.mapCenter,
-        zoom: 8
+        zoom: 2
       });
 
       this.directionsService = new google.maps.DirectionsService();
@@ -70,8 +68,9 @@ export default {
 </script>
 
 <template>
+
   <div>
-    <div ref="mapRef" style="width: 800px; height: 600px"></div>
+    <div ref="mapRef" style="width: 100%; height: 600px"></div>
     <select v-model="travelMode">
       <option value="DRIVING">Car</option>
       <option value="TRANSIT">Public Transportation</option>

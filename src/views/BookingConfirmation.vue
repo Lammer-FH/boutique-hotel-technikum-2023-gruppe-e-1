@@ -22,10 +22,7 @@ data() {
       } catch (error) {
       console.error("Error parsing bookingData:", error);
     }
-
     this.roomId = this.bookingData.selectedRoomId;
-
-
   },
 
   methods: {
@@ -38,14 +35,12 @@ data() {
   },
 
   components: { PersonalData, HotelContactInformation, RoomDetails, HotelLocation }
-
-
 }
-
-
 </script>
 
 <template>
+
+  <b-container>
 
   <b-list-group>
     <b-list-group-item>
@@ -63,11 +58,22 @@ data() {
     <b-list-group-item>
       <HotelContactInformation />
     </b-list-group-item>
-
+    <b-list-group-item>
+      <!-- mixed vue bootstrap with standard boostrap, could not find a way to allign the button to the right side?! -->
+      <div class="row justify-content-end">
+        <div class="col-auto">
+          <b-button @click="printContent" variant="primary">Print</b-button>
+        </div>
+        <div class="col-auto">
+          <b-button @click="goHome" variant="primary">Home</b-button>
+        </div>
+      </div>
+    </b-list-group-item>
   </b-list-group>
 
-  <b-button @click="printContent" variant="primary">Print</b-button>
-  <b-button @click="goHome" variant="primary">Home</b-button>
+
+
+  </b-container>
 
 
 </template>
