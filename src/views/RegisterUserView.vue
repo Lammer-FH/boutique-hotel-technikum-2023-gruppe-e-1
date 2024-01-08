@@ -28,7 +28,7 @@ export default {
 
 <template>
   <div>
-    Registrierung
+    <h1>Registrierung</h1>
     <RegistrationForm :registrationData="registrationData" />
   </div>
 </template>
