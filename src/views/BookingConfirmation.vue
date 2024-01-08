@@ -4,6 +4,7 @@ import PersonalData from "@/components/booking/PersonalData.vue";
 import HotelContactInformation from "@/components/HotelContactInformation.vue";
 import RoomDetails from "@/components/bookingConfirmation/RoomDetails.vue";
 import HotelLocation from "@/components/bookingConfirmation/HotelLocation.vue";
+import {useBookingApiStore} from "@/stores/bookingApiStore";
 
 export default {
   name: "BookingConfirmation",
@@ -12,6 +13,7 @@ data() {
     return {
       bookingData: null,
       roomId: null,
+      bookingApi: useBookingApiStore(),
     }
 },
 
@@ -45,6 +47,9 @@ data() {
   <b-list-group>
     <b-list-group-item>
       <h1>Buchungsbestätigung</h1>
+    </b-list-group-item>
+    <b-list-group-item>
+      <p>BuchungsID: {{this.bookingApi.bookingID}} </p>
     </b-list-group-item>
     <b-list-group-item>
       <PersonalData :personalData="this.bookingData" />
