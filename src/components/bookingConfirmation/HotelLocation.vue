@@ -71,11 +71,15 @@ export default {
 
   <div>
     <div ref="mapRef" style="width: 100%; height: 600px"></div>
-    <select v-model="travelMode">
-      <option value="DRIVING">Car</option>
-      <option value="TRANSIT">Public Transportation</option>
-      <option value="BICYCLING">Bicycle</option>
-      <option value="WALKING">Walking</option>
-    </select>
+
+    <b-form-group label="Reiseart:" label-for="travel-mode">
+      <b-form-select id="travel-mode" v-model="travelMode">
+        <b-form-select-option value="DRIVING">Auto</b-form-select-option>
+        <b-form-select-option value="TRANSIT">Öffis</b-form-select-option>
+        <b-form-select-option value="BICYCLING">Fahrrad</b-form-select-option>
+      </b-form-select>
+
+
+    </b-form-group>
   </div>
 </template>
