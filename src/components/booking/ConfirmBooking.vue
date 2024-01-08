@@ -13,9 +13,7 @@ export default {
       bookingApi: useBookingApiStore(),
       modalData: {
         title: "",
-        message: "",
-        details: "",
-        bookingOk: true
+        message: ""
       },
       isModalHidden: true,
     };
@@ -27,22 +25,11 @@ export default {
            .then( () => {
              if (this.bookingApi.confirmBooking) {
                // neue seite als buchungsbestätigung mit druckoption
-
-               /*
-               this.modalData.title = "Buchungsbestätigung";
-               this.modalData.message = "Buchung erfolgreich durchgeführt. Ihre Buchungs ID: " + this.bookingApi.bookingID;
-               this.modalData.details = this.bookingData;
-               this.isModalHidden = false;
-                */
+               this.$router.push({path: "/booking_confirmation/" + JSON.stringify(this.bookingData) });
              } else {
-               /*
                this.modalData.title = "Buchung fehlgeschlagen";
                this.modalData.message = "Bitte Buchung erneut durchführen.";
-               this.modalData.details = " ";
-               this.modalData.bookingOk = false;
                this.isModalHidden = false;
-
-                */
              }
            });
     },
@@ -55,19 +42,15 @@ export default {
 
   <PersonalData :personalData="this.bookingData" />
 
-
   <div class="d-grid gap-2">
-    <!-- convert json object to string, otherwise the hand over of the bookingData to BookingConfirmation.vue did not work -->
-    <RouterLink  :to="'/booking_confirmation/' + JSON.stringify(this.bookingData)">
-    <button type="submit" class="btn btn-primary" @click="book()">
-      Zahlungspflichtig bestellen
-    </button>
-      </RouterLink>
-  </div>
+      <button type="submit" class="btn btn-primary" @click="book()">
+        Zahlungspflichtig bestellen
+      </button>
+    </div>
 
-  <div>
-    <ConfirmationModal :modalData="this.modalData" :isHidden="isModalHidden" />
-  </div>
-</template>
+    <div>
+      <ConfirmationModal :modalData="this.modalData" :isHidden="isModalHidden" />
+    </div>
+  </template>
 
-<style scoped></style>
+  <style scoped></style>

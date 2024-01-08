@@ -1,14 +1,4 @@
-<template>
-  <div>
-    <div ref="mapRef" style="width: 800px; height: 600px"></div>
-    <select v-model="travelMode">
-      <option value="DRIVING">Car</option>
-      <option value="TRANSIT">Public Transportation</option>
-      <option value="BICYCLING">Bicycle</option>
-      <option value="WALKING">Walking</option>
-    </select>
-  </div>
-</template>
+
 
 <script>
 export default {
@@ -78,3 +68,15 @@ export default {
   },
 }
 </script>
+
+<template>
+  <div>
+    <div ref="mapRef" style="width: 800px; height: 600px"></div>
+    <select v-model="travelMode">
+      <option value="DRIVING">Car</option>
+      <option value="TRANSIT">Public Transportation</option>
+      <option value="BICYCLING">Bicycle</option>
+      <option value="WALKING">Walking</option>
+    </select>
+  </div>
+</template>

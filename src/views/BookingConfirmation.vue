@@ -31,6 +31,9 @@ data() {
   methods: {
     printContent() {
       window.print();
+    },
+    goHome() {
+      this.$router.push({path: "/"})
     }
   },
 
@@ -64,6 +67,7 @@ data() {
   </b-list-group>
 
   <b-button @click="printContent" variant="primary">Print</b-button>
+  <b-button @click="goHome" variant="primary">Home</b-button>
 
 
 </template>

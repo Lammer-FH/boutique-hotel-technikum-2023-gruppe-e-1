@@ -1,8 +1,4 @@
-
-
 <script>
-
-import PersonalData from "@/components/booking/PersonalData.vue";
 import HotelContactInformation from "@/components/HotelContactInformation.vue";
 import RoomDetails from "@/components/bookingConfirmation/RoomDetails.vue";
 
@@ -14,53 +10,26 @@ export default {
         isHidden(newIsHidden){
             if(newIsHidden == false){
                 this.$refs.confirmationModal.show();
-
             }
         }
     },
-  components: {PersonalData, HotelContactInformation,RoomDetails },
-  methods: {
-    printModalContent() {
-      // Open print dialog for the modal content
-      window.print();
-    },
-  },
-
+  components: { HotelContactInformation,RoomDetails },
 };
 </script>
 
 <template>
-
   <div>
     <b-modal ref="confirmationModal" id="confirmationModal" :title="this.modalData.title" ok-only>
-
       <b-list-group>
         <b-list-group-item>
           <p class="my-4"> {{ this.modalData.message }} </p>
         </b-list-group-item>
-        <b-list-group-item>
-          <PersonalData v-if="this.modalData.bookingOk" :personalData="this.modalData.details" />
-        </b-list-group-item>
-        <b-list-group-item>
-
-        </b-list-group-item>
-        <b-list-group-item>
+          <b-list-group-item>
           <HotelContactInformation />
         </b-list-group-item>
-
-
       </b-list-group>
-
-      <b-button @click="printModalContent" variant="primary">Print</b-button>
-
-
-
-
-
     </b-modal>
-
   </div>
 </template>
 
-<style scoped></style>
 
