@@ -1,5 +1,7 @@
 <script>
+import router from "../../router";
 import { useAuthenticationApiStore } from "../../stores/authenticationApiStore";
+import ConfirmationModal from "../ConfirmationModal.vue";
 
 export default {
   name: "LoginForm",
@@ -7,20 +9,29 @@ export default {
     return {
       authenticationApi: useAuthenticationApiStore(),
       loginData: { email: "", password: "" },
+      apiMessage: {
+        title: "",
+        message: "",
+      },
+      isModalHidden: true,
     };
   },
   methods: {
     login() {
       console.log(this.loginData);
       this.authenticationApi.postLogin(this.loginData).then(() => {
-        this.sendDataToLoginView();
+        if (this.authenticationApi.$state.hasLoginError) {
+          this.apiMessage.title = "Fehler beim Login";
+          this.apiMessage.message =
+            "Es ist ein Fehler beim Login aufgetreten. Überprüfuen Sie Ihre Eingaben und versuchen Sie erneut sich anzumelden.";
+          this.isModalHidden = false;
+        } else {
+          router.push({path: '/booking_history'});
+        }
       });
     },
-    sendDataToLoginView(){
-      const data = this.authenticationApi.hasLoginError;
-      this.$emit("handle-login", data);
-    }
   },
+  components: { ConfirmationModal },
 };
 </script>
 
@@ -63,6 +74,12 @@ export default {
           Anmelden
         </button>
       </div>
+    </div>
+    <div>
+      <ConfirmationModal
+        :modalData="this.apiMessage"
+        :isHidden="isModalHidden"
+      />
     </div>
   </div>
 </template>
