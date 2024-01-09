@@ -5,18 +5,36 @@ import 'bootstrap-vue-next/dist/bootstrap-vue-next.css'
 import BootstrapVueNext from 'bootstrap-vue-next'
 import {createApp} from 'vue'
 import {createPinia} from 'pinia'
+import axios from 'axios'
 
 import App from './App.vue'
 import router from './router'
 
 import {library} from '@fortawesome/fontawesome-svg-core'
 import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome'
-import {faWineBottle, faBed, faBath, faUserSecret, faTv, faCouch, faSnowflake, faWifi, faMugSaucer, faWheelchairMove} from '@fortawesome/free-solid-svg-icons'
+import {faWineBottle, faBed, faBath, faUserSecret, faTv, faCouch, faSnowflake, faWifi, faMugSaucer, 
+    faWheelchairMove, faRightToBracket, faUser, faRightFromBracket} from '@fortawesome/free-solid-svg-icons'
 
-
-library.add(faWineBottle, faBed, faBath, faTv, faCouch, faSnowflake, faWifi, faMugSaucer, faWheelchairMove )
+library.add(faWineBottle, faBed, faBath, faTv, faCouch, faSnowflake, faWifi, faMugSaucer, faWheelchairMove, faRightToBracket, faRightFromBracket, faUser )
 
 const app = createApp(App)
+
+axios.defaults.baseURL = 'https://boutique-hotel.helmuth-lammer.at/api/v1/';
+
+axios.interceptors.request.use(
+  (config) => {
+
+    if (localStorage.getItem('token') !== null) {
+      config.headers.Authorization = `Bearer ${localStorage.getItem('token')}`;
+    }
+
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
 
 app.use(createPinia())
 app.use(router)

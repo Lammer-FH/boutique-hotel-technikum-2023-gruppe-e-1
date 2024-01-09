@@ -5,6 +5,7 @@ import {
   BIconX,
   BIconPersonCircle,
 } from "bootstrap-icons-vue";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
 export default {
   name: "Header",
@@ -13,6 +14,26 @@ export default {
     BIconList,
     BIconX,
   },
+  data() {
+    return {
+      existsToken: localStorage.getItem("token") !== null,
+    };
+  },
+  methods: {
+    logout() {
+      localStorage.removeItem("token");
+      this.$forceUpdate();
+    },
+  },
+  computed: {
+    isLoggedIn() {
+      if (localStorage.getItem("token") === null) {
+        return false;
+      } else {
+        return true;
+      }
+    },
+  },
 };
 </script>
 
@@ -20,14 +41,45 @@ export default {
   <b-navbar toggleable type="light" variant="light" class="container-fluid">
     <b-navbar-brand>
       <RouterLink to="/">
-        <img src="../assets/images/logo.png" class="img-fluid" id="header-logo"/>
+        <img
+          src="../assets/images/logo.png"
+          class="img-fluid"
+          id="header-logo"
+        />
       </RouterLink>
     </b-navbar-brand>
 
     <b-navbar-nav class="ms-auto mb-2 mb-lg-0">
-      <b-button variant="light">
-        <BIconPersonCircle></BIconPersonCircle>
-      </b-button>
+      <div class="container">
+        <RouterLink
+          v-if="isLoggedIn"
+          class="link-underline link-underline-opacity-0"
+          to="/booking_history"
+        >
+          <b-button variant="light" id="user-button">
+            <font-awesome-icon icon="user"></font-awesome-icon>
+          </b-button>
+          <b-tooltip target="user-button" triggers="hover">
+            zur Buchungshistorie
+          </b-tooltip>
+        </RouterLink>
+
+        <RouterLink
+          v-if="!isLoggedIn"
+          class="link-underline link-underline-opacity-0"
+          to="/login"
+        >
+          <b-button variant="light" id="login-button">
+            <font-awesome-icon icon="right-to-bracket"></font-awesome-icon>
+          </b-button>
+          <b-tooltip target="login-button" triggers="hover"> Login </b-tooltip>
+        </RouterLink>
+
+        <b-button v-if="isLoggedIn" variant="light" id="logout-button" @click="logout">
+          <font-awesome-icon icon="right-from-bracket"></font-awesome-icon>
+        </b-button>
+        <b-tooltip target="logout-button" triggers="hover"> Logout </b-tooltip>
+      </div>
     </b-navbar-nav>
 
     <b-navbar-toggle target="navbar-toggle-collapse">
@@ -74,14 +126,18 @@ export default {
             Anreise & Kontakt
           </b-nav-item>
         </RouterLink>
-        <RouterLink class="link-underline link-underline-opacity-0" to="/login">
+        <RouterLink
+          v-if="!isLoggedIn"
+          class="link-underline link-underline-opacity-0"
+          to="/login"
+        >
           <b-nav-item class="text-end me-3" href="#"> Login </b-nav-item>
         </RouterLink>
         <RouterLink
           class="link-underline link-underline-opacity-0"
           to="booking_history"
         >
-          <b-nav-item class="text-end me-3" href="#" hidden="hidden">
+          <b-nav-item v-if="isLoggedIn" class="text-end me-3" href="#">
             Buchungshistorie
           </b-nav-item>
         </RouterLink>
@@ -99,7 +155,7 @@ export default {
 </template>
 
 <style scoped>
-#header-logo{
+#header-logo {
   max-width: 150px;
 }
 </style>
