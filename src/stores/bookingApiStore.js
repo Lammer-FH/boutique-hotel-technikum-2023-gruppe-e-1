@@ -13,14 +13,14 @@ export const useBookingApiStore = defineStore("bookingApi", {
   }),
 
   actions: {
-    postApi(bookingData) {
+     postApi(bookingData) {
       let data = {
         firstname: bookingData.firstName,
         lastname: bookingData.lastName,
         email: bookingData.emailAdress,
         birthdate: bookingData.birthday,
       };
-      axios
+      return axios
         .post(
           apiUrl +
             "room/" +
