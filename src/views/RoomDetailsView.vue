@@ -1,6 +1,5 @@
 <script>
 
-import axios from "axios";
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 import {ref} from "vue";
 import { useRoomApiStore } from "../stores/roomApiStore";

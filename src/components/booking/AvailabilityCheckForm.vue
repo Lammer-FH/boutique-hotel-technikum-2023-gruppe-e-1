@@ -1,7 +1,7 @@
 <script>
-import axios from "axios";
+
 import { useRoomApiStore } from "../../stores/roomApiStore";
-import ConfirmationModal from "../ConfirmationModal.vue";
+import ConfirmationModal from "../bookingConfirmation/BookingFailModal.vue";
 
 export default {
   name: "AvailabilityCheckForm",
@@ -175,7 +175,6 @@ export default {
       this.$emit("checked-availability", data);
     },
   },
-  components: { ConfirmationModal },
 };
 </script>
 

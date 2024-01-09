@@ -1,6 +1,9 @@
 <script>
+
+import HotelContactInformation from "@/components/HotelContactInformation.vue";
 export default {
-  name: "ImprintView"
+  name: "ImprintView",
+  components: {HotelContactInformation}
 }
 </script>
 
@@ -8,13 +11,7 @@ export default {
 
   <div class="container">
     <h1>Imprint - Wellness Boutique Hotel</h1>
-    <address>
-      Wellness Boutique Hotel<br>
-      123 Serenity Lane<br>
-      Tranquil Town, CA 54321<br>
-      Phone: (555) 123-4567<br>
-      Email: info@wellnesshotel.com<br>
-    </address>
+    <HotelContactInformation/>
 
     <p>This website is owned and operated by Wellness Boutique Hotel. By accessing or using this website, you agree to
       be bound by the terms and conditions stated below. If you do not agree to these terms and conditions, please do
@@ -29,13 +26,7 @@ export default {
 
     <h2>Contact</h2>
     <p>If you have any questions regarding this imprint, you may contact us using the information below:</p>
-    <address>
-      Wellness Boutique Hotel<br>
-      Attn: Website Administrator<br>
-      123 Serenity Lane<br>
-      Tranquil Town, CA 54321<br>
-      Email: admin@wellnesshotel.com<br>
-    </address>
+    <HotelContactInformation/>
   </div>
 
 </template>
