@@ -1,7 +1,7 @@
 <script>
-import axios from "axios";
+
 import { useRoomApiStore } from "../../stores/roomApiStore";
-import ConfirmationModal from "../ConfirmationModal.vue";
+import ConfirmationModal from "../bookingConfirmation/BookingFailModal.vue";
 
 export default {
   name: "AvailabilityCheckForm",
@@ -175,11 +175,12 @@ export default {
       this.$emit("checked-availability", data);
     },
   },
-  components: { ConfirmationModal },
 };
 </script>
 
 <template>
+
+
   <div class="mb-3">
     <label for="date-from" class="form-label">Anreisedatum:</label>
     <input
