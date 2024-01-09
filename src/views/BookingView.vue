@@ -27,7 +27,6 @@ export default {
   },
 
 
-
   methods: {
     /*
       set the data received from AvailableCheckForm 
@@ -90,7 +89,7 @@ export default {
 
 
   computed: {
-    isValidAvailabilityForm(){
+    isValidAvailabilityForm() {
       return this.isValidAvailabilityCheck;
     },
     /*
@@ -149,6 +148,7 @@ export default {
           data-bs-parent="#booking-accordion"
       >
         <div class="accordion-body">
+
           <AvailabilityCheckForm
               @checked-availability="handleAvailabilityData"
           />
@@ -204,6 +204,14 @@ export default {
           data-bs-parent="#booking-accordion"
       >
         <div class="accordion-body">
+
+          <p><strong>Wollen Sie sich in unser Portal vor der BUCHUNG einloggen oder sich dafür registrieren?</strong></p>
+          <RouterLink :to="'/login/'">
+            <b-button>LOGIN/REGISTRIERUNG - Portal</b-button>
+          </RouterLink>
+          <br>
+          <br>
+
           <PersonalDataInputForm @personalData="handlePersonalData"/>
         </div>
       </div>

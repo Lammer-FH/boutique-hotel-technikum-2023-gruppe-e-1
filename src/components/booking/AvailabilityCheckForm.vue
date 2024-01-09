@@ -180,6 +180,8 @@ export default {
 </script>
 
 <template>
+
+
   <div class="mb-3">
     <label for="date-from" class="form-label">Anreisedatum:</label>
     <input
