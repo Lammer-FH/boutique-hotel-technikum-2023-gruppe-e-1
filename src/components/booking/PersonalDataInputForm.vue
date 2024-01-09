@@ -2,18 +2,26 @@
 import {useVuelidate} from '@vuelidate/core'
 import {required, email, sameAs, minValue} from '@vuelidate/validators';
 import {reactive, computed} from "vue";
+import {useBookingApiStore} from "../../stores/bookingApiStore"
 
 
 export default {
   name: "PersonalDataInputForm",
   props: {},
+  data(){
+    return {
+      bookingApi: useBookingApiStore(),
+    }
+  },
 
 // Data for the parent
   emits: ["personalData"],
 
 
   setup() {
-    const state = reactive({
+    let state = null
+
+    state = reactive({
       firstName: "",
       lastName: "",
       emailAdress: "",
@@ -55,6 +63,18 @@ export default {
       state,
       v$,
       getMaxDate,
+    }
+  },
+
+  mounted(){
+    if(localStorage.getItem("token") !== null){
+      this.bookingApi.getUserWithBookings().then(() => {
+        this.state.firstName = this.bookingApi.$state.userData.firstname;
+        this.state.lastName = this.bookingApi.$state.userData.lastname;
+        this.state.birthday = this.bookingApi.$state.userData.birthdate;
+        this.state.emailAdress = this.bookingApi.$state.userData.email;
+        this.state.emailAdressConfirm = this.bookingApi.$state.userData.email;
+      });
     }
   },
 

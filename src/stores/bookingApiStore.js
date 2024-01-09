@@ -10,10 +10,23 @@ export const useBookingApiStore = defineStore("bookingApi", {
     rooms: [],
     hasRoomsError: false,
     roomsError: "",
+    userData: null
   }),
 
   actions: {
-     postApi(bookingData) {
+    getUserWithBookings() {
+      return axios.get(
+        apiUrl + "user"
+      )
+      .then((response) => {
+        this.$state.userData = response.data
+        console.log(this.$state.userData)
+      })
+      .catch((error) => {
+        console.log(error)
+      });
+    },
+    postApi(bookingData) {
       let data = {
         firstname: bookingData.firstName,
         lastname: bookingData.lastName,
