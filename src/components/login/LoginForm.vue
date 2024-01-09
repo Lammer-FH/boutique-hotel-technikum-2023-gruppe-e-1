@@ -2,7 +2,7 @@
 
 import router from "../../router";
 import { useAuthenticationApiStore } from "../../stores/authenticationApiStore";
-import ConfirmationModal from "../ConfirmationModal.vue";
+
 
 export default {
   name: "LoginForm",
