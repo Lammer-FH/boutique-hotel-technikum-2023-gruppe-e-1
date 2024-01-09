@@ -1,4 +1,5 @@
 <script>
+
 import router from "../../router";
 import { useAuthenticationApiStore } from "../../stores/authenticationApiStore";
 import ConfirmationModal from "../ConfirmationModal.vue";
@@ -32,6 +33,7 @@ export default {
     },
   },
   components: { ConfirmationModal },
+
 };
 </script>
 
@@ -75,12 +77,14 @@ export default {
         </button>
       </div>
     </div>
+
     <div>
       <ConfirmationModal
         :modalData="this.apiMessage"
         :isHidden="isModalHidden"
       />
     </div>
+
   </div>
 </template>
 

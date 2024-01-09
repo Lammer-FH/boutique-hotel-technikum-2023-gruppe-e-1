@@ -113,8 +113,7 @@ export default {
           push the room to the availableRooms array
         */
     checkAvailabilityForRoom(room) {
-      this.roomApi.checkAvailability(room.id, this.dateFrom, this.dateTo);
-      setTimeout(() => {
+      this.roomApi.checkAvailability(room.id, this.dateFrom, this.dateTo).then(() => {
         if (this.roomApi.checkAvailabilityErrorCode != 200) {
           this.apiError.title = "Fehler bei der Abftrage: Verfügbarkeit";
           this.apiError.message =
@@ -127,6 +126,9 @@ export default {
             this.checkRoomAvailabilityDependingOnNumberOfPersons(room);
           }
         }
+      });
+      setTimeout(() => {
+        
       }, 500);
     },
     /*
@@ -144,8 +146,7 @@ export default {
           prepare data and send it to the BookingView
         */
     async continueToRoomSelection() {
-      this.roomApi.getRooms();
-      setTimeout(() => {
+      this.roomApi.getRooms().then(() => {
         if (this.roomApi.getRoomsErrorCode != 200) {
           this.apiError.title = "Fehler bei der Abftrage: Zimmer";
           this.apiError.message =
@@ -161,7 +162,7 @@ export default {
           });
           this.sendDataToBookingView();
         }
-      }, 500);
+      });
     },
     sendDataToBookingView() {
       const data = {

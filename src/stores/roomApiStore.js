@@ -14,7 +14,7 @@ export const useRoomApiStore = defineStore("roomApi", {
 
   actions: {
     fetchRoomDetails(roomId) {
-      axios
+      return axios
         .get(apiUrl + "rooms/" + roomId)
         .then((response) => {
           this.$state.room = response.data;
@@ -24,7 +24,7 @@ export const useRoomApiStore = defineStore("roomApi", {
         });
     },
     getRooms() {
-      axios
+      return axios
         .get(apiUrl + "rooms")
         .then((response) => {
           this.$state.rooms = response.data;
@@ -35,7 +35,7 @@ export const useRoomApiStore = defineStore("roomApi", {
         });
     },
     checkAvailability(roomId, dateFrom, dateTo) {
-      axios
+      return axios
         .get(apiUrl + "room/" + roomId + "/from/" + dateFrom + "/to/" + dateTo)
         .then((response) => {
           this.$state.isRoomAvailable = response.data;
