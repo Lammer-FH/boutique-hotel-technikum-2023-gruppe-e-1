@@ -16,10 +16,7 @@ export default {
   },
 
   created() {
-        // ToDo timeout anders händln
-
     this.getRoomDetails();
-
   },
 
   computed: {

@@ -6,7 +6,7 @@ export default {
 </script>
 
 <template>
-  <BContainer fluid class="pb-3 border-bottom" v-if="personalData">
+  <BContainer fluid class="pb-3" v-if="personalData">
     <BRow>
       <BCol> gewählter Zeitraum:</BCol>
       <BCol> {{ personalData.dateFrom }} - {{ personalData.dateTo }}</BCol>
