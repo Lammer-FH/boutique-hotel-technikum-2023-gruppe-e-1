@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import axios from "axios";
+import { config } from "@fortawesome/fontawesome-svg-core";
 
 const apiUrl = "https://boutique-hotel.helmuth-lammer.at/api/v1/";
 
@@ -21,10 +22,11 @@ export const useAuthenticationApiStore = defineStore("authenticationApi", {
         )
         .then((response) => {
           localStorage.token = response.data
+          this.$state.hasLoginError = false
         })
         .catch((error) => {
           console.error("Error Post Login");
-          this.hasLoginError = true;
+          this.$state.hasLoginError = true;
         });
     },
   },
