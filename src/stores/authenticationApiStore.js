@@ -7,6 +7,7 @@ const apiUrl = "https://boutique-hotel.helmuth-lammer.at/api/v1/";
 export const useAuthenticationApiStore = defineStore("authenticationApi", {
   state: () => ({
     hasLoginError: false,
+    token: localStorage.token,
   }),
 
   actions: {
@@ -21,6 +22,7 @@ export const useAuthenticationApiStore = defineStore("authenticationApi", {
           data
         )
         .then((response) => {
+          this.$state.token = response.data
           localStorage.token = response.data
           this.$state.hasLoginError = false
         })
@@ -29,5 +31,9 @@ export const useAuthenticationApiStore = defineStore("authenticationApi", {
           this.$state.hasLoginError = true;
         });
     },
+    logout(){
+      localStorage.removeItem("token");
+      this.$state.token = null;
+    }
   },
 });

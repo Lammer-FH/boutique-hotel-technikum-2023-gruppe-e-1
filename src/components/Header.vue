@@ -6,6 +6,7 @@ import {
   BIconPersonCircle,
 } from "bootstrap-icons-vue";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { useAuthenticationApiStore } from "../stores/authenticationApiStore";
 
 export default {
   name: "Header",
@@ -16,18 +17,17 @@ export default {
   },
   data() {
     return {
-      existsToken: localStorage.getItem("token") !== null,
     };
   },
   methods: {
     logout() {
-      localStorage.removeItem("token");
-      this.$forceUpdate();
+      useAuthenticationApiStore().logout();
+      this.$router.push("/");
     },
   },
   computed: {
     isLoggedIn() {
-      if (localStorage.getItem("token") === null) {
+      if (useAuthenticationApiStore().$state.token === null) {
         return false;
       } else {
         return true;
