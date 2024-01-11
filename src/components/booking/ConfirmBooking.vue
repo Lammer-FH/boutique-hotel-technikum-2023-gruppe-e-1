@@ -1,5 +1,6 @@
 <script>
 import { useBookingApiStore } from "@/stores/bookingApiStore";
+import { bookingDataStore } from "@/stores/bookingDataStore";
 import ConfirmationModal from "../bookingConfirmation/BookingFailModal.vue";
 import PersonalData from "@/components/booking/PersonalData.vue";
 
@@ -11,6 +12,7 @@ export default {
     return {
       // access bookingApiStore
       bookingApi: useBookingApiStore(),
+      bookingDataStore: bookingDataStore(),
       modalData: {
         title: "",
         message: ""
@@ -24,7 +26,8 @@ export default {
        this.bookingApi.postApi(this.bookingData)
            .then( () => {
              if (this.bookingApi.confirmBooking) {
-               this.$router.push({path: "/booking_confirmation/" + JSON.stringify(this.bookingData) });
+               this.bookingDataStore.setBookingData(this.bookingData);
+               this.$router.push({path: "/booking_confirmation/"  });
              } else {
                this.modalData.title = "Buchung fehlgeschlagen";
                this.modalData.message = "Bitte Buchung erneut durchführen.";
