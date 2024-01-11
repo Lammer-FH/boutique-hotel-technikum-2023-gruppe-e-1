@@ -13,13 +13,11 @@ export default {
         <label for="register-button" class="form-label"
           >Noch nicht registriert?</label
         ><br />
-        <button
-          id="register-button"
-          type="button"
-          class="btn btn-primary"
-        >
-          Registrieren
-        </button>
+        <RouterLink to="/registration">
+          <button id="register-button" type="button" class="btn btn-primary">
+            Registrieren
+          </button>
+        </RouterLink>
       </div>
     </div>
   </div>
