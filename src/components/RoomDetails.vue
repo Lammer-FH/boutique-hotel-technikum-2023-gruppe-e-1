@@ -11,7 +11,6 @@ export default {
     return {
         roomApi: useRoomApiStore(),
         room: null,
-        //roomId: 0
     }
   },
 

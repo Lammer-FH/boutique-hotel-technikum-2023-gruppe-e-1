@@ -2,7 +2,7 @@
 
 import PersonalData from "@/components/booking/PersonalData.vue";
 import HotelContactInformation from "@/components/HotelContactInformation.vue";
-import RoomDetails from "@/components/bookingConfirmation/RoomDetails.vue";
+import RoomDetails from "@/components/RoomDetails.vue";
 import HotelLocation from "@/components/bookingConfirmation/HotelLocation.vue";
 import {useBookingApiStore} from "@/stores/bookingApiStore";
 import { bookingDataStore } from "@/stores/bookingDataStore";

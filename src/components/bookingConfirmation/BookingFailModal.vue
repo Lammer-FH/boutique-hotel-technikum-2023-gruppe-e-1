@@ -1,6 +1,6 @@
 <script>
 import HotelContactInformation from "@/components/HotelContactInformation.vue";
-import RoomDetails from "@/components/bookingConfirmation/RoomDetails.vue";
+import RoomDetails from "@/components/RoomDetails.vue";
 
 export default {
   name: "ConfirmBooking",
