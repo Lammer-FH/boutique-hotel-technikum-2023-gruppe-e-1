@@ -20,12 +20,18 @@ export default {
     };
   },
   methods: {
+    /*
+      call logout method and redirect to home-page
+    */
     logout() {
       useAuthenticationApiStore().logout();
       this.$router.push("/");
     },
   },
   computed: {
+    /*
+      check if token exists in store
+    */
     isLoggedIn() {
       if (useAuthenticationApiStore().$state.token === null) {
         return false;

@@ -11,6 +11,11 @@ export const useAuthenticationApiStore = defineStore("authenticationApi", {
   }),
 
   actions: {
+    /*
+      Post user data to backend
+      If successful store received token in stores state variable token and 
+      local storage item token
+    */
      postLogin(loginData) {
       const data = {
         clientId: loginData.email,
@@ -31,6 +36,9 @@ export const useAuthenticationApiStore = defineStore("authenticationApi", {
           this.$state.hasLoginError = true;
         });
     },
+    /*
+      remove local storage item token and set stores state variable to null
+    */
     logout(){
       localStorage.removeItem("token");
       this.$state.token = null;

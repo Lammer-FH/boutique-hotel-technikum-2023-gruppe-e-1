@@ -22,6 +22,9 @@ const app = createApp(App)
 
 axios.defaults.baseURL = 'https://boutique-hotel.helmuth-lammer.at/api/v1/';
 
+/*
+  use interceptor to add token to every request, if exists
+*/
 axios.interceptors.request.use(
   (config) => {
     const token = useAuthenticationApiStore().$state.token
@@ -41,6 +44,10 @@ app.use(createPinia())
 app.use(router)
 app.use(BootstrapVueNext)
 
+/*
+  if there is no token in local storage on application start,
+  logout user
+*/
 if(localStorage.token == null){
   useAuthenticationApiStore().logout();
 }
