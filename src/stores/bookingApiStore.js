@@ -20,7 +20,6 @@ export const useBookingApiStore = defineStore("bookingApi", {
       )
       .then((response) => {
         this.$state.userData = response.data
-        console.log(this.$state.userData)
       })
       .catch((error) => {
         console.log(error)
