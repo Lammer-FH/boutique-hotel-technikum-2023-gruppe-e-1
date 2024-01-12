@@ -121,8 +121,8 @@ export default {
 
 
     registerUser() {
-
-      if (this.checkIfFormIsValid() == true) {
+      this.validationOfAllFields();
+      if (this.checkIfFormIsValid()) {
         this.registrationApi.postRegisterUser(this.user)
             .then(() => {
               if (this.registrationApi.confirmRegistration) {
@@ -138,12 +138,29 @@ export default {
       }
     },
 
+
+    // goes through all the error messages of the fields and checks if there is an error message or not
     checkIfFormIsValid() {
       for (let key in this.errors) {
-        if (this.errors[key]) return false;
+        if (this.errors[key]) return false;  // If any error message is not empty, the form is invalid
       }
-      return true;
+      return true; // If no errors, the form is valid
+    },
+
+    validationOfAllFields(){
+      this.validateFirstName();
+      this.validateLastName();
+      this.validateAdress();
+      this.validatePostalcode();
+      this.validateCity();
+      this.validateEmail();
+      this.validateEmailConfirm();
+      this.validateUsername();
+      this.validatePassword();
+      this.validatePasswordConfirm();
     }
+
+
   },
 
   components: {
@@ -308,12 +325,13 @@ export default {
       </div>
 
       <div class="d-grid gap-2">
-        <button
+        <b-button variant="primary"
             type="submit"
-            class="btn btn-primary"
-            @click="registerUser()">
+            :disabled="!checkIfFormIsValid()"
+            @click="registerUser()"
+        >
           Registrieren
-        </button>
+        </b-button>
       </div>
 
       <div>

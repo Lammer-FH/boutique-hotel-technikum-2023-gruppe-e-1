@@ -25,9 +25,9 @@ export const useRegisterUserApiStore = defineStore("registrationApi", {
                     data
                 )
                 .then((response) => {
-                    this.$state.confirmRegistration = true,
-                    localStorage.token = response.data
-            //TODO: muss man hier den token überhaupt speichern?
+                    this.$state.confirmRegistration = true
+           //         localStorage.token = response.data
+
                 })
                 .catch((error) => {
                     console.error("Error Post Registration");

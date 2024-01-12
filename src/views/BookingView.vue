@@ -204,10 +204,12 @@ export default {
           data-bs-parent="#booking-accordion"
       >
         <div class="accordion-body">
-
-          <p><strong>Wollen Sie sich in unser Portal vor der BUCHUNG einloggen oder sich dafür registrieren?</strong></p>
+          <div class="p-3" >
+            <p><strong>Wollen Sie sich in unser Portal vor der Buchung einloggen oder sich dafür registrieren?</strong>
+            </p>
+          </div>
           <RouterLink :to="'/login/'">
-            <b-button>LOGIN/REGISTRIERUNG - Portal</b-button>
+            <b-button variant="primary" mt-3>LOGIN/REGISTRIERUNG - Portal</b-button>
           </RouterLink>
           <br>
           <br>
@@ -250,4 +252,5 @@ export default {
 .accordion-button:not(.collapsed) {
   background-color: #f8f9fa;
 }
+
 </style>

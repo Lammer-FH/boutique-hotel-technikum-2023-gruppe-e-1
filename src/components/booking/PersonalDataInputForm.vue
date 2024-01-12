@@ -184,13 +184,13 @@ export default {
   </div>
 
   <div class="d-grid gap-2">
-    <button
+    <b-button variant="primary"
         type="submit"
         class="btn btn-primary"
         @click="continueToConfirmBooking"
     >
       Buchen
-    </button>
+    </b-button>
   </div>
 
 
