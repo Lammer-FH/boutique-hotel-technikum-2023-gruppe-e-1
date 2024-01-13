@@ -1,9 +1,6 @@
 <script>
-import {useRegisterUserApiStore} from "@/stores/registerUserApiStore";
 import ConfirmationModal from "../ConfirmationModal.vue";
-import {useVuelidate} from '@vuelidate/core'
-import {computed, reactive} from "vue";
-import {email, numeric, required, sameAs} from "@vuelidate/validators";
+import {useAuthenticationApiStore} from "../../stores/authenticationApiStore";
 
 export default {
   name: "RegistrationForm",
@@ -13,7 +10,7 @@ export default {
 
   data() {
     return {
-      registrationApi: useRegisterUserApiStore(),
+      authenticationApi: useAuthenticationApiStore(),
       modalData: {
         title: "",
         message: "",
@@ -123,9 +120,9 @@ export default {
     registerUser() {
       this.validationOfAllFields();
       if (this.checkIfFormIsValid()) {
-        this.registrationApi.postRegisterUser(this.user)
+        this.authenticationApi.postRegisterUser(this.user)
             .then(() => {
-              if (this.registrationApi.confirmRegistration) {
+              if (this.authenticationApi.confirmRegistration) {
                 this.modalData.title = "Registrierungsbestätigung";
                 this.modalData.message = "Registrierung erfolgreich durchgeführt. Sie können sich nun mit ihrer Emailadresse und Passwort einloggen.";
                 this.isModalHidden = false;
