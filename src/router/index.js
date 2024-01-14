@@ -107,7 +107,7 @@ const router = createRouter({
       component: () => import("../views/ImprintView.vue"),
     },
     {
-      path: "/booking_confirmation/:bookingData",
+      path: "/booking_confirmation",
       name: "bookingConfirmation",
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route

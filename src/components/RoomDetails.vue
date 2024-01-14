@@ -11,7 +11,6 @@ export default {
     return {
         roomApi: useRoomApiStore(),
         room: null,
-        //roomId: 0
     }
   },
 
@@ -27,10 +26,9 @@ export default {
 
   methods: {
     getRoomDetails() {
-      this.roomApi.fetchRoomDetails(this.roomId);
-      setTimeout(() => {
+      this.roomApi.fetchRoomDetails(this.roomId).then(() => {
         this.room = this.roomApi.room;
-      }, 500);
+      });
     },
 
     // -------------------------------------------------------

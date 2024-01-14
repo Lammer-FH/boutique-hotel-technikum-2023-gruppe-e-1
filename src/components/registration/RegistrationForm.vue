@@ -1,9 +1,6 @@
 <script>
-import {useRegisterUserApiStore} from "@/stores/registerUserApiStore";
 import ConfirmationModal from "../ConfirmationModal.vue";
-import {useVuelidate} from '@vuelidate/core'
-import {computed, reactive} from "vue";
-import {email, numeric, required, sameAs} from "@vuelidate/validators";
+import {useAuthenticationApiStore} from "../../stores/authenticationApiStore";
 
 export default {
   name: "RegistrationForm",
@@ -13,7 +10,7 @@ export default {
 
   data() {
     return {
-      registrationApi: useRegisterUserApiStore(),
+      authenticationApi: useAuthenticationApiStore(),
       modalData: {
         title: "",
         message: "",
@@ -121,11 +118,11 @@ export default {
 
 
     registerUser() {
-
-      if (this.checkIfFormIsValid() == true) {
-        this.registrationApi.postRegisterUser(this.user)
+      this.validationOfAllFields();
+      if (this.checkIfFormIsValid()) {
+        this.authenticationApi.postRegisterUser(this.user)
             .then(() => {
-              if (this.registrationApi.confirmRegistration) {
+              if (this.authenticationApi.confirmRegistration) {
                 this.modalData.title = "Registrierungsbestätigung";
                 this.modalData.message = "Registrierung erfolgreich durchgeführt. Sie können sich nun mit ihrer Emailadresse und Passwort einloggen.";
                 this.isModalHidden = false;
@@ -138,12 +135,29 @@ export default {
       }
     },
 
+
+    // goes through all the error messages of the fields and checks if there is an error message or not
     checkIfFormIsValid() {
       for (let key in this.errors) {
-        if (this.errors[key]) return false;
+        if (this.errors[key]) return false;  // If any error message is not empty, the form is invalid
       }
-      return true;
+      return true; // If no errors, the form is valid
+    },
+
+    validationOfAllFields(){
+      this.validateFirstName();
+      this.validateLastName();
+      this.validateAdress();
+      this.validatePostalcode();
+      this.validateCity();
+      this.validateEmail();
+      this.validateEmailConfirm();
+      this.validateUsername();
+      this.validatePassword();
+      this.validatePasswordConfirm();
     }
+
+
   },
 
   components: {
@@ -308,12 +322,13 @@ export default {
       </div>
 
       <div class="d-grid gap-2">
-        <button
+        <b-button variant="primary"
             type="submit"
-            class="btn btn-primary"
-            @click="registerUser()">
+            :disabled="!checkIfFormIsValid()"
+            @click="registerUser()"
+        >
           Registrieren
-        </button>
+        </b-button>
       </div>
 
       <div>

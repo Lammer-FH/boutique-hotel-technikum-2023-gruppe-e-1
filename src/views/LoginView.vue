@@ -9,7 +9,7 @@ export default {
 </script>
 
 <template>
-  <h1>Login</h1>
+  <h1 mt-3>Login</h1>
 
   <div id="login-container" class="container">
     <div class="card text-dark bg-light mx-auto mt-3">

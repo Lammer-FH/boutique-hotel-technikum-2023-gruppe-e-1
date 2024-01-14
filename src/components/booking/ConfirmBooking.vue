@@ -1,8 +1,10 @@
 <script>
 import { useBookingApiStore } from "@/stores/bookingApiStore";
+import { bookingDataStore } from "@/stores/bookingDataStore";
 import ConfirmationModal from "../bookingConfirmation/BookingFailModal.vue";
 import PersonalData from "@/components/booking/PersonalData.vue";
 
+// component to show all booking information, when confirmed try to post booking data to the backend
 export default {
   name: "ConfirmBooking",
   // Data from the Parent
@@ -11,6 +13,7 @@ export default {
     return {
       // access bookingApiStore
       bookingApi: useBookingApiStore(),
+      bookingDataStore: bookingDataStore(),
       modalData: {
         title: "",
         message: ""
@@ -19,12 +22,13 @@ export default {
     };
   },
   methods: {
-    // call the Api in the store with the booking Data
+    // call the postAPi from the bookingApiStore, when successful show the bookingconfirmation view
      book() {
        this.bookingApi.postApi(this.bookingData)
            .then( () => {
              if (this.bookingApi.confirmBooking) {
-               this.$router.push({path: "/booking_confirmation/" + JSON.stringify(this.bookingData) });
+               this.bookingDataStore.setBookingData(this.bookingData);
+               this.$router.push({path: "/booking_confirmation/"  });
              } else {
                this.modalData.title = "Buchung fehlgeschlagen";
                this.modalData.message = "Bitte Buchung erneut durchführen.";

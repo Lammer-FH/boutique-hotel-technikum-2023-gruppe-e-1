@@ -2,9 +2,13 @@
 
 import PersonalData from "@/components/booking/PersonalData.vue";
 import HotelContactInformation from "@/components/HotelContactInformation.vue";
-import RoomDetails from "@/components/bookingConfirmation/RoomDetails.vue";
+import RoomDetails from "@/components/RoomDetails.vue";
 import HotelLocation from "@/components/bookingConfirmation/HotelLocation.vue";
 import {useBookingApiStore} from "@/stores/bookingApiStore";
+import { bookingDataStore } from "@/stores/bookingDataStore";
+
+
+// booking con
 
 export default {
   name: "BookingConfirmation",
@@ -12,19 +16,15 @@ export default {
 data() {
     return {
       bookingData: null,
+      bookingDataStore: bookingDataStore(),
       roomId: null,
       bookingApi: useBookingApiStore(),
     }
 },
-
+// get bookingdata from the bookingDataStore
   created() {
-    // change string back to json object
-    try {
-      this.bookingData = JSON.parse(this.$route.params.bookingData);
-      } catch (error) {
-      console.error("Error parsing bookingData:", error);
-    }
-    this.roomId = this.bookingData.selectedRoomId;
+      this.bookingData = this.bookingDataStore.bookingData;
+      this.roomId = this.bookingData.selectedRoomId;
   },
 
   methods: {

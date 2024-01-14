@@ -2,7 +2,7 @@
 
 import router from "../../router";
 import { useAuthenticationApiStore } from "../../stores/authenticationApiStore";
-
+import ConfirmationModal from "../ConfirmationModal.vue";
 
 export default {
   name: "LoginForm",
@@ -18,8 +18,12 @@ export default {
     };
   },
   methods: {
+    /*
+      Post the users entered Data, then check for error.
+      if there is an error set data for modal and open it,
+      Otherwise redirect to Booking History
+    */
     login() {
-      console.log(this.loginData);
       this.authenticationApi.postLogin(this.loginData).then(() => {
         if (this.authenticationApi.$state.hasLoginError) {
           this.apiMessage.title = "Fehler beim Login";
