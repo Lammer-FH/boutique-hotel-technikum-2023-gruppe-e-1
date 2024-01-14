@@ -1,6 +1,5 @@
-
-
 <script>
+// component that initializes a google map, gets the location of the user and draws a rout from that position to the hotel location
 export default {
   data() {
     return {

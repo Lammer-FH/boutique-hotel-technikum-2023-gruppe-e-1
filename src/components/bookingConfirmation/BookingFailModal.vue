@@ -1,10 +1,12 @@
 <script>
+
+// modal that shows up when the booking failed
+
 import HotelContactInformation from "@/components/HotelContactInformation.vue";
 import RoomDetails from "@/components/RoomDetails.vue";
 
 export default {
   name: "ConfirmBooking",
-  // Data from the Parent
   props: ["modalData", "isHidden"],
   watch: {
         isHidden(newIsHidden){

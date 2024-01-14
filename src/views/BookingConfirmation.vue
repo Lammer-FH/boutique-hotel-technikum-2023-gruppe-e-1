@@ -7,6 +7,9 @@ import HotelLocation from "@/components/bookingConfirmation/HotelLocation.vue";
 import {useBookingApiStore} from "@/stores/bookingApiStore";
 import { bookingDataStore } from "@/stores/bookingDataStore";
 
+
+// booking con
+
 export default {
   name: "BookingConfirmation",
 
@@ -18,15 +21,10 @@ data() {
       bookingApi: useBookingApiStore(),
     }
 },
-
+// get bookingdata from the bookingDataStore
   created() {
-    // change string back to json object
-    try {
       this.bookingData = this.bookingDataStore.bookingData;
-      } catch (error) {
-      console.error("Error parsing bookingData:", error);
-    }
-    this.roomId = this.bookingData.selectedRoomId;
+      this.roomId = this.bookingData.selectedRoomId;
   },
 
   methods: {

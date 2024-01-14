@@ -4,6 +4,7 @@ import { bookingDataStore } from "@/stores/bookingDataStore";
 import ConfirmationModal from "../bookingConfirmation/BookingFailModal.vue";
 import PersonalData from "@/components/booking/PersonalData.vue";
 
+// component to show all booking information, when confirmed try to post booking data to the backend
 export default {
   name: "ConfirmBooking",
   // Data from the Parent
@@ -21,7 +22,7 @@ export default {
     };
   },
   methods: {
-    // call the Api in the store with the booking Data
+    // call the postAPi from the bookingApiStore, when successful show the bookingconfirmation view
      book() {
        this.bookingApi.postApi(this.bookingData)
            .then( () => {

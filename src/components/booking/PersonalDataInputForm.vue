@@ -4,6 +4,7 @@ import {required, email, sameAs, minValue} from '@vuelidate/validators';
 import {reactive, computed} from "vue";
 import {useBookingApiStore} from "../../stores/bookingApiStore"
 
+// input form for personal information, using vuelidate to check if everything is correct and shows warnings if something is missing/ not correct
 
 export default {
   name: "PersonalDataInputForm",
@@ -80,7 +81,7 @@ export default {
 
   methods: {
 
-    // on Button click: checks if all required Fields are filled, stores all values int the personalData Object and continues to next Tab
+    // on Button click: checks if all required Fields are filled, stores all values in the personalData Object and continues to next Tab
     continueToConfirmBooking() {
 
       this.v$.$validate()
@@ -97,13 +98,11 @@ export default {
       }
     },
   },
-
 };
 
 </script>
 
 <template>
-
   <div class="mb-3">
     <label for="firstName" class="form-label">Vorname:</label>
     <input
